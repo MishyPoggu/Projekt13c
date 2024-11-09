@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #20212f;
+}
+
+.navbar {
+    background-color: #222121;
+    width: 100%;
+    overflow: hidden;
+    padding: 14px 20px; /* Magasság beállítása */
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.navbar li {
+    flex-grow: 1;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.navbar a:hover {
+    background-color: #333;
+}
+
+/* Fórum elrendezés */
+.forum-container {
+    display: flex;
+    height: calc(100vh - 48px); /* A navbar magasságát figyelembe véve */
+    color: white;
+}
+
+/* Fő tartalom (bal oldalon) */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #2d2d2d;
+}
+
+/* Sidebar (jobb oldalon) */
+.sidebar {
+    width: 400px;
+    background-color: #333;
+    padding: 20px;
+    overflow-y: auto;
+}
