@@ -9,7 +9,7 @@ const config = {
     dialect: process.env.DB_DIALECT || "mariadb",
     name: process.env.DB_NAME || "project",
     username: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || ""
+    password: process.env.DB_PASS || "1234567"
   }
 };
 

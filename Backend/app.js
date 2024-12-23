@@ -1,10 +1,19 @@
 const express = require('express');
 const mysql = require('mysql2');
+const sequelize = require('./Connections/connections.js');
 const app = express();
 const cors = require('cors');
 require("dotenv").config();
 
 app.use(express.json());
+
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('All tables created successfully!');
+  })
+  .catch(err => {
+    console.error('Failed to create tables:', err.message);
+  });
 
 app.use(cors(
     {
