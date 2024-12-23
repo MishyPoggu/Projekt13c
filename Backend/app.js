@@ -5,6 +5,9 @@ const app = express();
 const cors = require('cors');
 require("dotenv").config();
 
+const userRoute = require('./Routes/userRoute');
+const tokenRoute = require('./Routes/tokenRoute');
+
 app.use(express.json());
 
 sequelize.sync({ alter: true })
@@ -23,14 +26,13 @@ app.use(cors(
     }
 ));
 
-const userRoute = require("./Routes/userRoute");
-
 // Test
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
 
 app.use("/users", userRoute);
+app.use("/tokens", tokenRoute);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

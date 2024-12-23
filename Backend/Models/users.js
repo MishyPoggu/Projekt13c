@@ -1,7 +1,7 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../Connections/connections');
+const { DataTypes } = require('sequelize');
+const connections = require('../Connections/connections');
 
-const User = sequelize.define('User', {
+const Users = connections.define('User', {
   userId: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -28,4 +28,4 @@ const User = sequelize.define('User', {
   tableName: 'Users',
 });
 
-module.exports = User;
+module.exports = Users;
