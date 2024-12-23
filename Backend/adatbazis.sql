@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Users (
     CreatedAt TIMESTAMP NOT NULL
 );
 
-INSERT INTO Users (Username, Email, PasswordHash, CreatedAt) 
+INSERT INTO Users (Username, Email, PasswordHash, CreatedAt)
 VALUES 
 ('Kovács', 'kovacsbence@example.com', 'hashedpassword6', CURRENT_TIMESTAMP),
 ('Nagy', 'nagyreka@example.com', 'hashedpassword7', CURRENT_TIMESTAMP),
