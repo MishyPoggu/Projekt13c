@@ -81,6 +81,76 @@ const addConsole = async (req, res) => {
     }
 };
 
+const addConsoles = async (req, res) => {
+    const transaction = await connections.transaction();
+  
+    try {
+        if (isAdmin(req)) {
+            const { consoles } = req.body; 
+    
+            if (!consoles || !Array.isArray(consoles) || consoles.length === 0) {
+                return res.status(400).json({
+                    status: 400,
+                    message: 'No consoles provided or invalid format.',
+                    üzenet: 'Nincsenek konzolok megadva vagy hibás formátum.',
+                });
+            }
+
+            for (const consoleData of consoles) {
+                const { name, release, publisher } = consoleData;
+
+                if (!name || !release || !publisher) {
+                    await transaction.rollback();
+                    return res.status(400).json({
+                        status: 400,
+                        message: 'Each console must have a name, release year, and publisher.',
+                        üzenet: 'Minden konzolhoz szükséges név, kiadási év és kiadó.',
+                    });
+                }
+
+                console.log(`Checking for existing console with name: ${name}...`);
+                const existingConsole = await Consoles.findOne({ where: { name }, transaction });
+                if (existingConsole) {
+                    await transaction.rollback();
+                    return res.status(409).json({
+                        status: 409,
+                        message: `Console with name "${name}" already exists.`,
+                        üzenet: `A "${name}" nevű konzol már létezik.`,
+                    });
+                }
+
+                console.log(`Creating console: ${name}...`);
+                await Consoles.create(
+                    { name, release, publisher },
+                    { transaction }
+                );
+            }
+
+            console.log("All consoles added successfully.");
+            await transaction.commit();
+
+            res.status(201).json({
+                status: 201,
+                message: 'Consoles added successfully!',
+                üzenet: 'A konzolok sikeresen hozzáadva!',
+            });
+        } else {
+            return res.status(403).json({
+                status: 403,
+                message: 'Unauthorized. Admin credentials required.',
+                üzenet: 'Hozzáférés megtagadva. Admin jogosultság szükséges.',
+            });
+        }
+    } catch (error) {
+        console.error('Error deleting console:', error);
+        res.status(500).json({
+            status: 500,
+            message: 'An error occurred while deleting the console.',
+            üzenet: 'Hiba merült fel a konzol törlése közben.'
+        });
+    }
+};
+
 const removeConsole = async (req, res) => {
     try {
         if (isAdmin(req)) {
@@ -148,5 +218,6 @@ const getConsoleById = async (req, res) => {}
 module.exports = {
     getAllConsoles,
     addConsole,
+    addConsoles,
     removeConsole
 }
