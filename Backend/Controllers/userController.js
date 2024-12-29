@@ -22,7 +22,7 @@ const getAllUsers = async (req, res) => {
         res.status(500).json({
             status: 500,
             message: 'An error occurred while fetching users.',
-            üzenet: 'Hiba merült fel az adatok lekérése közben.'
+            üzenet: 'Hiba merült fel az adatok lekérdezése közben.'
         });
     }
 };

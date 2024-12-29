@@ -8,6 +8,9 @@ require("dotenv").config();
 const userRoute = require('./Routes/userRoute');
 const tokenRoute = require('./Routes/tokenRoute');
 
+// Consoles, Arcade Machines, Pinball Machines
+const consoleRoute = require('./Routes/consoleRoute');
+
 app.use(express.json());
 
 sequelize.sync({ alter: true })
@@ -31,8 +34,11 @@ app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
 
-app.use("/users", userRoute);
-app.use("/tokens", tokenRoute);
+app.use('/users', userRoute);
+app.use('/tokens', tokenRoute);
+
+// Consoles, Arcade Machines, Pinball Machines
+app.use('/consoles', consoleRoute);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
