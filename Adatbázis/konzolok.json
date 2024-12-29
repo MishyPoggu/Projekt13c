@@ -1,6 +1,11 @@
 {
     "consoles": [
         {
+            "name": "3DO Interactive Multiplayer",
+            "release": "1993",
+            "publisher": "Panasonic"
+        },
+        {
             "name": "Atari 5200",
             "release": "1982",
             "publisher": "Atari, Inc"

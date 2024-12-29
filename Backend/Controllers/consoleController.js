@@ -212,11 +212,54 @@ const removeConsole = async (req, res) => {
     }
 };
 
-const getConsoleById = async (req, res) => {}
+const getConsole = async (req, res) => {
+    try {
+        const { id, name } = req.body;
+
+        if (name) {
+            const console = await Consoles.findOne({ where: { name } });
+            if (!console) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'Console not found by name.',
+                    üzenet: 'Konzol nem található ilyen névvel.'
+                });
+            }
+
+            return res.status(200).json({
+                status: 200,
+                data: console
+            })
+        }
+        else if (id) {
+            const console = await Consoles.findOne({ where: { id } });
+            if (!console) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'Console not found by ID.',
+                    üzenet: 'Konzol nem található ilyen ID-vel.'
+                });
+            }
+
+            return res.status(200).json({
+                status: 200,
+                data: console
+            })
+        }
+    } catch (error) {
+        console.error('Error getting console:', error);
+        res.status(500).json({
+            status: 500,
+            message: 'An error occurred while getting the console.',
+            üzenet: 'Hiba merült fel a konzol lekérdezése közben.'
+        });
+    }
+}
 
 
 module.exports = {
     getAllConsoles,
+    getConsole,
     addConsole,
     addConsoles,
     removeConsole
