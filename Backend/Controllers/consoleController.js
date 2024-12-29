@@ -81,6 +81,84 @@ const addConsole = async (req, res) => {
     }
 };
 
+const updateConsole = async (req, res) => {
+    const transaction = await connections.transaction();
+
+    try {
+        if (isAdmin(req)) {
+            const { id, name, release, publisher } = req.body;
+
+            if (!id) {
+                return res.status(400).json({
+                    status: 400,
+                    message: 'Console ID is required.',
+                    üzenet: 'A konzol azonosítója kötelező.',
+                });
+            }
+
+            console.log("Fetching existing console...");
+            const existingConsole = await Consoles.findByPk(id, { transaction });
+
+            if (!existingConsole) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'Console not found.',
+                    üzenet: 'Konzol nem található.',
+                });
+            }
+
+            console.log("Validating new name if provided...");
+            if (name) {
+                const conflictingConsole = await Consoles.findOne({
+                    where: { name },
+                    transaction,
+                });
+
+                if (conflictingConsole && conflictingConsole.id !== id) {
+                    return res.status(409).json({
+                        status: 409,
+                        message: 'A console with that name already exists.',
+                        üzenet: 'Egy ilyen nevű konzol már létezik.',
+                    });
+                }
+            }
+
+            console.log("Updating console with provided fields...");
+            const fieldsToUpdate = {};
+
+            if (name) fieldsToUpdate.name = name;
+            if (release) fieldsToUpdate.release = release;
+            if (publisher) fieldsToUpdate.publisher = publisher;
+
+            await existingConsole.update(fieldsToUpdate, { transaction });
+
+            await transaction.commit();
+
+            console.log("Console updated successfully.");
+            res.status(200).json({
+                status: 200,
+                consoleId: existingConsole.id,
+                message: 'Console updated successfully!',
+                üzenet: 'Konzol sikeresen frissítve!',
+            });
+        } else {
+            return res.status(403).json({
+                status: 403,
+                message: 'Unauthorized access.',
+                üzenet: 'Engedély nélküli hozzáférés.',
+            });
+        }
+    } catch (error) {
+        console.error("Error occurred:", error);
+        if (transaction) await transaction.rollback();
+        res.status(500).json({
+            status: 500,
+            message: 'An error occurred. Please try again later.',
+            üzenet: 'Hiba merült fel. Kérjük, próbálja újra később.',
+        });
+    }
+};
+
 const addConsoles = async (req, res) => {
     const transaction = await connections.transaction();
   
@@ -261,6 +339,7 @@ module.exports = {
     getAllConsoles,
     getConsole,
     addConsole,
+    updateConsole,
     addConsoles,
     removeConsole
 }
