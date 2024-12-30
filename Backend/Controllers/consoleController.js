@@ -1,6 +1,9 @@
 const { Consoles } = require('../Models/index');
 const connections = require('../Connections/connections');
 
+const msg = require('../Response/msg');
+const uzn = require('../Response/uzenet');
+
 const isAdmin = (req) => {
     const { username, adminPassword } = req.body;
     return username === 'admin' && adminPassword === 'admin';
@@ -17,8 +20,8 @@ const getAllConsoles = async (req, res) => {
         console.log(error);
         res.status(500).json({
             status: 500,
-            message: 'An error occurred while fetching items.',
-            üzenet: 'Hiba merült fel az adatok lekérdezése közben.'
+            message: msg.console.failure.fetcherror,
+            üzenet: uzn.console.failure.fetcherror
         });
     }
 };
@@ -33,8 +36,8 @@ const addConsole = async (req, res) => {
             if (!name || !release || !publisher) {
                 return res.status(400).json({
                     status: 400,
-                    message: 'All fields are required.',
-                    üzenet: 'Minden mező kitöltése kötelező.',
+                    message: msg.data.failure.unfilled,
+                    üzenet: uzn.data.failure.unfilled
                 });
             }
         
@@ -43,8 +46,8 @@ const addConsole = async (req, res) => {
             if (existingName) {
                 return res.status(409).json({
                     status: 409,
-                    message: 'A console with that name already exists in the database.',
-                    üzenet: 'Az adatbázisban már található konzol ilyen névvel.',
+                    message: msg.console.failure.nametaken,
+                    üzenet: uzn.console.failure.nametaken
                 });
             }
         
@@ -66,8 +69,8 @@ const addConsole = async (req, res) => {
             res.status(201).json({
                 status: 201,
                 consoleId: newConsole.id,
-                message: 'Console added successfully!',
-                üzenet: 'Konzol sikeresen létrehozva!',
+                message: msg.console.success.added,
+                üzenet: uzn.console.success.added
             });
         }
     } catch (error) {
@@ -75,8 +78,8 @@ const addConsole = async (req, res) => {
         if (transaction) await transaction.rollback();
         res.status(500).json({
             status: 500,
-            message: 'An error occurred. Please try again later.',
-            üzenet: 'Hiba merült fel. Kérjük, próbálja újra később.',
+            message: msg.console.failure.unknown,
+            üzenet: uzn.console.failure.unknown
         });
     }
 };
@@ -91,8 +94,8 @@ const updateConsole = async (req, res) => {
             if (!id) {
                 return res.status(400).json({
                     status: 400,
-                    message: 'Console ID is required.',
-                    üzenet: 'A konzol azonosítója kötelező.',
+                    message: msg.console.failure.idrequired,
+                    üzenet: uzn.console.failure.idrequired
                 });
             }
 
@@ -102,8 +105,8 @@ const updateConsole = async (req, res) => {
             if (!existingConsole) {
                 return res.status(404).json({
                     status: 404,
-                    message: 'Console not found.',
-                    üzenet: 'Konzol nem található.',
+                    message: msg.console.failure.notfound,
+                    üzenet: uzn.console.failure.notfound
                 });
             }
 
@@ -117,8 +120,8 @@ const updateConsole = async (req, res) => {
                 if (conflictingConsole && conflictingConsole.id !== id) {
                     return res.status(409).json({
                         status: 409,
-                        message: 'A console with that name already exists.',
-                        üzenet: 'Egy ilyen nevű konzol már létezik.',
+                        message: msg.console.failure.nametaken,
+                        üzenet: uzn.console.failure.nametaken
                     });
                 }
             }
@@ -138,14 +141,14 @@ const updateConsole = async (req, res) => {
             res.status(200).json({
                 status: 200,
                 consoleId: existingConsole.id,
-                message: 'Console updated successfully!',
-                üzenet: 'Konzol sikeresen frissítve!',
+                message: msg.console.success.updated,
+                üzenet: uzn.console.success.updated
             });
         } else {
             return res.status(403).json({
                 status: 403,
-                message: 'Unauthorized access.',
-                üzenet: 'Engedély nélküli hozzáférés.',
+                message: msg.admin.failure.unauthorized,
+                üzenet: uzn.admin.failure.unauthorized
             });
         }
     } catch (error) {
@@ -153,8 +156,8 @@ const updateConsole = async (req, res) => {
         if (transaction) await transaction.rollback();
         res.status(500).json({
             status: 500,
-            message: 'An error occurred. Please try again later.',
-            üzenet: 'Hiba merült fel. Kérjük, próbálja újra később.',
+            message: msg.console.failure.unknown,
+            üzenet: uzn.console.failure.unknown
         });
     }
 };
@@ -169,8 +172,8 @@ const addConsoles = async (req, res) => {
             if (!consoles || !Array.isArray(consoles) || consoles.length === 0) {
                 return res.status(400).json({
                     status: 400,
-                    message: 'No consoles provided or invalid format.',
-                    üzenet: 'Nincsenek konzolok megadva vagy hibás formátum.',
+                    message: msg.console.failure.invalidformat,
+                    üzenet: uzn.console.failure.invalidformat
                 });
             }
 
@@ -181,8 +184,8 @@ const addConsoles = async (req, res) => {
                     await transaction.rollback();
                     return res.status(400).json({
                         status: 400,
-                        message: 'Each console must have a name, release year, and publisher.',
-                        üzenet: 'Minden konzolhoz szükséges név, kiadási év és kiadó.',
+                        message: msg.console.failure.unfilled,
+                        üzenet: uzn.console.failure.unfilled
                     });
                 }
 
@@ -192,8 +195,8 @@ const addConsoles = async (req, res) => {
                     await transaction.rollback();
                     return res.status(409).json({
                         status: 409,
-                        message: `Console with name "${name}" already exists.`,
-                        üzenet: `A "${name}" nevű konzol már létezik.`,
+                        message: msg.console.failure.thisnametaken(name),
+                        üzenet: uzn.console.failure.thisnametaken(name)
                     });
                 }
 
@@ -209,22 +212,22 @@ const addConsoles = async (req, res) => {
 
             res.status(201).json({
                 status: 201,
-                message: 'Consoles added successfully!',
-                üzenet: 'A konzolok sikeresen hozzáadva!',
+                message: msg.console.success.addedall,
+                üzenet: uzn.console.success.addedall
             });
         } else {
             return res.status(403).json({
                 status: 403,
-                message: 'Unauthorized. Admin credentials required.',
-                üzenet: 'Hozzáférés megtagadva. Admin jogosultság szükséges.',
+                message: msg.admin.failure.unauthorized,
+                üzenet: uzn.admin.failure.unauthorized
             });
         }
     } catch (error) {
-        console.error('Error deleting console:', error);
+        console.error('Error adding consoles:', error);
         res.status(500).json({
             status: 500,
-            message: 'An error occurred while deleting the console.',
-            üzenet: 'Hiba merült fel a konzol törlése közben.'
+            message: msg.console.failure.unknown,
+            üzenet: uzn.console.failure.unknown
         });
     }
 };
@@ -239,53 +242,53 @@ const removeConsole = async (req, res) => {
                 if (!console) {
                     return res.status(404).json({
                         status: 404,
-                        message: 'Console not found by name.',
-                        üzenet: 'Konzol nem található ilyen névvel.'
+                        message: msg.console.failure.namenotfound,
+                        üzenet: uzn.console.failure.namenotfound
                     });
                 }
 
                 await console.destroy();
                 return res.status(200).json({
                     status: 200,
-                    message: 'Console deleted successfully by name.',
-                    üzenet: 'Konzol sikeresen kitörölve név alapján.'
+                    message: msg.console.success.deleted,
+                    üzenet: uzn.console.success.deleted
                 });
             } else if (id) {
                 const console = await Consoles.findOne({ where: { id } });
                 if (!console) {
                     return res.status(404).json({
                         status: 404,
-                        message: 'Console not found by ID.',
-                        üzenet: 'Nem található konzol ilyen ID-vel.'
+                        message: msg.console.failure.idnotfound,
+                        üzenet: uzn.console.failure.idnotfound
                     });
                 }
 
                 await console.destroy();
                 return res.status(200).json({
                     status: 200,
-                    message: 'Console deleted successfully by ID.',
-                    üzenet: 'Konzol sikeresen kitörölve ID alapján.'
+                    message: msg.console.success.deleted,
+                    üzenet: uzn.console.success.deleted
                 });
             } else {
                 return res.status(400).json({
                     status: 400,
-                    message: 'Provide either console ID or name.',
-                    üzenet: 'Adjon meg azonosítót vagy nevet.'
+                    message: msg.console.failure.idorname,
+                    üzenet: uzn.console.failure.idorname
                 });
             }
         } else {
             return res.status(403).json({
                 status: 403,
-                message: 'Unauthorized. Admin credentials required.',
-                üzenet: 'Hozzáférés megtagadva. Admin jogosultság szükséges.'
+                message: msg.admin.failure.unauthorized,
+                üzenet: uzn.admin.failure.unauthorized
             });
         }
     } catch (error) {
         console.error('Error deleting console:', error);
         res.status(500).json({
             status: 500,
-            message: 'An error occurred while deleting the console.',
-            üzenet: 'Hiba merült fel a konzol törlése közben.'
+            message: msg.console.failure.unknown,
+            üzenet: uzn.console.failure.unknown
         });
     }
 };
@@ -299,8 +302,8 @@ const getConsole = async (req, res) => {
             if (!console) {
                 return res.status(404).json({
                     status: 404,
-                    message: 'Console not found by name.',
-                    üzenet: 'Konzol nem található ilyen névvel.'
+                    message: msg.console.failure.namenotfound,
+                    üzenet: uzn.console.failure.namenotfound
                 });
             }
 
@@ -314,8 +317,8 @@ const getConsole = async (req, res) => {
             if (!console) {
                 return res.status(404).json({
                     status: 404,
-                    message: 'Console not found by ID.',
-                    üzenet: 'Konzol nem található ilyen ID-vel.'
+                    message: msg.console.failure.idnotfound,
+                    üzenet: uzn.console.failure.idnotfound
                 });
             }
 
@@ -328,8 +331,8 @@ const getConsole = async (req, res) => {
         console.error('Error getting console:', error);
         res.status(500).json({
             status: 500,
-            message: 'An error occurred while getting the console.',
-            üzenet: 'Hiba merült fel a konzol lekérdezése közben.'
+            message: msg.console.failure.fetcherror,
+            üzenet: uzn.console.failure.fetcherror
         });
     }
 }

@@ -9,6 +9,7 @@ const ArcadeMachines = connections.define('ArcadeMachine', {
     },
     name: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false,
     },
     release: {

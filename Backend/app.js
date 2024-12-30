@@ -10,6 +10,7 @@ const tokenRoute = require('./Routes/tokenRoute');
 
 // Consoles, Arcade Machines, Pinball Machines
 const consoleRoute = require('./Routes/consoleRoute');
+const arcadeMachineRoute = require('./Routes/arcadeMachineRoute');
 
 app.use(express.json());
 
@@ -39,6 +40,7 @@ app.use('/tokens', tokenRoute);
 
 // Consoles, Arcade Machines, Pinball Machines
 app.use('/consoles', consoleRoute);
+app.use('/arcade', arcadeMachineRoute);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -1,5 +1,8 @@
-const { Users, Token } = require('../Models/index');
+const { Token } = require('../Models/index');
 const connections = require('../Connections/connections');
+
+const msg = require('../Response/msg');
+const uzn = require('../Response/uzenet');
 
 const findAllTokens = async (req, res) => {
     try {
@@ -12,8 +15,8 @@ const findAllTokens = async (req, res) => {
         console.log(error);
         res.status(500).json({
             status: 500,
-            message: 'An error occurred while fetching users.',
-            üzenet: 'Hiba merült fel az adatok lekérése közben.'
+            message: msg.token.failure.fetcherror,
+            üzenet: uzn.token.failure.fetcherror
         });
     }
 };

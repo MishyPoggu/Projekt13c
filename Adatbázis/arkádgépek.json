@@ -1,0 +1,304 @@
+{
+"arcadeMachines": [
+    {
+        "name": "Space Invaders",
+        "release": "1978",
+        "genre": "shoot 'em up arcade video game",
+        "publisher": "Taito corporation"
+    },
+    {
+        "name": "Crystal Castles",
+        "release": "1983",
+        "genre": "Maze",
+        "publisher": "Atari, Inc."
+    },
+    {
+        "name": "Crossbow",
+        "release": "1983",
+        "genre": "light gun shooter",
+        "publisher": "Exidy"
+    },
+    {
+        "name": "A.P.B.",
+        "release": "1987",
+        "genre": "Vehicular combat",
+        "publisher": "Atari Games"
+    },
+    {
+        "name": "Tapper",
+        "release": "1984",
+        "genre": "Action",
+        "publisher": "Bally Midway"
+    },
+    {
+        "name": "Fonz",
+        "release": "1976",
+        "genre": "arcade racing",
+        "publisher": "Sega"
+    },
+    {
+        "name": "Two Tigers",
+        "release": "1985",
+        "genre": "Action",
+        "publisher": "Taito Corporation"
+    },
+    {
+        "name": "Bazooka",
+        "release": "1980",
+        "genre": "Shooter",
+        "publisher": "Taito Corporation"
+    },
+    {
+        "name": "Super Off-Road",
+        "release": "1989",
+        "genre": "Racing",
+        "publisher": "Midway Games"
+    },
+    {
+        "name": "Battlezone",
+        "release": "1980",
+        "genre": "Shooter",
+        "publisher": "Atari, Inc."
+    },
+    {
+        "name": "Exterminator",
+        "release": "1982",
+        "genre": "Shooter",
+        "publisher": "Stern Electronics"
+    },
+    {
+        "name": "Title Fight",
+        "release": "1983",
+        "genre": "Fighting",
+        "publisher": "Atari Games"
+    },
+    {
+        "name": "Smash TV",
+        "release": "1990",
+        "genre": "Action, Shooter",
+        "publisher": "Midway Games"
+    },
+    {
+        "name": "Laser Ghost",
+        "release": "1990",
+        "genre": "Light Gun Shooter",
+        "publisher": "Atari Games"
+    },
+    {
+        "name": "Teenage Mutant Ninja Turtles (TMNT)",
+        "release": "1989",
+        "genre": "Beat 'em up",
+        "publisher": "Konami"
+    },
+    {
+        "name": "S.T.U.N. Runner",
+        "release": "1989",
+        "genre": "Racing, Shooter",
+        "publisher": "Atari Games"
+    },
+    {
+        "name": "Top Skater",
+        "release": "1997",
+        "genre": "Sports, Skateboarding",
+        "publisher": "Namco"
+    },
+    {
+        "name": "Starship 1",
+        "release": "1983",
+        "genre": "Space Shooter",
+        "publisher": "Atari, Inc."
+    },
+    {
+        "name": "Hang-On",
+        "release": "1985",
+        "genre": "Racing",
+        "publisher": "Sega"
+    },
+    {
+        "name": "Thunder Blade",
+        "release": "1987",
+        "genre": "Shooter",
+        "publisher": "Sega"
+    },
+    {
+        "name": "Skydiver",
+        "release": "1978",
+        "genre": "Action",
+        "publisher": "Cinematronics"
+    },
+    {
+        "name": "Paperboy",
+        "release": "1984",
+        "genre": "Action",
+        "publisher": "Atari Games"
+    },
+    {
+        "name": "Tron",
+        "release": "1982",
+        "genre": "Action, Maze",
+        "publisher": "Bally Midway"
+    },
+    {
+        "name": "Sea Wolf II",
+        "release": "1987",
+        "genre": "Shooter",
+        "publisher": "Sega"
+    },
+    {
+        "name": "TX-1",
+        "release": "1983",
+        "genre": "Racing",
+        "publisher": "Sega"
+    },
+    {
+        "name": "Dance Dance Revolution (DDR)",
+        "release": "1998",
+        "genre": "Rhythm",
+        "publisher": "Konami"
+    },
+    {
+        "name": "Guitar Freaks",
+        "release": "1998",
+        "genre": "Rhythm",
+        "publisher": "Konami"
+    },
+    {
+        "name": "Panic Park",
+        "release": "1995",
+        "genre": "Party",
+        "publisher": "Namco"
+    },
+    {
+        "name": "Arm Champs & Arm Champs II",
+        "release": "1985",
+        "genre": "Sports",
+        "publisher": "Atari Games"
+    },
+    {
+        "name": "Caveman",
+        "release": "1982",
+        "genre": "Action",
+        "publisher": "Stern Electronics"
+    },
+    {
+        "name": "Death Race",
+        "release": "1976",
+        "genre": "Vehicular Combat",
+        "publisher": "Exidy"
+    },
+    {
+        "name": "Star Trek",
+        "release": "1979",
+        "genre": "Space Shooter",
+        "publisher": "Sega"
+    },
+    {
+        "name": "T-Mek",
+        "release": "1991",
+        "genre": "Fighting, Mecha",
+        "publisher": "Atari Games"
+    },
+    {
+        "name": "F-114",
+        "release": "1985",
+        "genre": "Flight Simulator",
+        "publisher": "Atari Games"
+    },
+    {
+        "name": "Sonic Blast Man",
+        "release": "1991",
+        "genre": "Action",
+        "publisher": "Taito Corporation"
+    },
+    {
+        "name": "720o",
+        "release": "1986",
+        "genre": "Sports, Skateboarding",
+        "publisher": "Atari Games"
+    },
+    {
+        "name": "X-Men",
+        "release": "1992",
+        "genre": "Beat 'em up",
+        "publisher": "Konami"
+    },
+    {
+        "name": "Star Wars",
+        "release": "1983",
+        "genre": "Space Shooter",
+        "publisher": "Atari, Inc."
+    },
+    {
+        "name": "Shark Jaws",
+        "release": "1978",
+        "genre": "Action",
+        "publisher": "Midway Games"
+    },
+    {
+        "name": "Ms. Pac-Man",
+        "release": "1981",
+        "genre": "Maze",
+        "publisher": "Midway Games"
+    },
+    {
+        "name": "Time Traveler",
+        "release": "1991",
+        "genre": "Interactive Movie",
+        "publisher": "Sega"
+    },
+    {
+        "name": "After Burner",
+        "release": "1987",
+        "genre": "Flight Shooter",
+        "publisher": "Sega"
+    },
+    {
+        "name": "Sinistar",
+        "release": "1982",
+        "genre": "Shooter",
+        "publisher": "Williams Electronics"
+    },
+    {
+        "name": "Pong(puppy pong)",
+        "release": "1973",
+        "genre": "Sports",
+        "publisher": "Atari, Inc."
+    },
+    {
+        "name": "Baby Pac-Man",
+        "release": "1982",
+        "genre": "Maze",
+        "publisher": "Bally Midway"
+    },
+    {
+        "name": "Fire Truck",
+        "release": "1978",
+        "genre": "Action",
+        "publisher": "Atari, Inc."
+    },
+    {
+        "name": "Tank 8",
+        "release": "1980",
+        "genre": "Shooter",
+        "publisher": "Atari, Inc."
+    },
+    {
+        "name": "Computer Space",
+        "release": "1971",
+        "genre": "Shooter",
+        "publisher": "Nutting Associates"
+    },
+    {
+        "name": "Maneater",
+        "release": "1983",
+        "genre": "Action",
+        "publisher": "Bally Midway"
+    },
+    {
+        "name": "Discs Of Tron",
+        "release": "1983",
+        "genre": "Action",
+        "publisher": "Bally Midway"
+    }
+]
+}

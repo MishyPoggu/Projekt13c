@@ -3,6 +3,9 @@ const connections = require('../Connections/connections');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+const msg = require('../Response/msg');
+const uzn = require('../Response/uzenet');
+
 const SECRET_KEY = '1234';
 
 const isAdmin = (req) => {
@@ -21,8 +24,8 @@ const getAllUsers = async (req, res) => {
         console.log(error);
         res.status(500).json({
             status: 500,
-            message: 'An error occurred while fetching users.',
-            üzenet: 'Hiba merült fel az adatok lekérdezése közben.'
+            message: msg.user.failure.fetcherror,
+            üzenet: uzn.user.failure.fetcherror
         });
     }
 };
@@ -36,8 +39,8 @@ const registerUser = async (req, res) => {
       if (!username || !email || !passwordHash) {
         return res.status(400).json({
             status: 400,
-            message: 'All fields are required.',
-            üzenet: 'Minden mező kitöltése kötelező.',
+            message: msg.data.failure.unfilled,
+            üzenet: uzn.data.failure.unfilled
         });
       }
   
@@ -46,7 +49,7 @@ const registerUser = async (req, res) => {
       if (existingUser) {
         return res.status(409).json({
             status: 409,
-            message: 'E-mail already in use.',
+            message: msg.user.failure.emailtaken,
             üzenet: 'E-mail már használatban van.',
         });
       }
@@ -55,8 +58,8 @@ const registerUser = async (req, res) => {
       if (existingUsername) {
         return res.status(409).json({
             status: 409,
-            message: 'Username is already taken.',
-            üzenet: 'A felhasználónév már használatban van.',
+            message: msg.user.failure.nametaken,
+            üzenet: uzn.user.failure.nametaken
         });
       }
   
@@ -81,16 +84,16 @@ const registerUser = async (req, res) => {
       res.status(201).json({
         status: 201,
         userId: newUser.id,
-        message: 'User registered successfully!',
-        üzenet: 'Felhasználó sikeresen regisztrálva!',
+        message: msg.user.success.registered,
+        üzenet: uzn.user.success.registered
       });
     } catch (error) {
       console.error("Error occurred:", error);
       if (transaction) await transaction.rollback();
       res.status(500).json({
         status: 500,
-        message: 'An error occurred. Please try again later.',
-        üzenet: 'Hiba merült fel. Kérjük, próbálja újra később.',
+        message: msg.user.failure.unknown,
+        üzenet: uzn.user.failure.unknown
       });
     }
 };
@@ -101,8 +104,8 @@ const loginUser = async (req, res) => {
     if ((!username && !email) || !passwordHash) {
         return res.status(400).json({
             status: 400,
-            message: 'Either username or email, and password are required.',
-            üzenet: 'Felhasználónév vagy E-mail és jelszó szükséges a bejelentkezéshez.'
+            message: msg.user.failure.loginunfilled,
+            üzenet: uzn.user.failure.loginunfilled
         });
     }
 
@@ -114,8 +117,8 @@ const loginUser = async (req, res) => {
         if (!user) {
             return res.status(401).json({
                 status: 401,
-                message: 'Invalid email/username or password.',
-                üzenet: 'Nem megfelelő felhasználónév/E-mail vagy jelszó.'
+                message: msg.user.failure.logininvalid,
+                üzenet: uzn.user.failure.logininvalid
             });
         }
 
@@ -124,8 +127,8 @@ const loginUser = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(401).json({
                 status: 401,
-                message: 'Invalid email/username or password.',
-                üzenet: 'Nem megfelelő felhasználónév/E-mail vagy jelszó.'
+                message: msg.user.failure.logininvalid,
+                üzenet: uzn.user.failure.logininvalid
             });
         }
 
@@ -155,15 +158,15 @@ const loginUser = async (req, res) => {
             userId: user.userId,
             token,
             loginAt: loginTimestamp,
-            message: 'Login successful!',
-            üzenet: 'Sikeres bejelentkezés!'
+            message: msg.user.success.loggedin,
+            üzenet: uzn.user.success.loggedin
         });
     } catch (error) {
         console.error('Error during login:', error);
         res.status(500).json({
             status: 500,
-            message: 'An error occurred. Please try again later.',
-            üzenet: 'Hiba merült fel. Kérjük, próbálja újra később.'
+            message: msg.user.failure.unknown,
+            üzenet: uzn.user.failure.unknown
         });
     }
 };
@@ -179,53 +182,53 @@ const removeUser = async (req, res) => {
                 if (!user) {
                     return res.status(404).json({
                         status: 404,
-                        message: 'User not found by email.',
-                        üzenet: 'Felhasználó nem található email alapján.'
+                        message: msg.user.failure.emailnotfound,
+                        üzenet: uzn.user.failure.emailnotfound
                     });
                 }
 
                 await user.destroy();
                 return res.status(200).json({
                     status: 200,
-                    message: 'User deleted successfully by email.',
-                    üzenet: 'Felhasználó sikeresen törölve email alapján.'
+                    message: msg.user.success.deleted,
+                    üzenet: uzn.user.success.deleted
                 });
             } else if (id) {
                 const user = await Users.findOne({ where: { id } });
                 if (!user) {
                     return res.status(404).json({
                         status: 404,
-                        message: 'User not found by ID.',
-                        üzenet: 'Felhasználó nem található azonosító alapján.'
+                        message: msg.user.failure.idnotfound,
+                        üzenet: uzn.user.failure.idnotfound
                     });
                 }
 
                 await user.destroy();
                 return res.status(200).json({
                     status: 200,
-                    message: 'User deleted successfully by ID.',
-                    üzenet: 'Felhasználó sikeresen törölve azonosító alapján.'
+                    message: msg.user.success.deleted,
+                    üzenet: uzn.user.success.deleted
                 });
             } else {
                 return res.status(400).json({
                     status: 400,
-                    message: 'Provide either user ID or email.',
-                    üzenet: 'Adjon meg azonosítót vagy e-mailt.'
+                    message: msg.user.failure.idoremail,
+                    üzenet: uzn.user.failure.idoremail
                 });
             }
         } else {
             return res.status(403).json({
                 status: 403,
-                message: 'Unauthorized. Admin credentials required.',
-                üzenet: 'Hozzáférés megtagadva. Admin jogosultság szükséges.'
+                message: msg.admin.failure.unauthorized,
+                üzenet: uzn.admin.failure.unauthorized
             });
         }
     } catch (error) {
         console.error('Error deleting user:', error);
         res.status(500).json({
             status: 500,
-            message: 'An error occurred while deleting the user.',
-            üzenet: 'Hiba merült fel a felhasználó törlése közben.'
+            message: msg.user.failure.unknown,
+            üzenet: uzn.user.failure.unknown
         });
     }
 };
