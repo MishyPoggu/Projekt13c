@@ -76,6 +76,33 @@ const arcade = {
     }
 }
 
+const pinball = {
+    failure: {
+        unknown: "An error has occurred. Please try again later.",
+        fetcherror: "An error occurred while fetching pinball machines.",
+
+        nametaken: "An pinball machine with that name already exists in the database.",
+        idrequired: "Arcane machine id required.",
+        notfound: "Pinball machine not found.",
+
+        invalidformat: "No pinball machines provided, or invalid format.",
+        unfilled: "Each pinball machine must have a name, release year, genre, and publisher.",
+        thisnametaken: (e) => {
+            return `Pinball machine with name ${e} already exists.`;
+        },
+
+        namenotfound: "Pinball machine not found by name.",
+        idnotfound: "Pinball machine not found by id.",
+        idorname: "Provide either pinball machine id or name."
+    },
+    success: {
+        added: "Pinball machine created successfully!",
+        addedall: "All pinball machines created successfully",
+        updated: "Pinball machine updated successfully!",
+        deleted: "Pinball machine successfully deleted!"
+    }
+}
+
 const admin = {
     failure: {
         unauthorized: "Unauthorized. Admin credentials required."
@@ -98,6 +125,7 @@ module.exports = {
     user,
     console,
     arcade,
+    pinball,
     admin,
     data,
     token

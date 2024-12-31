@@ -76,6 +76,33 @@ const arcade = {
     }
 }
 
+const pinball = {
+    failure: {
+        unknown: "Hiba történt. Próbálja újra később.",
+        fetcherror: "Hiba történt az flipper gépek lekérdezése közben.",
+
+        nametaken: "Már létezik egy flipper gép ezzel a névvel az adatbázisban.",
+        idrequired: "Flipper gép id szükséges.",
+        notfound: "Flipper gép nem található.",
+
+        invalidformat: "Nincs megadva flipper gép, vagy érvénytelen formátum.",
+        unfilled: "Minden flipper géphez szükséges egy név, megjelenési év, műfaj és kiadó.",
+        thisnametaken: (e) => {
+            return `Már létezik flipper gép a következő névvel: ${e}.`;
+        },
+
+        namenotfound: "Flipper gép nem található név alapján.",
+        idnotfound: "Flipper gép nem található id alapján.",
+        idorname: "Adjon meg vagy egy flipper gép id-t, vagy egy nevet."
+    },
+    success: {
+        added: "Flipper gép sikeresen létrehozva!",
+        addedall: "Az összes flipper gép sikeresen létrehozva!",
+        updated: "Flipper gép sikeresen frissítve!",
+        deleted: "Flipper gép sikeresen törölve!"
+    }
+}
+
 const admin = {
     failure: {
         unauthorized: "Hozzáférés megtagadva. Admin hitelesítő adatok szükségesek."
@@ -98,6 +125,7 @@ module.exports = {
     user,
     console,
     arcade,
+    pinball,
     admin,
     data,
     token

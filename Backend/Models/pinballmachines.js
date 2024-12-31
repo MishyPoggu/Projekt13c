@@ -9,6 +9,7 @@ const PinballMachines = connections.define('PinballMachine', {
     },
     name: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false,
     },
     release: {
