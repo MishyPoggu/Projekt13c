@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
-const config = require('config');
+const config = require('./config');
 
-const sequelize = new Sequelize(
+const connections = new Sequelize(
   config.db.name,
   config.db.username,
   config.db.password,
@@ -12,7 +12,10 @@ const sequelize = new Sequelize(
   }
 );
 
-sequelize.authenticate()
+// Néha kell, amikor új táblát hozunk létre
+// connections.sync({ force: true });
+
+connections.authenticate()
 .then(() => {
   console.log('Successfully connected to the database:', config.db.name);
 })
@@ -21,4 +24,4 @@ sequelize.authenticate()
 });
 
 
-module.exports = sequelize;
+module.exports = connections;

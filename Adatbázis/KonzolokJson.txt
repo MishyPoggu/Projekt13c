@@ -1,0 +1,385 @@
+{
+  "name": "Atari 5200",
+  "release": "1982",
+  "publisher": "Atari, Inc"
+},
+{
+  "name": "Atari Jaguar CD",
+  "release": "1995",
+  "publisher": "Atari Corporation"
+},
+{
+  "name": "Atari 7800",
+  "release": "1986",
+  "publisher": "Atari Corporation"
+},
+{
+  "name": "Atari Lynx",
+  "release": "1989",
+  "publisher": "Atari Corporation"
+},
+{
+  "name": "Bandai WonderSwan",
+  "release": "1999",
+  "publisher": "Bandai"
+},
+{
+  "name": "CBS ColecoVision",
+  "release": "1982",
+  "publisher": "Coleco"
+},
+{
+  "name": "Fairchild Channel F",
+  "release": "1976",
+  "publisher": "Fairchild Semiconductor"
+},
+{
+  "name": "Mattel Intellivision",
+  "release": "1979",
+  "publisher": "Mattel"
+},
+{
+  "name": "NEC PC Engine",
+  "release": "1987",
+  "publisher": "NEC"
+},
+{
+  "name": "Nintendo DSi",
+  "release": "2008",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo Game Boy Color",
+  "release": "1998",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo Pokemon Mini",
+  "release": "2001",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo Wii",
+  "release": "2006",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo DS",
+  "release": "2004",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo Game Boy Advance",
+  "release": "2001",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo NES",
+  "release": "1983",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo Virtual Boy",
+  "release": "1995",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo 64",
+  "release": "1996",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo Game Boy",
+  "release": "1989",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo GameCube",
+  "release": "2001",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Nintendo SNES",
+  "release": "1990",
+  "publisher": "Nintendo"
+},
+{
+  "name": "Philips Videopac",
+  "release": "1978",
+  "publisher": "Philips"
+},
+{
+  "name": "Sega 32X",
+  "release": "1994",
+  "publisher": "Sega"
+},
+{
+  "name": "Sega Game Gear",
+  "release": "1990",
+  "publisher": "Sega"
+},
+{
+  "name": "Sega Mega Drive",
+  "release": "1988",
+  "publisher": "Sega"
+},
+{
+  "name": "Sega 32X CD",
+  "release": "1994",
+  "publisher": "Sega"
+},
+{
+  "name": "Sega Master System",
+  "release": "1985",
+  "publisher": "Sega"
+},
+{
+  "name": "Sega Saturn",
+  "release": "1994",
+  "publisher": "Sega"
+},
+{
+  "name": "Sega Dreamcast",
+  "release": "1999",
+  "publisher": "Sega"
+},
+{
+  "name": "Sega Mega-CD",
+  "release": "1991",
+  "publisher": "Sega"
+},
+{
+  "name": "SNK Neo Geo CD",
+  "release": "1994",
+  "publisher": "SNK"
+},
+{
+  "name": "Sony PlayStation",
+  "release": "1994",
+  "publisher": "Sony"
+},
+{
+  "name": "Sony PlayStation Portable",
+  "release": "2004",
+  "publisher": "Sony"
+},
+{
+  "name": "Sony PlayStation 2",
+  "release": "2000",
+  "publisher": "Sony"
+},
+{
+  "name": "PlayStation 2 Slim",
+  "release": "2004",
+  "publisher": "Sony"
+},
+{
+  "name": "Sony PlayStation 3",
+  "release": "2006",
+  "publisher": "Sony"
+},
+{
+  "name": "PlayStation 3 Slim",
+  "release": "2009",
+  "publisher": "Sony"
+},
+{
+  "name": "PlayStation Vita",
+  "release": "2011",
+  "publisher": "Sony"
+},
+{
+  "name": "PlayStation 3 Super Slim",
+  "release": "2012",
+  "publisher": "Sony"
+},
+{
+  "name": "Sony PlayStation 4",
+  "release": "2013",
+  "publisher": "Sony"
+},
+{
+  "name": "PlayStation 4 Slim",
+  "release": "2016",
+  "publisher": "Sony"
+},
+{
+  "name": "PlayStation 4 Pro",
+  "release": "2016",
+  "publisher": "Sony"
+},
+{
+  "name": "PlayStation 5",
+  "release": "2020",
+  "publisher": "Sony"
+},
+{
+  "name": "PlayStation 5 Slim",
+  "release": "2023",
+  "publisher": "Sony"
+},
+{
+  "name": "PlayStation 5 Pro",
+  "release": "2024",
+  "publisher": "Sony"
+},
+{
+  "name": "Tiger Game.com",
+  "release": "1997",
+  "publisher": "Tiger Electronics"
+},
+{
+  "name": "Timlex Mega Duck",
+  "release": "1993",
+  "publisher": "Timlex"
+},
+{
+  "name": "VM Labs Nuon",
+  "release": "2000",
+  "publisher": "VM Labs"
+},
+{
+  "name": "Amstrad GX4000",
+  "release": "1990",
+  "publisher": "Amstrad"
+},
+{
+  "name": "Bandai WonderSwan Color",
+  "release": "2000",
+  "publisher": "Bandai"
+},
+{
+  "name": "Commodore Amiga CD32",
+  "release": "1993",
+  "publisher": "Commodore"
+},
+{
+  "name": "Hartung Game Master",
+  "release": "1990",
+  "publisher": "Hartung"
+},
+{
+  "name": "MB Microvision",
+  "release": "1979",
+  "publisher": "Milton Bradley"
+},
+{
+  "name": "Nokia N-Gage",
+  "release": "2003",
+  "publisher": "Nokia"
+},
+{
+  "name": "Philips Videopac+",
+  "release": "1983",
+  "publisher": "Philips"
+},
+{
+  "name": "SNK Neo Geo Pocket",
+  "release": "1998",
+  "publisher": "SNK"
+},
+{
+  "name": "Tiger Gizmondo",
+  "release": "2005",
+  "publisher": "Tiger Telematics"
+},
+{
+  "name": "Vectrex",
+  "release": "1982",
+  "publisher": "GCE"
+},
+{
+  "name": "Watara Supervision",
+  "release": "1992",
+  "publisher": "Watara"
+},
+{
+  "name": "Atari 2600",
+  "release": "1977",
+  "publisher": "Atari, Inc"
+},
+{
+  "name": "Atari Jaguar",
+  "release": "1993",
+  "publisher": "Atari Corporation"
+},
+{
+  "name": "Atari XEGS",
+  "release": "1987",
+  "publisher": "Atari Corporation"
+},
+{
+  "name": "Bit Corporation Gamate",
+  "release": "1990",
+  "publisher": "Bit Corporation"
+},
+{
+  "name": "Entex Adventure Vision",
+  "release": "1982",
+  "publisher": "Entex Industries"
+},
+{
+  "name": "Interton VC4000",
+  "release": "1978",
+  "publisher": "Interton"
+},
+{
+  "name": "Philips CD-i",
+  "release": "1991",
+  "publisher": "Philips"
+},
+{
+  "name": "RDI Halcyon",
+  "release": "1985",
+  "publisher": "RDI Video Systems"
+},
+{
+  "name": "SNK Neo Geo",
+  "release": "1990",
+  "publisher": "SNK"
+},
+{
+  "name": "SNK Neo Geo Pocket Color",
+  "release": "1999",
+  "publisher": "SNK"
+},
+{
+  "name": "Tiger R-Zone",
+  "release": "1995",
+  "publisher": "Tiger Electronics"
+},
+{
+  "name": "View-Master Interactive Vision",
+  "release": "1988",
+  "publisher": "View-Master"
+},
+{
+  "name": "Worlds of Wonder Action Max",
+  "release": "1987",
+  "publisher": "Worlds of Wonder"
+},
+{
+  "name": "Microsoft Xbox",
+  "release": "2001",
+  "publisher": "Microsoft"
+},
+{
+  "name": "Xbox 360",
+  "release": "2005",
+  "publisher": "Microsoft"
+},
+{
+  "name": "Xbox One",
+  "release": "2013",
+  "publisher": "Microsoft"
+},
+{
+  "name": "Xbox Series X",
+  "release": "2020",
+  "publisher": "Microsoft"
+},
+{
+  "name": "Xbox Series S",
+  "release": "2020",
+  "publisher": "Microsoft"
+}
