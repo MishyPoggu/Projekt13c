@@ -2,7 +2,15 @@
     <nav class="navbar">
         <ul>
             <li><a routerLink=""></a></li>
-
+            <nav class="navbar">
+                <ul>
+                    <li><a routerLink="/">Főoldal</a></li>
+                    <li><a routerLink="/login">Bejelentkezés</a></li>
+                    <li><a routerLink="/register">Regisztráció</a></li>
+                    <li><a routerLink="/">Raktár</a></li>                   
+                </ul>
+              </nav>              
         </ul>
     </nav>  
-</body>
+    <router-outlet></router-outlet>
+</body> 

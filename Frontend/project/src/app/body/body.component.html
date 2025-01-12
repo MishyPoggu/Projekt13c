@@ -11,33 +11,26 @@
         </div>
     </div>
 
-    <!-- Konzolok -->
-    <div class="image-grid">
-        <div class="circle-image">
-            <img src="assets/Playstationlogo.jpg" alt="Konzol 1" onclick="showContent(1)">
-        </div>
-        <div class="circle-image">
-            <img src="assets/nintendo-symbol.jpg" alt="Konzol 2" onclick="showContent(2)">
-        </div>
-        <div class="circle-image">
-            <img src="assets/xboxlogo.jpg" alt="Konzol 3" onclick="showContent(3)">
+    <div class="container">
+        <div class="text-section">
+            <h1 id="title">Atari</h1>
+            <p id="description">1972-ben alapította Nolan Bushnell és Ted Dabney. Megalapításától videójátékokkal foglalkozott, ekkor jelentek meg a híres, népszerű Computer Space és Pong játékok. (A kettő közül a Pong számított a legforradalmibbnak, hiszen mérföldkőnek számít a videójáték-történelemben.) Első konzoljuk az Atari VCS (Video Computer System) volt, amely később az Atari 2600 nevet kapta. 1976-tól otthoni számítógépeket is gyártottak (Atari 400/800, később XL-sorozat). Az 1983-as videójáték-válság alaposan keresztbe tett a cég működésének. A nehéz helyzetbe került céget 1984-ben Jack Tramiel, a Commodore alapítója és korábbi tulajdonosa vásárolta meg. Az ő vezetése alatt mutatták be 1985-ben a 16 bites, Motorola 68000 processzoron alapuló Atari ST számítógépcsaládot, amely a nyolcvanas-kilencvenes évek fordulóján igen népszerű volt. Az olcsó PC-k elterjedésével az Atari folyamatosan piacot veszített, és hiába mutatta be az igen fejlett, Motorola 68030 alapú Atari Falcon számítógépet és a 64 bites játékkonzolok előfutárát, az Atari Jaguart, a csődöt nem kerülhette el. Az Atari Corporation 1996-ban átalakult, majd megszüntették. Az értékes Atari márkanevet 1998-ban a Hasbro játékgyártó világcég vette meg. 2001-ben az Infogrames szoftvercég vette meg a Hasbro Interactive nevű leányvállalatot az Atari márkához kapcsolódó jogokkal együtt. A cég jelenleg Atari SA néven működik.</p>
+        </div> 
+        <div class="image-section">
+            <img id="main-image" src="assets/atariconsoles.jpg" alt="Atari konzolok">
         </div>
     </div>
 
-    <!-- Tartalom megjelenítése (kezdetben rejtett) -->
-    <div id="content-container" class="content-container">
-        <div id="content1" class="content">
-            <h2>Playstation</h2>
-            <p>A PlayStation[m 1] (a hivatalos rövidítésén PS, de a köztudatban elterjedt még a PSone, PSX és PS1 nevek is) egy otthoni videójáték-konzol, amit a Sony Computer Entertainment fejlesztett. A konzol 1994. december 3-án jelent meg Japánban, 1995. szeptember 9-én Észak-Amerikában.A konzol Japánban 1994 december 4-én, Észak Amerikában 1995 szeptember 9-én, Európában 1995 szeptember 29-én jelent meg. Az első játékok fejlesztői leginkább a Namco és a Sony voltak. Az első játékok között szerepelt a Tekken, a Battle Arena Toshinden, a Warhawk, az Air Combat, a Philosoma és a Ridge Racer. A Namco játékok többsége az akkori játéktermi programok direkt átiratai voltak. Ez is nagyban hozzájárult a gép sikereihez.</p>
+    <div class="carousel">
+        <button #visszaGomb id="vissza-gomb">&#8592;</button>
+        <div class="carousel-images">
+            <img #thumbnail src="/assets/atariconsoles.jpg" alt="Atari konzolok" class="thumbnail active" data-title="Atari" data-description="1972-ben alapította Nolan Bushnell és Ted Dabney. Megalapításától videójátékokkal foglalkozott, ekkor jelentek meg a híres, népszerű Computer Space és Pong játékok. (A kettő közül a Pong számított a legforradalmibbnak, hiszen mérföldkőnek számít a videójáték-történelemben.) Első konzoljuk az Atari VCS (Video Computer System) volt, amely később az Atari 2600 nevet kapta. 1976-tól otthoni számítógépeket is gyártottak (Atari 400/800, később XL-sorozat). Az 1983-as videójáték-válság alaposan keresztbe tett a cég működésének. A nehéz helyzetbe került céget 1984-ben Jack Tramiel, a Commodore alapítója és korábbi tulajdonosa vásárolta meg. Az ő vezetése alatt mutatták be 1985-ben a 16 bites, Motorola 68000 processzoron alapuló Atari ST számítógépcsaládot, amely a nyolcvanas-kilencvenes évek fordulóján igen népszerű volt. Az olcsó PC-k elterjedésével az Atari folyamatosan piacot veszített, és hiába mutatta be az igen fejlett, Motorola 68030 alapú Atari Falcon számítógépet és a 64 bites játékkonzolok előfutárát, az Atari Jaguart, a csődöt nem kerülhette el. Az Atari Corporation 1996-ban átalakult, majd megszüntették. Az értékes Atari márkanevet 1998-ban a Hasbro játékgyártó világcég vette meg. 2001-ben az Infogrames szoftvercég vette meg a Hasbro Interactive nevű leányvállalatot az Atari márkához kapcsolódó jogokkal együtt. A cég jelenleg Atari SA néven működik." data-image="assets/atariconsoles.jpg">
+            <img #thumbnail src="/assets/nintendoconsoles.jpg" alt="Nintendo konzolok" class="thumbnail" data-title="Nintendo" data-description="A Nintendo Company, Limited (任天堂株式会社, Nintendó Kabusiki-gaisa) egy japán multinacionális cég. A vállalatot Jamaucsi Fuszadzsiró alapította Kiotóban 1889. szeptember 23-án, eredetileg kézzel készített, ún. hanafuda kártyák gyártására.[3] A 20. század közepén a cég számos piaci szegmensen kísérletezett, például taxi- és szállodaüzemeltetéssel. Az évek során a videójáték-gyártás vált a cég fő profiljává és a játékipar egyik meghatározó szereplője lett. Emellett a Nintendo az amerikai Seattle Mariners baseballcsapat többségi, az Atlanta Hawks kosárlabdacsapatnak pedig kisebbségi tulajdonosa.
+
+            A Nintendo a videójáték-piac legrégebbi, máig fennmaradt három nagy videójátékkonzol-gyártó cégének egyike a Microsoft és a Sony mellett. Game Boy Advance és Nintendo DS modelljeinek köszönhetően piacvezető a kézi játékkonzolok gyártásában. 2007. június 30-ig a Nintendo története során 453 millió játékgépet és közel 2,2 milliárd játékprogramot adott el világszerte." data-image="assets/nintendoconsoles.jpg">
+            <img #thumbnail src="/assets/playstationconsoles.jpg" alt="Playstation konzolok" class="thumbnail" data-title="Playstation" data-description="A PlayStation története 1994. december 3-án kezdődött, amikor a Sony Computer Entertainment bemutatta az első PlayStation konzolt Japánban. Ez a forradalmi lépés nemcsak a Sony számára, hanem az egész videojáték-ipar számára mérföldkőnek számított. A PlayStation által bevezetett 3D grafika és CD-ROM technológia új irányt adott a játékkészítésnek, lehetővé téve a fejlesztők számára, hogy gazdagabb és részletesebb játékélményeket kínáljanak.
+            Azóta a PlayStation márka szimbólumává vált az innovációnak és a minőségnek. A konzolok folyamatosan fejlődtek, és számos ikonikus játék jelent meg rajtuk, mint például a Gran Turismo, God of War és Final Fantasy sorozatok. A PlayStation nemcsak technológiai újításokat hozott magával, hanem közösségi élményeket is teremtett, amelyek még ma is érezhetőek." data-image="assets/playstationconsoles.jpg">
         </div>
-        <div id="content2" class="content">
-            <h2>Nintendo</h2>
-            <p>A Nintendo Company, Limited (任天堂株式会社, Nintendó Kabusiki-gaisa) egy japán multinacionális cég. A vállalatot Jamaucsi Fuszadzsiró alapította Kiotóban 1889. szeptember 23-án, eredetileg kézzel készített, ún. hanafuda kártyák gyártására.[2] A 20. század közepén a cég számos piaci szegmensen kísérletezett, például taxi- és szállodaüzemeltetéssel. Az évek során a videójáték-gyártás vált a cég fő profiljává és a játékipar egyik meghatározó szereplője lett. Emellett a Nintendo az amerikai Seattle Mariners baseballcsapat többségi, az Atlanta Hawks kosárlabdacsapatnak pedig kisebbségi tulajdonosa.</p>
-        </div>
-        <div id="content3" class="content">
-            <h2>Xbox</h2>
-            <p>EAz Xbox egy hatodik generációs videójáték-konzol, melyet a Microsoft gyártott. 2001. november 15-én jelent meg Észak-Amerikában, 2002. február 22-én Japánban és 2002. március 14-én Ausztráliában és Európában az Xbox 360 elődjeként. Ez volt a Microsoft első próbálkozása hardverfejlesztőként a játékkonzol piacon, ahol a Sony PlayStation 2-vel, a Sega Dreamcasttal és a Nintendo GameCube-bal kellett szembenéznie. A beépített Xbox Live szolgáltatás lehetővé tette a játékosok számára az internetes játékot.[4]</p>
-        </div>
-        <button onclick="closeContent()">Bezárás</button>
+        <button #eloReGomb id="elore-gomb">&#8594;</button>
     </div>
 </body>
