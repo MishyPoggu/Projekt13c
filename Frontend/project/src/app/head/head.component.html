@@ -1,16 +1,20 @@
-<body>
-    <nav class="navbar">
-        <ul>
-            <li><a routerLink=""></a></li>
-            <nav class="navbar">
-                <ul>
-                    <li><a routerLink="/">Főoldal</a></li>
-                    <li><a routerLink="/login">Bejelentkezés</a></li>
-                    <li><a routerLink="/register">Regisztráció</a></li>
-                    <li><a routerLink="/">Raktár</a></li>                   
-                </ul>
-              </nav>              
-        </ul>
-    </nav>  
-    <router-outlet></router-outlet>
-</body> 
+<nav class="navbar">
+     <div class="navbar-container">
+        <div class="logó">
+            <a href="#">Pixel Vault</a>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a routerLink="/">Főoldal</a></li>
+                <li><a routerLink="/">Rólunk</a></li>
+                <li><a routerLink="/">Kapcsolat</a></li>
+            </ul>
+        </div>
+        <div class="icon">
+            <i class="icons" (click)="toggleAuthMenu()">account_circle</i>
+            <div *ngIf="showAuthMenu" class="auth-menu">
+        
+            </div>
+        </div>
+     </div>
+</nav>  

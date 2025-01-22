@@ -1,12 +1,24 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; 
 
 @Component({
   selector: 'app-head',
-  standalone: true,
   templateUrl: './head.component.html',
-  styleUrls: ['./head.component.css'],
-  imports: [RouterModule] 
+  styleUrls: ['./head.component.css']
 })
 export class HeadComponent {
+  showAuthMenu: boolean = false;
+
+  toggleAuthMenu() {
+    this.showAuthMenu = !this.showAuthMenu;
+  }
+
+  bejelentkezes() {
+ 
+    console.log('Bejelentkezés');
+  }
+
+  regisztracio() {
+
+    console.log('Regisztráció');
+  }
 }
