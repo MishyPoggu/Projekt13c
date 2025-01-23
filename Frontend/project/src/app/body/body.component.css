@@ -1,0 +1,19 @@
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* A videó a tartalom mögött */
+    opacity: 50%;
+  }
+  
+  .content {
+    position: relative;
+    z-index: 1; /* A tartalom a videón(előtt) lesz */
+    color: white; 
+    text-align: center;
+    margin-top: 20vh;
+  }
+  
