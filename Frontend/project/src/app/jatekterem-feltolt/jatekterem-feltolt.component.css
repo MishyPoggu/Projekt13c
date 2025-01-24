@@ -1,0 +1,49 @@
+.upload-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 16px;
+    background-color: #f9f9f9;
+  }
+  
+  .item-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 16px;
+    border-radius: 8px;
+  }
+  
+  .item-details {
+    flex: 1;
+  }
+  
+  .item-rating {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+  }
+  
+  .item-rating span {
+    margin-right: 8px;
+  }
+  
+  .item-rating button {
+    margin-right: 4px;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .item-rating button:hover {
+    background-color: #e0e0e0;
+  }
+  

@@ -1,0 +1,30 @@
+<form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="title">Cím:</label>
+      <input id="title" formControlName="title" type="text" required>
+    </div>
+  
+    <div>
+      <label for="description">Leírás:</label>
+      <textarea id="description" formControlName="description" required></textarea>
+    </div>
+  
+    <div>
+      <label for="image">Kép:</label>
+      <input id="image" formControlName="image" type="file" (change)="onFileSelect($event)" required>
+    </div>
+  
+    <button type="submit">Feltöltés</button>
+  </form>
+  
+  <div *ngFor="let item of uploadItems" class="upload-item">
+    <img [src]="item.imageUrl" alt="{{ item.title }}">
+    <h3>{{ item.title }}</h3>
+    <p>{{ item.description }}</p>
+    <div>
+      <span>Értékelés: {{ item.rating }}</span>
+      <button (click)="onRate(item, item.rating + 1)">👍</button>
+      <button (click)="onRate(item, item.rating - 1)">👎</button>
+    </div>
+  </div>
+  
