@@ -8,8 +8,8 @@ const config = {
     port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 3306,
     dialect: process.env.DB_DIALECT || "mariadb",
     name: process.env.DB_NAME || "project",
-    username: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || "1234567"
+    username: process.env.DB_USERNAME || "",
+    password: process.env.DB_PASS || ""
   }
 };
 
