@@ -1,90 +1,89 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { UploadItem } from '../models/upload-item.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-jatekretem-feltoltes',
-  templateUrl: './jatekterem-feltolt.html',
-  styleUrls: ['./jatekterem-feltolt.css']
+  selector: 'app-jatekterem-feltolt',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './jatekterem-feltolt.component.html',
+  styleUrls: ['./jatekterem-feltolt.component.css']
 })
-export class JatekteremFeltoltesComponent implements OnInit {
+export class JatekteremFeltoltesComponent {
   uploadForm: FormGroup;
   selectedFile: File | null = null;
-  uploadItems: UploadItem[] = []; // A feltöltött elem lista
+  isSubmitting = false;
+  errorMessage = '';
+  uploadedItems: Array<{ title: string; description: string; imageUrl: string; rating: number }> = [
+    {
+      title: 'Első teszt elem',
+      description: 'Ez egy teszt leírás az első elemhez.',
+      imageUrl: 'https://via.placeholder.com/100', 
+      rating: 5
+    },
+    {
+      title: 'Második teszt elem',
+      description: 'Ez egy másik teszt elem leírása.',
+      imageUrl: 'https://via.placeholder.com/100', 
+      rating: -3
+    }
+  ]; 
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.uploadForm = this.fb.group({
-      cím: ['', Validators.required],
-      leírás: ['', Validators.required],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
       image: [null, Validators.required]
     });
-  }
-
-  ngOnInit(): void {
-    // Teszt adatok
-    this.uploadItems = [
-      {
-        id: '1',
-        cím: 'Teszt Cím 1',
-        leírás: 'Ez egy teszt leírás 1.',
-        imageUrl: 'https://via.placeholder.com/150',
-        értékelés: 5
-      },
-      {
-        id: '2',
-        cím: 'Teszt Cím 2',
-        leírás: 'Ez egy teszt leírás 2.',
-        imageUrl: 'https://via.placeholder.com/150',
-        értékelés: 3
-      },
-      {
-        id: '3',
-        cím: 'Teszt Cím 3',
-        leírás: 'Ez egy teszt leírás 3.',
-        imageUrl: 'https://via.placeholder.com/150',
-        értékelés: 4
-      }
-    ];
-
-    // Feltöltött elem betöltése a backendből
-    this.http.get<UploadItem[]>('/api/uploads').subscribe(
-      data => {
-        this.uploadItems = data.sort((a, b) => b.értékelés - a.értékelés); // Értékelés szerinti rendezés
-      },
-      error => {
-        console.error('Nem sikerült betölteni a valódi adatokat, mock adatok megmaradnak.', error);
-      }
-    );
   }
 
   onFileSelect(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       this.selectedFile = fileInput.files[0];
+      this.uploadForm.patchValue({ image: this.selectedFile });
     }
   }
 
   onSubmit(): void {
-    if (this.uploadForm.valid && this.selectedFile) {
-      const formData = new FormData();
-      formData.append('cím', this.uploadForm.get('cím')?.value);
-      formData.append('leírás', this.uploadForm.get('leírás')?.value);
-      formData.append('image', this.selectedFile);
-
-      this.http.post<UploadItem>('/api/uploads', formData).subscribe(newItem => {
-        this.uploadItems.push(newItem);
-        this.uploadItems.sort((a, b) => b.értékelés - a.értékelés);
-      });
+    if (this.uploadForm.invalid || !this.selectedFile) {
+      this.errorMessage = 'Minden mező kitöltése kötelező!';
+      return;
     }
+
+    this.errorMessage = '';
+    this.isSubmitting = true;
+
+    const formData = new FormData();
+    formData.append('title', this.uploadForm.get('title')?.value);
+    formData.append('description', this.uploadForm.get('description')?.value);
+    formData.append('image', this.selectedFile);
+
+    this.http.post<{ imageUrl: string }>('http://localhost:3000/upload', formData).subscribe({
+      next: (response) => {
+        console.log('Sikeres feltöltés:', response);
+
+        this.uploadedItems.push({
+          title: this.uploadForm.get('title')?.value,
+          description: this.uploadForm.get('description')?.value,
+          imageUrl: response.imageUrl, 
+          rating: 0 
+        });
+
+        this.isSubmitting = false;
+        this.uploadForm.reset();
+        this.selectedFile = null;
+      },
+      error: (err) => {
+        console.error('Hiba történt:', err);
+        this.errorMessage = 'A feltöltés sikertelen, próbáld újra!';
+        this.isSubmitting = false;
+      }
+    });
   }
 
-  onRate(item: UploadItem, rating: number): void {
-    // Értékelés küldése a backendnek
-    this.http.put(`/api/uploads/${item.id}/rate`, { rating }).subscribe(updatedItem => {
-      const index = this.uploadItems.findIndex(i => i.id === item.id);
-      this.uploadItems[index] = updatedItem as UploadItem;
-      this.uploadItems.sort((a, b) => b.értékelés - a.értékelés);
-    });
+  rateItem(item: any, value: number): void {
+    item.rating += value;
   }
 }
