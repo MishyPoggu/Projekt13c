@@ -1,10 +1,41 @@
 <body>
-    <body>
-        <video autoplay muted loop class="background-video">
-            <source src="assets/játék-videó.mp4" type="video/mp4" />
-          </video>
-          <div class="content">
-          </div>      
-    </body>
-    
-</body>
+    <video autoplay muted loop class="background-video">
+      <source src="assets/játék-videó.mp4" type="video/mp4" />
+    </video>
+    <div class="content">
+      <form class="form-container" (ngSubmit)="onSubmit()" #form="ngForm">
+        <div>
+          <label for="name">Cég/Hely neve:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            ngModel
+            required
+            placeholder="Add meg a cég/hely nevét"
+          />
+        </div>
+        <div>
+          <label for="description">Leírás:</label>
+          <textarea
+            id="description"
+            name="description"
+            ngModel
+            required
+            placeholder="Írd be a leírást"
+          ></textarea>
+        </div>
+        <div>
+          <label for="image">Kép feltöltése:</label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            (change)="onFileSelected($event)"
+          />
+        </div>
+        <button type="submit" [disabled]="!form.valid">Mentés</button>
+      </form>
+    </div>
+  </body>
+  
