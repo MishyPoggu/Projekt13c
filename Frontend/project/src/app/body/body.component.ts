@@ -1,19 +1,27 @@
-import { Component } from '@angular/core';
-import { NgForm, FormsModule } from '@angular/forms'; 
+import { Component, HostListener } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.css'],
   standalone: true,
-  imports: [FormsModule], 
+  imports: [FormsModule, CommonModule],
 })
 export class BodyComponent {
   selectedFile: File | null = null;
+  showForm: boolean = false;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollPosition = window.scrollY;
+    this.showForm = scrollPosition > 100; 
+  }
 
   onSubmit() {
-    console.log('Űrlap elküldve!');
-    // backend
+    console.log('Elküldve!');
+    // backend 
   }
 
   onFileSelected(event: Event) {

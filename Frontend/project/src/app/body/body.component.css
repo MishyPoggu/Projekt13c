@@ -5,8 +5,23 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 1; /* A videó a tartalom mögött marad */
+  z-index: 1;
   opacity: 0.5;
+}
+
+.header {
+  position: relative;
+  margin-top: 40vh; 
+  text-align: center;
+  z-index: 3;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.spacer {
+  height: 150vh; 
 }
 
 .content {
@@ -14,8 +29,8 @@
   z-index: 2;
   color: white;
   text-align: center;
-  margin-top: 20vh; 
-  padding: 0 15px; 
+  margin-top: 20vh;
+  padding: 0 15px;
 }
 
 .form-container {
@@ -27,8 +42,8 @@
   margin: 0 auto;
   max-width: 400px;
   position: relative;
-  z-index: 2; /* A form elé kerül a tartalom */
-  width: 100%; 
+  z-index: 2;
+  width: 100%;
 }
 
 .form-container div {
@@ -49,6 +64,12 @@
   border: none;
   border-radius: 4px;
   font-size: 1rem;
+  font-family: 'Press Start 2P', cursive;
+  text-shadow: 
+    -1px 0 0 #fdff2a,
+    -1px 0 0 #df4a42,
+    1px 0 0 #91fcfe,
+    1px 0 0 #4405fc;
 }
 
 .form-container button {
@@ -60,4 +81,36 @@
 .form-container button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  text-align: center;
+  margin: auto;
+  font-size: 40px;
+  line-height: 40px;
+  letter-spacing: 5px;
+  text-shadow: 
+    -2px 0 0 #fdff2a,
+    -4px 0 0 #df4a42,
+    2px 0 0 #91fcfe,
+    4px 0 0 #4405fc;
+  animation: blink 2s steps(4, start) infinite; /* https://codepen.io/paulnoble/pen/gaPaoY */
+}
+
+label{
+  font-family: 'Press Start 2P', cursive;
+  font-size: 15px;
+  text-shadow: 
+    -1px 0 0 #fdff2a,
+    -1px 0 0 #df4a42,
+    1px 0 0 #91fcfe,
+    1px 0 0 #4405fc;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
 }
