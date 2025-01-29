@@ -10,7 +10,9 @@
   <div class="content">
     <form
       class="form-container"
-      [ngClass]="{ 'show': showForm }"
+      *ngIf="showForm" 
+      data-aos="fade-up"
+      data-aos-duration="1000"
       (ngSubmit)="onSubmit()"
       #form="ngForm"
     >
@@ -47,4 +49,5 @@
       <button type="submit" [disabled]="!form.valid">Mentés</button>
     </form>
   </div>
+  <div class="page-end-spacer"></div>
 </body>

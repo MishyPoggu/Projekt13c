@@ -21,7 +21,7 @@
 }
 
 .spacer {
-  height: 150vh; 
+  height: 100vh; 
 }
 
 .content {
@@ -29,25 +29,27 @@
   z-index: 2;
   color: white;
   text-align: center;
-  margin-top: 20vh;
+  margin-top: 5vh;
   padding: 0 15px;
+  justify-content: flex-start;
 }
 
 .form-container {
   background-color: rgba(0, 0, 0, 0.8);
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 20px;
   display: inline-block;
   text-align: left;
   margin: 0 auto;
-  max-width: 400px;
+  max-width: 800px;
   position: relative;
   z-index: 2;
   width: 100%;
+  margin-top: 5vh;
 }
 
 .form-container div {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-container label {
@@ -96,18 +98,12 @@ h1 {
     -4px 0 0 #df4a42,
     2px 0 0 #91fcfe,
     4px 0 0 #4405fc;
-  animation: blink 2s steps(4, start) infinite; /* https://codepen.io/paulnoble/pen/gaPaoY */
+  animation: blink 2s steps(4, start) infinite;
+}
+.page-end-spacer {
+  height: 10vh; 
 }
 
-label{
-  font-family: 'Press Start 2P', cursive;
-  font-size: 15px;
-  text-shadow: 
-    -1px 0 0 #fdff2a,
-    -1px 0 0 #df4a42,
-    1px 0 0 #91fcfe,
-    1px 0 0 #4405fc;
-}
 
 @keyframes blink {
   to {

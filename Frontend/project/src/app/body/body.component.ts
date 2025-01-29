@@ -1,6 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, AfterViewInit } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 @Component({
   selector: 'app-body',
@@ -9,19 +11,31 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule],
 })
-export class BodyComponent {
+export class BodyComponent implements AfterViewInit {
   selectedFile: File | null = null;
-  showForm: boolean = false;
+  showForm: boolean = false; 
+  aosInitialized: boolean = false; 
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollPosition = window.scrollY;
-    this.showForm = scrollPosition > 100; 
+    
+    if (scrollPosition > 50 && !this.aosInitialized) {
+      this.aosInitialized = true; 
+      this.showForm = true;
+
+      AOS.init({
+        duration: 2000, 
+        once: false, 
+      });
+    }
+  }
+
+  ngAfterViewInit() {
   }
 
   onSubmit() {
     console.log('Elküldve!');
-    // backend 
   }
 
   onFileSelected(event: Event) {
