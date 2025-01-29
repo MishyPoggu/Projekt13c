@@ -1,20 +1,27 @@
 <nav class="navbar">
-     <div class="navbar-container">
-        <div class="logó">
-            <a href="#">Pixel Vault</a>
-        </div>
-        <div class="menu">
-            <ul>
-                <li><a routerLink="/">Főoldal</a></li>
-                <li><a routerLink="/">Rólunk</a></li>
-                <li><a routerLink="/">Kapcsolat</a></li>
-            </ul>
-        </div>
-        <div class="icon">
-            <i class="icons" (click)="toggleAuthMenu()">account_circle</i>
-            <div *ngIf="showAuthMenu" class="auth-menu">
-        
-            </div>
-        </div>
-     </div>
-</nav>  
+
+    <div class="burger" (click)="toggleMenu()">
+      <div class="line" [class.open]="isMenuOpen"></div>
+      <div class="line" [class.open]="isMenuOpen"></div>
+      <div class="line" [class.open]="isMenuOpen"></div>
+    </div>
+  
+     
+    <ul class="dropdownmenu" [class.open]="isMenuOpen">
+      <li><a href="#">Szia</a></li>
+      <li><a href="#">Ádám</a></li>
+      <li><a href="#">és</a></li>
+      <li><a href="#">Mishy</a></li>
+    </ul>
+  
+
+    <h2>"In the early '80s, the arcade game Pac-Man was twice as popular as oxygen."</h2>
+
+
+
+    <div class="icons">
+      <a href="#" class="icon"><i class="fas fa-bell"></i></a>
+      <a href="#" class="icon"><i class="fas fa-user"></i></a>
+    </div>
+  </nav>
+  

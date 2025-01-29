@@ -1,24 +1,14 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-head',
   templateUrl: './head.component.html',
-  styleUrls: ['./head.component.css'],
-  imports: [CommonModule] 
+  styleUrls: ['./head.component.css']
 })
 export class HeadComponent {
-  showAuthMenu: boolean = false;
+  isMenuOpen = false;
 
-  toggleAuthMenu() {
-    this.showAuthMenu = !this.showAuthMenu;
-  }
-
-  bejelentkezes() {
-    console.log('Bejelentkezés');
-  }
-
-  regisztracio() {
-    console.log('Regisztráció');
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }

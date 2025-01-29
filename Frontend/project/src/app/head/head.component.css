@@ -1,69 +1,135 @@
+/* Navbar*/
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #000000;
-    color: #FF007F;
-    padding: 11px 22px;
-    position: fixed; 
-    top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #000000;
+  padding: 10px 20px;
+  color: #8000FF;
+  position: relative;
+  z-index: 1111;
+  width: 100%;
+  overflow: visible;
+}
+
+h2 {
+  color: #FF008D;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Press Start 2P", cursive;
+  position: relative;
+  display: inline-block;
+}
+
+/* Burger lenyiló navbar*/
+.burger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1111;
+  position: relative;
+}
+
+.line {
+  width: 25px;
+  height: 3px;
+  background: #8000FF;
+  transition: transform 0.3s;
+}
+
+/* Animáció a burger navbarhoz */
+.line.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.line.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* linkek */
+.dropdownmenu {
+  position: absolute;
+  top: 69px;
+  left: 10px;
+  background-color: #000000;
+  width: 200px;
+  display: none;
+  flex-direction: column;
+  text-align: left;
+  padding: 10px 0;
+  z-index: 9420;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px;
+}
+
+.dropdownmenu li {
+  list-style: none;
+  padding: 11px 16px;
+}
+
+.dropdownmenu li a {
+  text-decoration: none;
+  color: #FF008D;
+  display: block;
+}
+
+.dropdownmenu li a:hover{
+  background-color: #000001;
+}
+
+.dropdownmenu.open {
+  display: flex;
+}
+
+/* ikonok */
+.icons {
+  display: flex;
+  gap: 15px;
+}
+
+.icon i {
+  font-size: 20px;
+  color: white;
+  transition: color 0.3s;
+}
+
+.icon i:hover {
+  color: #ffcc00;
+}
+
+/* Reszponzivitás */
+@media (max-width: 769px) {
+  .nav-links {
+    position: absolute;
+    top: 50px;
     left: 0;
     width: 100%;
-    z-index: 9999; /* Magas z-index,így ez nem halványodik a többi elemmel */
-}
+    background: #000000;
+    display: none; 
+    flex-direction: column;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1200;
+  }
 
-.navbar-container {
+  .nav-links.open {
     display: flex;
-    align-items: center;
-    width: 100%;
-}
+  }
 
-.logó a {
-    color: #8000FF;
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bolder;
-}
-
-.menu ul {
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-.menu ul li {
-    margin-right: 20px;
-}
-
-.icon {
-    position: relative;
-    cursor: pointer;
-}
-
-.icons {
-    font-size: 1.5rem;
-}
-
-.auth-menu {
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background-color: #B2B500;
-    color: black;
-}
-
-.auth-menu button {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
+  .nav-links li {
     padding: 10px;
-    background-color: blue;
-    color: #FF007F;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+  }
 
-.auth-menu button:hover {
-    background-color: blueviolet;
+  .dropdownmenu {
+    top: 69px;
+  }
+
+  h2 {
+    display: none;
+  }
 }
