@@ -7,8 +7,13 @@ import { Component } from '@angular/core';
 })
 export class HeadComponent {
   isMenuOpen = false;
+  isUserDropdownOpen = false;
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
+    toggleMenu() {
+        this.isMenuOpen = !this.isMenuOpen;
+    }
+
+    toggleUserDropdown() {
+        this.isUserDropdownOpen = !this.isUserDropdownOpen;
+    }
 }

@@ -20,8 +20,15 @@
 
 
     <div class="icons">
-      <a href="#" class="icon"><i class="fas fa-bell"></i></a>
-      <a href="#" class="icon"><i class="fas fa-user"></i></a>
+        <a href="#" class="icon"><i class="fas fa-bell"></i></a>
+
+        <a href="#" class="icon" (click)="toggleUserDropdown()">
+          <i class="fas fa-user"></i>
+        </a>
+        <ul class="user-dropdown" [class.open]="isUserDropdownOpen">
+          <li><a href="#">Bejelentkezés</a></li>
+          <li><a href="#">Regisztráció</a></li>
+        </ul>
     </div>
   </nav>
   

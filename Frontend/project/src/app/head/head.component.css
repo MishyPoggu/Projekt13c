@@ -90,6 +90,7 @@ h2 {
 .icons {
   display: flex;
   gap: 15px;
+  position: relative;
 }
 
 .icon i {
@@ -101,6 +102,37 @@ h2 {
 .icon i:hover {
   color: #ffcc00;
 }
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  background-color: #000001;
+  border: 1px solid #001111;
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+}
+
+.user-dropdown.open {
+  display: block;
+  top: 56px;
+}
+
+.user-dropdown li {
+  padding: 10px;
+  background-color: #000000;
+  border: 1px solid #FF1493;
+}
+
+.user-dropdown li a {
+  text-decoration: none;
+  color: #00CED1;
+}
+
+.user-dropdown li:hover {
+  background-color: #FF00FF;
+}
+
 
 /* Reszponzivitás */
 @media (max-width: 769px) {
