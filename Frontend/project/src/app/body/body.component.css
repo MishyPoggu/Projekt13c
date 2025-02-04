@@ -21,7 +21,7 @@
 }
 
 .spacer {
-  height: 100vh; 
+  height: 50vh; 
 }
 
 .content {
@@ -46,6 +46,7 @@
   z-index: 2;
   width: 100%;
   margin-top: 5vh;
+  height: 400px;
 }
 
 .form-container div {
@@ -100,10 +101,14 @@ h1 {
     4px 0 0 #4405fc;
   animation: blink 2s steps(4, start) infinite;
 }
+
 .page-end-spacer {
   height: 10vh; 
 }
 
+.body{
+  background-color: #20212f;
+}
 
 @keyframes blink {
   to {

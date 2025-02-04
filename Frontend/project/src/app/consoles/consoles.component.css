@@ -10,15 +10,20 @@ body {
 }
 
 .container {
-    max-width: 1200px;
-    margin: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    z-index: 1111;
+    max-width: 800px; 
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
 }
 
 .card {
+    width: 250px;  
+    height: 250px; 
     background-color: #222;
     padding: 20px;
     border-radius: 10px;
@@ -28,31 +33,50 @@ body {
     align-items: center;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-decoration: none; 
-    color: #fff; 
-    cursor: pointer; 
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 3;
 }
 
-
 .card img {
-    max-width: 100%;
+    width: 80%; 
     height: auto;
-    margin-bottom: 15px;
+    max-height: 100px; 
+    object-fit: contain;
+    margin-bottom: 10px;
 }
 
 .card h3 {
-    margin: 10px 0 5px;
-    font-size: 1.2em;
+    font-size: 1.1em;
+    margin: 5px 0;
 }
 
 .card p {
-    margin: 0;
     font-size: 0.9em;
     color: #ccc;
 }
 
 .card:hover {
-    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 12px rgba(250, 0, 212, 0.3);
     transform: translateY(-5px);
-    transition: all 0.3s;
 }
+
+.page-start-spacer {
+    height: 10vh; 
+  }
+
+.page-end-spacer {
+    height: 10vh; 
+  }
+
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
