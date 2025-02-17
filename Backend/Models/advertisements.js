@@ -1,39 +1,36 @@
 const { DataTypes } = require('sequelize');
 const connections = require('../Connections/connections');
-const Advertisements = require('./advertisements');
+const Companies = require('./companies');
+const Addresses = require('./addresses');
 
-const Addresses = connections.define('Address', {
-    addressId: {
+const Advertisements = connections.define('Advertisement', {
+    advertisementId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    streetAddress: {
+    companyName: {
+        type: DataTypes.STRING,
+        references: {
+            model: Companies,
+            key: 'companyName',
+        },
+        allowNull: false,
+    },
+    description: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    city: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    postalCode: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    stateOrRegion: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    country: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    advertisementId: {
+    addressId: {
         type: DataTypes.INTEGER,
         references: {
-            model: Advertisements,
-            key: 'advertisementId',
+            model: Addresses,
+            key: 'addressId',
         },
+        allowNull: false,
+    },
+    imageUrl: {
+        type: DataTypes.STRING,
         allowNull: false,
     },
     createdAt: {
@@ -46,7 +43,7 @@ const Addresses = connections.define('Address', {
     },
 }, {
     timestamps: true,
-    tableName: 'Addresses',
+    tableName: 'Advertisements',
 });
 
-module.exports = Addresses;
+module.exports = Advertisements;
