@@ -1,0 +1,26 @@
+.legomb {
+    position: fixed;
+    bottom: 30px;
+    right: 50%;
+    transform: translate(50%, 50%);
+    width: 40px;
+    height: 40px;
+    padding: 11px 22px;
+    background:linear-gradient(145deg, #080808, #000001);
+    opacity: 0.9;
+    color: #f70088;
+    border: none;
+    cursor: pointer;
+    z-index: 9669;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 50%;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5), 
+                -3px -3px 8px rgba(50, 50, 50, 0.);
+}
+
+.hidden {
+    display: none;
+}

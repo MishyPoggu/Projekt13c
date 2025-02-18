@@ -3,13 +3,14 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { ScrolldownComponent } from '../../scrolldown/scrolldown.component';
 
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ScrolldownComponent],
 })
 export class BodyComponent implements AfterViewInit {
   selectedFile: File | null = null;
