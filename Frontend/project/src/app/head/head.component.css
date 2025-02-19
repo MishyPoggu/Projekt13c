@@ -88,9 +88,9 @@ h2 {
 
 /* ikonok */
 .icons {
+  position: relative;
   display: flex;
   gap: 15px;
-  position: relative;
 }
 
 .icon i {
@@ -111,11 +111,16 @@ h2 {
   padding: 0px;
   margin: 0px;
   list-style-type: none;
+  right: 0;
+  left: auto;
+  transform: translateX(12.5%);
 }
 
 .user-dropdown.open {
   display: block;
-  top: 56px;
+  top: 58px;
+  right: 0;
+  left:auto;
 }
 
 .user-dropdown li {
