@@ -7,7 +7,7 @@ import { Component, HostListener } from '@angular/core';
   styleUrl: './scrolldown.component.css'
 })
 export class ScrolldownComponent {
-  isVisible: boolean = true;
+  isVisible = true;
 
 
   scrollDown() {
@@ -20,9 +20,10 @@ export class ScrolldownComponent {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    if (window.pageYOffset == 0) {
+    if (window.scrollY == 0) {
       this.isVisible = true;
     }
   }
+
 
 }
