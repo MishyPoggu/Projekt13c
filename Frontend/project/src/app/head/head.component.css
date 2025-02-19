@@ -129,8 +129,8 @@ h2 {
   color: #00CED1;
 }
 
-.user-dropdown li:hover {
-  background-color: #FF00FF;
+.user-dropdown li a:hover {
+  background-color: #050508;
 }
 
 
