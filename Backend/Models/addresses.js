@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const connections = require('../Connections/connections');
-const Advertisements = require('./advertisements');
 
 const Addresses = connections.define('Address', {
     addressId: {
@@ -30,10 +29,6 @@ const Addresses = connections.define('Address', {
     },
     advertisementId: {
         type: DataTypes.INTEGER,
-        references: {
-            model: Advertisements,
-            key: 'advertisementId',
-        },
         allowNull: false,
     },
     createdAt: {
