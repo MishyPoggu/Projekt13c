@@ -9,8 +9,8 @@ const config = {
     dialect: process.env.DB_DIALECT || "mariadb",
     name: process.env.DB_NAME || "project",
     username: process.env.DB_USERNAME || "admin",
-    password: process.env.DB_PASS || "admin"
-  }
+    password: process.env.DB_PASS || "admin",
+  },
 };
 
 module.exports = config;

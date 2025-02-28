@@ -1,33 +1,36 @@
-const { DataTypes } = require('sequelize');
-const connections = require('../Connections/connections');
+const { DataTypes } = require("sequelize");
+const connections = require("../Connections/connections");
 
-const Users = connections.define('User', {
+const Users = connections.define(
+  "User",
+  {
     userId: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     username: {
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
     },
     email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
         isEmail: true,
-        },
+      },
     },
     passwordHash: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    }, {
-        timestamps: true,
-        tableName: 'Users',
-    }
+  },
+  {
+    timestamps: true,
+    tableName: "Users",
+  }
 );
 
 module.exports = Users;

@@ -1,12 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const pinballMachineController = require('../Controllers/pinballMachineController');
+const express = require("express");
+const {
+  getAllPinballMachines,
+  getPinballMachine,
+  addPinballMachine,
+  addPinballMachines,
+  removePinballMachine,
+  updatePinballMachine,
+} = require("../Controllers/pinballMachineController");
 
-router.get('', pinballMachineController.getAllPinballMachines);
-router.get('/get', pinballMachineController.getPinballMachine);
-router.put('/add', pinballMachineController.addPinballMachine);
-router.put('/addMultiple', pinballMachineController.addPinballMachines);
-router.delete('/remove', pinballMachineController.removePinballMachine);
-router.patch('/update', pinballMachineController.updatePinballMachine);
+const router = express.Router();
+
+router.get("", getAllPinballMachines);
+router.get("/get", getPinballMachine);
+router.put("/add", addPinballMachine);
+router.put("/addMultiple", addPinballMachines);
+router.delete("/remove", removePinballMachine);
+router.patch("/update", updatePinballMachine);
 
 module.exports = router;

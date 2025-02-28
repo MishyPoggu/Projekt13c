@@ -1,7 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const tokenController = require('../Controllers/tokenController');
+const express = require("express");
+const { findAllTokens } = require("../Controllers/tokenController");
 
-router.get('', tokenController.findAllTokens);
+const router = express.Router();
+
+router.get("", findAllTokens);
 
 module.exports = router;

@@ -1,12 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const arcadeMachineController = require('../Controllers/arcadeMachineController');
+const express = require("express");
+const {
+  getAllArcadeMachines,
+  getArcadeMachine,
+  addArcadeMachine,
+  addArcadeMachines,
+  removeArcadeMachine,
+  updateArcadeMachine,
+} = require("../Controllers/arcadeMachineController");
 
-router.get('', arcadeMachineController.getAllArcadeMachines);
-router.get('/get', arcadeMachineController.getArcadeMachine);
-router.put('/add', arcadeMachineController.addArcadeMachine);
-router.put('/addMultiple', arcadeMachineController.addArcadeMachines);
-router.delete('/remove', arcadeMachineController.removeArcadeMachine);
-router.patch('/update', arcadeMachineController.updateArcadeMachine);
+const router = express.Router();
+
+router.get("", getAllArcadeMachines);
+router.get("/get", getArcadeMachine);
+router.put("/add", addArcadeMachine);
+router.put("/addMultiple", addArcadeMachines);
+router.delete("/remove", removeArcadeMachine);
+router.patch("/update", updateArcadeMachine);
 
 module.exports = router;

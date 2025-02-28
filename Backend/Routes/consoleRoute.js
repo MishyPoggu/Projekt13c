@@ -1,12 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const consoleController = require('../Controllers/consoleController');
+const express = require("express");
+const {
+  getAllConsoles,
+  getConsole,
+  addConsole,
+  addConsoles,
+  removeConsole,
+  updateConsole,
+} = require("../Controllers/consoleController");
 
-router.get('', consoleController.getAllConsoles);
-router.get('/get', consoleController.getConsole);
-router.put('/add', consoleController.addConsole);
-router.put('/addMultiple', consoleController.addConsoles);
-router.delete('/remove', consoleController.removeConsole);
-router.patch('/update', consoleController.updateConsole);
+const router = express.Router();
+
+router.get("", getAllConsoles);
+router.get("/get", getConsole);
+router.put("/add", addConsole);
+router.put("/addMultiple", addConsoles);
+router.delete("/remove", removeConsole);
+router.patch("/update", updateConsole);
 
 module.exports = router;
