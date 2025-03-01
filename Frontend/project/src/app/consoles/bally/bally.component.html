@@ -1,1 +1,15 @@
-<p>bally works!</p>
+<div class="container">
+    <div class="content" [style.backgroundImage]="'url(' + selectedItem.image + ')'">
+      <div class="overlay"></div>
+      <p>{{ selectedItem.description }}</p>
+    </div>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <div class="timeline">
+      <ng-container *ngFor="let item of timelineItems; let i = index">
+        <div (click)="selectItem(item)" class="timeline-item" [class.selected]="item === selectedItem">
+          <div class="timeline-point"></div>
+          <div class="time">{{ item.time }}</div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
