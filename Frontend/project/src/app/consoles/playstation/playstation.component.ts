@@ -19,11 +19,25 @@ export class PlaystationComponent {
     { time: '2013-2016', image: 'assets/psvr.jpg', description: '2013 – PlayStation 4 (PS4) megjelenése. Erősebb hardver, amely jobb grafikai teljesítményt biztosított. Share gomb a DualShock 4 kontrolleren a játékvideók és képek megosztásához. PlayStation Plus előfizetés bevezetése az online multiplayerhez.PS4 Pro: Erősebb verzió a 4K és HDR támogatás érdekében. PlayStation VR: Sony első VR-headsete, amely PS4-gyel működött.' },
     { time: '2020', image: 'assets/ps5.jpg', description: 'A Sony 2020. november 12-én a COVID-19 idején dobta piacra a PS5-öt, amely hatalmas zavarokat okozott. Főbb problémák a bevezetés után: Súlyos készlethiány – Sok rajongó hónapokig nem tudott PS5-öt vásárolni a korlátozott kínálat miatt. Scalperek és viszonteladók – A botok felvásárolták a PS5-készleteket, és dupla vagy háromszoros áron adtak el konzolokat. Késleltetett játékkiadások. A járvány befolyásolta a játékfejlesztési ütemterveket. A PS5 sajátossága: Ultragyors SSD – kiküszöböli a betöltési képernyőket,sugárkövetés – javítja a megvilágítást és a visszaverődést. A PS5 eladások meghaladták az 50 millió darabot.' },
     { time: '2024-Jelen', image: 'assets/ps5pro.jpg', description: 'A PlayStation 5 Pro-t a Sony hivatalosan 2024. szeptember 10-én jelentette be, a 2024 márciusa óta terjedő iparági pletykák nyomán. Többek között az új konzolnak három fő fejlesztése van: a jelenlegi PS5-nél körülbelül 45%-kal gyorsabb GPU, egy mély tanuláson alapuló képfelskálázási technológia, PlayStral Supercrayation (PlayPSSRray) teljesítmény a PlayStation 5-höz képest.' },
+    { time: 'Cikk letöltése', isDownload: true, filepath:'assets/Pdf/Playstation.pdf'},
   ];
 
   selectedItem = this.timelineItems[0];
 
   selectItem(item: any) {
-    this.selectedItem = item;
+    if (item.isDownload) {
+      this.downloadFile(item.filepath);
+    } else {
+      this.selectedItem = item;
+    }
+  }
+
+  downloadFile(filepath: string) {
+    const link = document.createElement('a');
+    link.href = filepath;
+    link.download = filepath.split('/').pop() || 'document.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
