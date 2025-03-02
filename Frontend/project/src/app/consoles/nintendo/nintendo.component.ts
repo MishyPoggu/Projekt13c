@@ -18,11 +18,25 @@ export class NintendoComponent {
     { time: '2000-09', image: 'assets/nintendowiiposter.jpg', description: 'Kiadják a GameCube-ot, amely optikai lemezt használ, és versenybe száll a Sony PlayStation 2-vel és az Xbox-szal. Megjelenik a Nintendo DS, amely érintőképernyőt hoz a kézikonzolok világába. Bemutatják a Nintendo Wii-t, amely a mozgásérzékelős irányítással új játékstílust vezet be. A Nintendo DS és a Wii minden idők legnagyobb példányszámban eladott konzoljaivá válnak.' },
     { time: '2010-16', image: 'assets/nintendo3ds.jpg', description: 'Megjelenik a Nintendo 3DS, amely szemüveg nélküli 3D-s kijelzőt kínál. A Wii U piacra kerül, de az eladások elmaradnak a várakozásoktól. Nintendo és a mobiljáték-piac: bejelentik, hogy okostelefonos játékokat fejlesztenek.' },
     { time: '2017-jelen', image: 'assets/legendofzelda.jpg', description: 'Megjelenik a Nintendo Switch, amely forradalmasítja a konzolpiacot hibrid kialakításával. A Super Smash Bros. Ultimate minden idők egyik legsikeresebb Nintendo játéka lesz. 2020: A COVID-19 járvány alatt a Animal Crossing: New Horizons óriási siker lesz. 2023: A The Legend of Zelda: Tears of the Kingdom megjelenik és hatalmas elismerést kap.' },
+    { time: 'Cikk letöltése', isDownload: true, filepath:'assets/Pdf/Nintendo.pdf'},
   ];
 
   selectedItem = this.timelineItems[0];
 
   selectItem(item: any) {
-    this.selectedItem = item;
+    if (item.isDownload) {
+      this.downloadFile(item.filepath);
+    } else {
+      this.selectedItem = item;
+    }
+  }
+
+  downloadFile(filepath: string) {
+    const link = document.createElement('a');
+    link.href = filepath;
+    link.download = filepath.split('/').pop() || 'document.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
