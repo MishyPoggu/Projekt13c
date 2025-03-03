@@ -1,4 +1,4 @@
-import { Component, HostListener, AfterViewInit } from '@angular/core';
+import { Component, HostListener, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import AOS from 'aos';
@@ -13,26 +13,50 @@ import { ScrolldownComponent } from '../../scrolldown/scrolldown.component';
   imports: [FormsModule, CommonModule, ScrolldownComponent],
 })
 export class BodyComponent implements AfterViewInit {
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
+
   selectedFile: File | null = null;
-  showForm: boolean = false; 
-  aosInitialized: boolean = false; 
+  showForm: boolean = false;
+  aosInitialized: boolean = false;
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollPosition = window.scrollY;
-    
     if (scrollPosition > 50 && !this.aosInitialized) {
-      this.aosInitialized = true; 
+      this.aosInitialized = true;
       this.showForm = true;
-
       AOS.init({
-        duration: 2000, 
-        once: false, 
+        duration: 2000,
+        once: false,
       });
     }
   }
 
   ngAfterViewInit() {
+    const video = this.videoPlayer.nativeElement;
+    video.load(); 
+
+    const tryPlay = () => {
+      video.play()
+        .then(() => {
+          console.log('Video is playing');
+        })
+        .catch((error) => {
+          console.error('Video play error: ', error);
+        });
+    };
+
+    tryPlay();
+
+    if (video.paused) {
+      const playOnInteraction = () => {
+        tryPlay();
+        document.removeEventListener('click', playOnInteraction);
+        document.removeEventListener('touchstart', playOnInteraction);
+      };
+      document.addEventListener('click', playOnInteraction);
+      document.addEventListener('touchstart', playOnInteraction);
+    }
   }
 
   onSubmit() {

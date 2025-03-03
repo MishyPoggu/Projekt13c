@@ -2,7 +2,7 @@
   <div class="header">
     <h1>Pixel Vault</h1>
   </div>
-  <video autoplay muted loop class="background-video">
+  <video #videoPlayer muted loop playsinline preload="auto" class="background-video">
     <source src="assets/játék-videó.mp4" type="video/mp4" />
   </video>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -11,43 +11,18 @@
   <app-scrolldown></app-scrolldown>
 
   <div class="content">
-    <form
-      class="form-container"
-      *ngIf="showForm" 
-      data-aos="fade-up"
-      data-aos-duration="2000"
-      (ngSubmit)="onSubmit()"
-      #form="ngForm"
-    >
+    <form class="form-container" *ngIf="showForm" data-aos="fade-up" data-aos-duration="2000" (ngSubmit)="onSubmit()" #form="ngForm">
       <div>
         <label for="name">Cég/Hely neve:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          ngModel
-          required
-          placeholder="Add meg a cég/hely nevét"
-        />
+        <input type="text" id="name" name="name" ngModel required placeholder="Add meg a cég/hely nevét" />
       </div>
       <div>
         <label for="description">Leírás:</label>
-        <textarea
-          id="description"
-          name="description"
-          ngModel
-          required
-          placeholder="Írd be a leírást"
-        ></textarea>
+        <textarea id="description" name="description" ngModel required placeholder="Írd be a leírást"></textarea>
       </div>
       <div id="uj-resz">
         <label for="image">Kép feltöltése:</label>
-        <input
-          type="file"
-          id="image"
-          name="image"
-          (change)="onFileSelected($event)"
-        />
+        <input type="file" id="image" name="image" (change)="onFileSelected($event)" />
       </div>
       <button type="submit" [disabled]="!form.valid">Mentés</button>
     </form>
