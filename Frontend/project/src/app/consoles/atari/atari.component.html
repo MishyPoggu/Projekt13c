@@ -1,17 +1,24 @@
 <div class="container">
   <div class="content" *ngIf="!selectedItem.isDownload" [style.backgroundImage]="'url(' + selectedItem.image + ')'">
-    <div class="overlay"></div>
     <p>{{ selectedItem.description }}</p>
   </div>
 
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  
+
   <div class="timeline">
-    <ng-container *ngFor="let item of timelineItems; let i = index">
-      <div (click)="selectItem(item)" class="timeline-item" [class.selected]="item === selectedItem">
-        <div class="timeline-point"></div>
+    <ng-container *ngFor="let item of timelineItems">
+      <div (click)="selectItem(item)" class="timeline-item" 
+           [class.selected]="item === selectedItem"
+           *ngIf="!isMobileView || item === selectedItem || item.isDownload">
         <div class="time">{{ item.time }}</div>
       </div>
     </ng-container>
+    <div class="download-button" *ngIf="isMobileView">
+      <button (click)="downloadFile('assets/Pdf/Atari.pdf')">Cikk letöltése</button>
+    </div>
+    <div class="mobile-nav" *ngIf="isMobileView">
+      <button (click)="previousItem()" [disabled]="selectedItem === timelineItems[0]">Előző</button>
+      <button (click)="nextItem()" [disabled]="selectedItem === timelineItems[timelineItems.length - 1]">Következő</button>
+    </div>
   </div>
 </div>

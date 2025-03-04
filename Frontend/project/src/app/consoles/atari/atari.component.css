@@ -125,3 +125,76 @@
 .timeline-item.selected:not(:last-child)::after {
   border-top-color: #a30000;
 }
+
+@media (max-width: 768px) {
+  .timeline-item {
+    display: none;
+  }
+
+  .timeline-item:is(.selected, :last-child) {
+    display: flex;
+  }
+
+  .mobile-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .mobile-nav button {
+    background: #e20000;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .mobile-nav button:disabled {
+    background: gray;
+    cursor: not-allowed;
+  }
+
+  .mobile-nav button:hover:not(:disabled) {
+    background: #a30000;
+  }
+}
+
+.download-button {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.download-button button {
+  background: #e20000;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  border: 3px solid #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 1.2em;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 15px #e20000;
+  border-radius: 50px;
+  width: auto;
+}
+
+.download-button button:hover {
+  background: #a30000;
+  box-shadow: 0 0 20px #a30000;
+}
+
+@media (max-width: 768px) {
+  .download-button button {
+    font-size: 1em;
+    padding: 8px 15px;
+    margin: 15px 0;
+  }
+}
