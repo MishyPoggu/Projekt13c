@@ -9,7 +9,7 @@
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    height: auto;
+    height: 100vh;
   }
 }
 
@@ -37,12 +37,12 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
-  z-index: -1; 
+  z-index: -1;
 }
 
 .content p {
   position: relative;
-  font-size: clamp(1em, 2vw, 1.5em); 
+  font-size: clamp(1em, 2vw, 1.5em);
   z-index: 2;
   text-align: center;
   padding: 10px;
@@ -50,7 +50,7 @@
 
 @media (max-width: 768px) {
   .content {
-    flex: none;
+    height: 100vh;
     padding: 15px;
   }
 }
@@ -69,9 +69,7 @@
 
 @media (max-width: 768px) {
   .timeline {
-    border-left: none;
-    border-top: 5px solid #e20000;
-    padding: 20px 10px;
+    display: none;
   }
 }
 
@@ -83,8 +81,6 @@
   border-radius: 50px;
   text-align: center;
   font-size: 1.2em;
-  width: auto;
-  position: relative;
   transition: all 0.3s ease-in-out;
   display: flex;
   justify-content: center;
@@ -93,14 +89,6 @@
   color: #fff;
   box-shadow: 0 0 15px #e20000;
   border: 3px solid #fff;
-}
-
-@media (max-width: 768px) {
-  .timeline-item {
-    font-size: 1em;
-    padding: 8px 15px;
-    margin: 15px 0;
-  }
 }
 
 .timeline-item:hover {
@@ -114,58 +102,31 @@
   color: #000;
 }
 
-.timeline-item.selected::before {
-  background-color: #a30000;
-}
-
-.timeline-item:not(:last-child) {
-  margin-bottom: 40px;
-}
-
-.timeline-item.selected:not(:last-child)::after {
-  border-top-color: #a30000;
-}
-
 @media (max-width: 768px) {
-  .timeline-item {
-    display: none;
-  }
-
-  .timeline-item:is(.selected, :last-child) {
-    display: flex;
-  }
-
   .mobile-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    margin-top: 10px;
+    align-items: center;
+    transform: translateY(-50%);
+    padding: 0 20px;
+    z-index: 3;
   }
 
-  .mobile-nav button {
-    background: #e20000;
-    color: white;
-    font-family: 'Press Start 2P', cursive;
+  .mobile-nav .nav-arrow {
+    background: transparent;
     border: none;
-    padding: 10px 15px;
+    color: #fff;
+    font-size: 2.5em;
     cursor: pointer;
-    transition: 0.3s;
   }
 
-  .mobile-nav button:disabled {
-    background: gray;
+  .mobile-nav .nav-arrow:disabled {
+    color: gray;
     cursor: not-allowed;
   }
-
-  .mobile-nav button:hover:not(:disabled) {
-    background: #a30000;
-  }
-}
-
-.download-button {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
 }
 
 .download-button button {
@@ -177,13 +138,8 @@
   cursor: pointer;
   transition: 0.3s;
   font-size: 1.2em;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 15px #e20000;
   border-radius: 50px;
-  width: auto;
+  box-shadow: 0 0 15px #e20000;
 }
 
 .download-button button:hover {
@@ -191,10 +147,31 @@
   box-shadow: 0 0 20px #a30000;
 }
 
+
 @media (max-width: 768px) {
-  .download-button button {
-    font-size: 1em;
-    padding: 8px 15px;
-    margin: 15px 0;
+  .download-mobile {
+    position:  absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 3;
+  }
+
+  .download-mobile button {
+    background: #e20000;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    border: 3px solid #fff;
+    padding: 8px 16px; 
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1em; 
+    border-radius: 50px;
+    box-shadow: 0 0 12px #e20000; 
+  }
+
+  .download-mobile button:hover {
+    background: #a30000;
+    box-shadow: 0 0 15px #a30000; 
   }
 }
