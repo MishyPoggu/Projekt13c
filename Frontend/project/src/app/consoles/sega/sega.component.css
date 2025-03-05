@@ -6,6 +6,13 @@
   background-color: #000;
 }
 
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: 100vh;
+  }
+}
+
 .content {
   flex: 3;
   display: flex;
@@ -17,6 +24,9 @@
   color: #fff;
   font-family: 'Press Start 2P', cursive;
   text-shadow: 2px 2px 10px rgba(0, 60, 133, 0.5);
+  padding: 20px;
+  text-align: center;
+  z-index: 1;
 }
 
 .content::before {
@@ -27,15 +37,22 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 0;
+  z-index: -1;
 }
 
 .content p {
   position: relative;
-  font-size: 1.5em;
-  z-index: 1;
+  font-size: clamp(1em, 2vw, 1.5em);
+  z-index: 2;
   text-align: center;
   padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .content {
+    height: 100vh;
+    padding: 15px;
+  }
 }
 
 .timeline {
@@ -50,6 +67,12 @@
   border-left: 5px solid #0048e2;
 }
 
+@media (max-width: 768px) {
+  .timeline {
+    display: none;
+  }
+}
+
 .timeline-item {
   cursor: pointer;
   padding: 10px 20px;
@@ -58,8 +81,6 @@
   border-radius: 50px;
   text-align: center;
   font-size: 1.2em;
-  width: auto;
-  position: relative;
   transition: all 0.3s ease-in-out;
   display: flex;
   justify-content: center;
@@ -81,14 +102,75 @@
   color: #000;
 }
 
-.timeline-item.selected::before {
-  background-color: #0016a3;
+@media (max-width: 768px) {
+  .mobile-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(-50%);
+    padding: 0 20px;
+    z-index: 3;
+  }
+
+  .mobile-nav .nav-arrow {
+    background: transparent;
+    border: none;
+    color: #0048e2;
+    font-size: 2.5em;
+    cursor: pointer;
+  }
+
+  .mobile-nav .nav-arrow:disabled {
+    color: gray;
+    cursor: not-allowed;
+  }
 }
 
-.timeline-item:not(:last-child) {
-  margin-bottom: 40px;
+.download-button button {
+  background: #0048e2;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  border: 3px solid #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 1.2em;
+  border-radius: 50px;
+  box-shadow: 0 0 15px #0048e2;
 }
 
-.timeline-item.selected:not(:last-child)::after {
-  border-top-color: #0016a3;
+.download-button button:hover {
+  background: #0026a3;
+  box-shadow: 0 0 20px #0026a3;
+}
+
+@media (max-width: 768px) {
+  .download-mobile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+
+  .download-mobile button {
+    background: #0048e2;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    border: 3px solid #fff;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1em;
+    border-radius: 50px;
+    box-shadow: 0 0 12px #0048e2;
+  }
+
+  .download-mobile button:hover {
+    background: #0026a3;
+    box-shadow: 0 0 15px #0026a3;
+  }
 }

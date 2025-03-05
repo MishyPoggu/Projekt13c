@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,11 +17,45 @@ export class XboxComponent {
     { time: '2013-2016', image: 'assets/xbox/xboxone.jpg', description: '2013 november22: Megjelent az Xbox One, amelyet kezdetben kritizáltak az online kapcsolati követelmények és a használt játékok korlátozásai miatt. A negatív visszajelzések hatására a Microsoft módosította ezeket a politikákat, hogy jobban megfeleljen a felhasználói igényeknek. A Microsoft bevezette a visszafelé kompatibilitást, lehetővé téve az Xbox 360 játékok futtatását az Xbox One konzolon, ezzel növelve a játékosok számára elérhető játékok számát.' },
     { time: '2017-2019', image: 'assets/xbox/gamepass.jpg', description: 'Elindult az Xbox Game Pass előfizetési szolgáltatás, amely havi díj ellenében hozzáférést biztosított egy folyamatosan bővülő játékkönyvtárhoz, új üzleti modellt kínálva a játékosok számára. 2017 november7: Megjelent az Xbox One X, amelyet a világ legerősebb konzoljaként hirdettek, és 4K felbontású játékélményt kínált a felhasználóknak.' },
     { time: '2020-2025', image: 'assets/xbox/designlab.jpg', description: 'Az Xbox Game Pass Ultimate előfizetők számára elérhetővé vált az xCloud (később Xbox Cloud Gaming), amely lehetővé tette a játékok streamelését különböző eszközökön, beleértve a mobiltelefonokat és táblagépeket is. A Microsoft bejelentette az Xbox Design Lab kibővítését, amely lehetővé teszi a játékosok számára, hogy egyedi kontrollereket tervezzenek és rendeljenek, tovább személyre szabva a játékélményt.' },
+    { time: 'Cikk letöltése', isDownload: true, filepath:'assets/Pdf/xbox.pdf'},
   ];
 
   selectedItem = this.timelineItems[0];
-
-  selectItem(item: any) {
-    this.selectedItem = item;
+    isMobileView = window.innerWidth <= 768;
+  
+    @HostListener('window:resize', [])
+    onResize() {
+      this.isMobileView = window.innerWidth <= 768;
+    }
+  
+    selectItem(item: any) {
+      if (item.isDownload) {
+        this.downloadFile(item.filepath);
+      } else {
+        this.selectedItem = item;
+      }
+    }
+  
+    previousItem() {
+      const currentIndex = this.timelineItems.indexOf(this.selectedItem);
+      if (currentIndex > 0) {
+        this.selectedItem = this.timelineItems[currentIndex - 1];
+      }
+    }
+  
+    nextItem() {
+      const currentIndex = this.timelineItems.indexOf(this.selectedItem);
+      if (currentIndex < this.timelineItems.length - 1) {
+        this.selectedItem = this.timelineItems[currentIndex + 1];
+      }
+    }
+  
+    downloadFile(filepath: string) {
+      const link = document.createElement('a');
+      link.href = filepath;
+      link.download = filepath.split('/').pop() || 'document.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   }
-}

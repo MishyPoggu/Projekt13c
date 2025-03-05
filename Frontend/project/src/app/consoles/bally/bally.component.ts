@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -19,8 +19,41 @@ export class BallyComponent {
   ];
 
   selectedItem = this.timelineItems[0];
-
-  selectItem(item: any) {
-    this.selectedItem = item;
+    isMobileView = window.innerWidth <= 768;
+  
+    @HostListener('window:resize', [])
+    onResize() {
+      this.isMobileView = window.innerWidth <= 768;
+    }
+  
+    selectItem(item: any) {
+      if (item.isDownload) {
+        this.downloadFile(item.filepath);
+      } else {
+        this.selectedItem = item;
+      }
+    }
+  
+    previousItem() {
+      const currentIndex = this.timelineItems.indexOf(this.selectedItem);
+      if (currentIndex > 0) {
+        this.selectedItem = this.timelineItems[currentIndex - 1];
+      }
+    }
+  
+    nextItem() {
+      const currentIndex = this.timelineItems.indexOf(this.selectedItem);
+      if (currentIndex < this.timelineItems.length - 1) {
+        this.selectedItem = this.timelineItems[currentIndex + 1];
+      }
+    }
+  
+    downloadFile(filepath: string) {
+      const link = document.createElement('a');
+      link.href = filepath;
+      link.download = filepath.split('/').pop() || 'document.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   }
-}
