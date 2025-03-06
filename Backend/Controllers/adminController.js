@@ -1,4 +1,4 @@
-const { Users, Token } = require("../Models/index");
+const { Administrators, Token } = require("../Models/index");
 const connections = require("../Connections/connections");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -8,17 +8,12 @@ const uzn = require("../Response/uzenet");
 
 const SECRET_KEY = "1234";
 
-const isAdmin = (req) => {
-  const { username, adminPassword } = req.body;
-  return username === "admin" && adminPassword === "admin";
-};
-
-const getAllUsers = async (req, res) => {
+const getAllAdmins = async (req, res) => {
   try {
-    const users = await Users.findAll();
+    const admins = await Administrators.findAll();
     res.status(200).json({
       status: 200,
-      data: users,
+      data: admins,
     });
   } catch (error) {
     console.log(error);
@@ -30,7 +25,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const registerUser = async (req, res) => {
+const registerAdmin = async (req, res) => {
   const transaction = await connections.transaction();
 
   try {
@@ -44,9 +39,12 @@ const registerUser = async (req, res) => {
       });
     }
 
-    console.log("Checking for existing user...");
-    const existingUser = await Users.findOne({ where: { email }, transaction });
-    if (existingUser) {
+    console.log("Checking for existing admin...");
+    const existingAdmin = await Administrators.findOne({
+      where: { email },
+      transaction,
+    });
+    if (existingAdmin) {
       return res.status(409).json({
         status: 409,
         message: msg.user.failure.emailtaken,
@@ -54,23 +52,11 @@ const registerUser = async (req, res) => {
       });
     }
 
-    const existingUsername = await Users.findOne({
-      where: { username },
-      transaction,
-    });
-    if (existingUsername) {
-      return res.status(409).json({
-        status: 409,
-        message: msg.user.failure.nametaken,
-        üzenet: uzn.user.failure.nametaken,
-      });
-    }
-
     console.log("Hashing password...");
     const hashedPassword = await bcrypt.hash(passwordHash, 10);
 
-    console.log("Creating new user...");
-    const newUser = await Users.create(
+    console.log("Creating new admin...");
+    const newAdmin = await Administrators.create(
       {
         username,
         email,
@@ -79,14 +65,14 @@ const registerUser = async (req, res) => {
       { transaction }
     );
 
-    console.log("New user created with ID:", newUser.id);
+    console.log("New admin created with ID:", newAdmin.id);
 
     await transaction.commit();
 
     console.log("Transaction committed successfully.");
     res.status(201).json({
       status: 201,
-      userId: newUser.id,
+      adminId: newAdmin.id,
       message: msg.user.success.registered,
       üzenet: uzn.user.success.registered,
     });
@@ -101,7 +87,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-const loginUser = async (req, res) => {
+const loginAdmin = async (req, res) => {
   const { username, email, passwordHash } = req.body;
 
   if ((!username && !email) || !passwordHash) {
@@ -113,11 +99,11 @@ const loginUser = async (req, res) => {
   }
 
   try {
-    const user = await Users.findOne({
+    const admin = await Administrators.findOne({
       where: email ? { email } : { username },
     });
 
-    if (!user) {
+    if (!admin) {
       return res.status(401).json({
         status: 401,
         message: msg.user.failure.logininvalid,
@@ -127,7 +113,7 @@ const loginUser = async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(
       passwordHash,
-      user.passwordHash
+      admin.passwordHash
     );
 
     if (!isPasswordValid) {
@@ -142,18 +128,18 @@ const loginUser = async (req, res) => {
 
     const token = jwt.sign(
       {
-        userId: user.id,
-        username: user.username,
-        email: user.email,
+        adminId: admin.id,
+        username: admin.username,
+        email: admin.email,
         loginAt: loginTimestamp,
       },
       SECRET_KEY,
-      { expiresIn: "2h" }
+      { expiresIn: "6h" }
     );
 
     const expiresAt = new Date(Date.now() + 6 * 60 * 60 * 1000);
     await Token.create({
-      userId: user.userId,
+      userId: admin.adminId,
       token,
       loginAt: loginTimestamp,
       expiresAt,
@@ -161,7 +147,7 @@ const loginUser = async (req, res) => {
 
     res.status(200).json({
       status: 200,
-      userId: user.userId,
+      adminId: admin.adminId,
       token,
       loginAt: loginTimestamp,
       message: msg.user.success.loggedin,
@@ -177,70 +163,13 @@ const loginUser = async (req, res) => {
   }
 };
 
-const removeUser = async (req, res) => {
-  try {
-    if (isAdmin(req)) {
-      const { id, email } = req.body;
-
-      if (email) {
-        const user = await Users.findOne({ where: { email } });
-        if (!user) {
-          return res.status(404).json({
-            status: 404,
-            message: msg.user.failure.emailnotfound,
-            üzenet: uzn.user.failure.emailnotfound,
-          });
-        }
-
-        await user.destroy();
-        return res.status(200).json({
-          status: 200,
-          message: msg.user.success.deleted,
-          üzenet: uzn.user.success.deleted,
-        });
-      } else if (id) {
-        const user = await Users.findOne({ where: { id } });
-        if (!user) {
-          return res.status(404).json({
-            status: 404,
-            message: msg.user.failure.idnotfound,
-            üzenet: uzn.user.failure.idnotfound,
-          });
-        }
-
-        await user.destroy();
-        return res.status(200).json({
-          status: 200,
-          message: msg.user.success.deleted,
-          üzenet: uzn.user.success.deleted,
-        });
-      } else {
-        return res.status(400).json({
-          status: 400,
-          message: msg.user.failure.idoremail,
-          üzenet: uzn.user.failure.idoremail,
-        });
-      }
-    } else {
-      return res.status(403).json({
-        status: 403,
-        message: msg.admin.failure.unauthorized,
-        üzenet: uzn.admin.failure.unauthorized,
-      });
-    }
-  } catch (error) {
-    console.error("Error deleting user:", error);
-    res.status(500).json({
-      status: 500,
-      message: msg.user.failure.unknown,
-      üzenet: uzn.user.failure.unknown,
-    });
-  }
+const removeAdmin = async (req, res) => {
+  // Implement admin removal logic if needed
 };
 
 module.exports = {
-  getAllUsers,
-  registerUser,
-  loginUser,
-  removeUser,
+  getAllAdmins,
+  registerAdmin,
+  loginAdmin,
+  removeAdmin,
 };
