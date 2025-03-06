@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { BodyComponent } from './body/body.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ForumComponent } from './forum/forum.component';
 import { ConsolesComponent } from './consoles/consoles.component';
 import { PlaystationComponent } from './consoles/playstation/playstation.component';
 import { XboxComponent } from './consoles/xbox/xbox.component';
@@ -22,6 +23,7 @@ export const appRoutes: Routes = [
   { path: 'home', component: BodyComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'forum', component: ForumComponent },
   { path: 'consoles', component: ConsolesComponent },
   { path: 'playstation', component: PlaystationComponent },
   { path: 'xbox', component: XboxComponent },

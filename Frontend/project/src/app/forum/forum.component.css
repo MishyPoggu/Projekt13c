@@ -1,0 +1,32 @@
+.sidebar {
+    width: 300px;
+    background-color: rgba(56, 22, 102, 0.8); 
+    padding: 20px;
+    overflow-y: auto;
+    border-radius: 20px;
+    position: relative;
+    z-index: 2;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.sidebar h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    text-shadow: 
+        -2px 0 0 #fdff2a,
+        -4px 0 0 #df4a42,
+        2px 0 0 #91fcfe,
+        4px 0 0 #4405fc;
+    animation: blink 2s steps(4, start) infinite;
+}
+
+.sidebar .elfsight-app-cb217884-8a82-44ec-962c-c5767780f5d2 {
+    margin-top: 10px;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
