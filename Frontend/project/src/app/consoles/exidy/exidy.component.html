@@ -1,1 +1,18 @@
-<p>exidy works!</p>
+<div class="container">
+  <div class="content" [style.backgroundImage]="selectedItem.image ? 'url(' + selectedItem.image + ')' : 'none'">
+    <p>{{ selectedItem.description }}</p>
+    <div class="mobile-nav" *ngIf="isMobileView">
+      <button class="nav-arrow left" (click)="previousItem()" [disabled]="selectedItem === timelineItems[0]">&#8592;</button>
+      <button class="nav-arrow right" (click)="nextItem()" [disabled]="selectedItem === timelineItems[timelineItems.length - 1]">&#8594;</button>
+    </div>
+  </div>
+
+  <div class="timeline" *ngIf="!isMobileView">
+    <ng-container *ngFor="let item of timelineItems">
+      <div (click)="selectItem(item)" class="timeline-item" [class.selected]="item === selectedItem">
+        <div class="time">{{ item.time }}</div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
