@@ -5,7 +5,6 @@ import { HeadComponent } from './head/head.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   templateUrl: './app.component.html',
   imports: [HeadComponent, RouterModule,], 
 })
