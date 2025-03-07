@@ -114,14 +114,18 @@ h2 {
   right: 0;
   left: auto;
   transform: translateX(12.5%);
+  z-index: 1000; 
 }
+
 
 .user-dropdown.open {
   display: block;
   top: 58px;
   right: 0;
   left:auto;
+  z-index: 1000;
 }
+
 
 .user-dropdown li {
   padding: 10px;
