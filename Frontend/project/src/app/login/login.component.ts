@@ -10,7 +10,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-login',
   templateUrl: './login.component.html',
   imports: [CommonModule, ReactiveFormsModule],
-
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
@@ -21,7 +20,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-  }
+  }  
 
   ngOnInit(): void {}
 

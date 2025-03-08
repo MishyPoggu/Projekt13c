@@ -21,7 +21,7 @@ import { SternComponent } from './consoles/stern/stern.component';
 export const appRoutes: Routes = [
   { path: '', component: BodyComponent },
   { path: 'home', component: BodyComponent },
-  { path: 'login', component: LoginComponent },
+  {path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent },
   { path: 'forum', component: ForumComponent },
   { path: 'consoles', component: ConsolesComponent },
