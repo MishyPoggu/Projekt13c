@@ -18,6 +18,7 @@ export class BodyComponent implements AfterViewInit {
   selectedFile: File | null = null;
   showForm: boolean = false;
   aosInitialized: boolean = false;
+  showMoreFields: boolean = false; 
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -69,5 +70,9 @@ export class BodyComponent implements AfterViewInit {
       this.selectedFile = input.files[0];
       console.log('Kiválasztott fájl:', this.selectedFile);
     }
+  }
+
+  toggleFields() {
+    this.showMoreFields = !this.showMoreFields; 
   }
 }

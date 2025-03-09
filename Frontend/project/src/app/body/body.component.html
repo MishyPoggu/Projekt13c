@@ -16,18 +16,49 @@
         <label for="name">Cég/Hely neve:</label>
         <input type="text" id="name" name="name" ngModel required placeholder="Add meg a cég/hely nevét" />
       </div>
+
       <div>
-        <label for="name">Helyszín:</label>
-        <input type="text" id="name" name="name" ngModel required placeholder="" />
+        <label for="name">Helyszín adatok</label>
+        <label for="streetAddress">Utcacím:</label>
+        <input type="text" id="street" name="street" ngModel required placeholder="Pl. Ady Endre utca 1" />
       </div>
+
+      <button type="button" (click)="toggleFields()">
+        {{ showMoreFields ? 'Kevesebb mező' : 'További mezők' }}
+      </button>
+
+      <div *ngIf="showMoreFields">
+        <div>
+          <label for="city">Város:</label>
+          <input type="text" id="city" name="city" ngModel required placeholder="Pl. Sátoraljaújhely" />
+        </div>
+
+        <div>
+          <label for="postalCode">Irányítószám:</label>
+          <input type="text" id="zipcode" name="zipcode" ngModel required placeholder="Pl. 3950" />
+        </div>
+
+        <div>
+          <label for="stateOrRegion">Állam vagy régió:</label>
+          <input type="text" id="state" name="state" ngModel required placeholder="Pl. Heves megye" />
+        </div>
+
+        <div>
+          <label for="country">Ország:</label>
+          <input type="text" id="country" name="country" ngModel required placeholder="Pl. Magyarország" />
+        </div>
+      </div>
+
       <div>
         <label for="description">Leírás:</label>
         <textarea id="description" name="description" ngModel required placeholder="Írd be a leírást"></textarea>
       </div>
+
       <div id="uj-resz">
         <label for="image">Kép feltöltése:</label>
         <input type="file" id="image" name="image" (change)="onFileSelected($event)" />
       </div>
+
       <button type="submit" [disabled]="!form.valid">Mentés</button>
     </form>
   </div>
