@@ -40,7 +40,6 @@ const registerCompany = async (req, res) => {
       websiteUrl,
     } = req.body;
 
-    // Validate required fields
     if (
       !companyName ||
       !registrationNumber ||
@@ -55,7 +54,6 @@ const registerCompany = async (req, res) => {
       });
     }
 
-    // Check if the company already exists
     const existingCompany = await Companies.findOne({
       where: { companyName },
       transaction,
@@ -145,7 +143,7 @@ const loginCompany = async (req, res) => {
         contactEmail: company.contactEmail,
       },
       SECRET_KEY,
-      { expiresIn: "6h" }
+      { expiresIn: "2h" }
     );
     res.status(200).json({
       status: 200,
