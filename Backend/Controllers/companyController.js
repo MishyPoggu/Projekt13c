@@ -234,8 +234,7 @@ const getAdvertisements = async (req, res) => {
   }
 };
 
-
-
+const postAdvertisement = async (req, res) => {
   upload.single("image")(req, res, async function (err) {
     if (err) {
       return res.status(400).json({
@@ -284,7 +283,7 @@ const getAdvertisements = async (req, res) => {
       });
     }
   });
-  
+};
 
 module.exports = {
   getAddresses,
