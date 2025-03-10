@@ -1,19 +1,12 @@
 const express = require("express");
-const {
-  getAllCompanies,
-  registerCompany,
-  loginCompany,
-  addAddress,
-  postAdvertisement,
-} = require("../Controllers/companyController");
-const upload = require("../Middleware/uploadImage");
-
 const router = express.Router();
+const companyController = require("../Controllers/companyController");
 
-router.get("", getAllCompanies);
-router.put("/register", registerCompany);
-router.post("/login", loginCompany);
-router.post("/add-address/:companyId", addAddress);
-router.post("/post-ad", upload.single("image"), postAdvertisement);
+router.post("/companies/add-address", companyController.addAddress);
+router.post("/companies/register", companyController.registerCompany);
+router.post("/companies/login", companyController.loginCompany);
+router.get("/companies", companyController.getAllCompanies);
+router.get("/companies/:companyId/addresses", companyController.getAddresses);
+router.get("/companies/:companyId/advertisements", companyController.getAdvertisements);
 
 module.exports = router;

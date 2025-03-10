@@ -21,7 +21,19 @@ const companyRoutes = require("./Routes/companyRoute");
 app.use(express.json());
 
 sequelize
-  .sync({ alter: true })
+  .query("DROP TABLE IF EXISTS Advertisements;")
+  .then(() => {
+    return sequelize.query("DROP TABLE IF EXISTS Addresses;");
+  })
+  .then(() => {
+    return sequelize.query("DROP TABLE IF EXISTS Companies;");
+  })
+
+  .then(() => {
+    return sequelize.sync({ force: true });
+  })
+
+
   .then(() => {
     console.log("All tables created successfully!");
   })

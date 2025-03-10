@@ -163,8 +163,7 @@ const loginCompany = async (req, res) => {
 
 const addAddress = async (req, res) => {
   try {
-    const { companyId } = req.params;
-    const { streetAddress, city, postalCode, stateOrRegion, country } =
+    const { companyId, streetAddress, city, postalCode, stateOrRegion, country } =
       req.body;
 
     if (!streetAddress || !city || !postalCode || !country) {
@@ -190,6 +189,7 @@ const addAddress = async (req, res) => {
       üzenet: uzn.address.success.created,
     });
   } catch (error) {
+    console.error("Error adding address:", error);
     res.status(500).json({
       status: 500,
       message: msg.address.failure.unknown,
@@ -198,7 +198,44 @@ const addAddress = async (req, res) => {
   }
 };
 
-const postAdvertisement = async (req, res) => {
+const getAddresses = async (req, res) => {
+  const { companyId } = req.params;
+  try {
+    const addresses = await Addresses.findAll({ where: { companyId } });
+    res.status(200).json({
+      status: 200,
+      data: addresses,
+    });
+  } catch (error) {
+    console.error("Error fetching addresses:", error);
+    res.status(500).json({
+      status: 500,
+      message: msg.address.failure.fetcherror,
+      üzenet: uzn.address.failure.fetcherror,
+    });
+  }
+};
+
+const getAdvertisements = async (req, res) => {
+  const { companyId } = req.params;
+  try {
+    const advertisements = await Advertisements.findAll({ where: { companyId } });
+    res.status(200).json({
+      status: 200,
+      data: advertisements,
+    });
+  } catch (error) {
+    console.error("Error fetching advertisements:", error);
+    res.status(500).json({
+      status: 500,
+      message: msg.ad.failure.fetcherror,
+      üzenet: uzn.ad.failure.fetcherror,
+    });
+  }
+};
+
+
+
   upload.single("image")(req, res, async function (err) {
     if (err) {
       return res.status(400).json({
@@ -247,9 +284,11 @@ const postAdvertisement = async (req, res) => {
       });
     }
   });
-};
+  
 
 module.exports = {
+  getAddresses,
+  getAdvertisements,
   getAllCompanies,
   registerCompany,
   loginCompany,

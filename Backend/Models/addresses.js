@@ -29,11 +29,17 @@ const Addresses = connections.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    advertisementId: {
+    companyId: { 
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: 'Companies',
+        key: 'companyId',
+      },
+      onDelete: 'CASCADE',
     },
     createdAt: {
+
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
