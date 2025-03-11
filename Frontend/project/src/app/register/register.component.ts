@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  imports: [CommonModule, ReactiveFormsModule], 
+  imports: [CommonModule, ReactiveFormsModule],   
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
@@ -23,6 +23,10 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  isInvalid(field: string): boolean {
+    return this.registerForm.get(field)!.invalid && this.registerForm.get(field)!.touched;
+  }
 
   onSubmit(): void {
     if (this.registerForm.valid) {

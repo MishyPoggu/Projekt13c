@@ -28,6 +28,7 @@
               }
             ],
             "styles": [
+            
               "src/styles.css"
             ],
             "scripts": []
@@ -86,9 +87,11 @@
                 "output": "/assets"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+"styles": [
+  "src/styles.css",
+  "node_modules/bootstrap/dist/css/bootstrap.min.css"
+],
+
             "scripts": []
           }
         }
