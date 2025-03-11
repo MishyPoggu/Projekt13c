@@ -17,6 +17,7 @@ import { NuttingComponent } from './consoles/nutting/nutting.component';
 import { BallyComponent } from './consoles/bally/bally.component';
 import { WilliamsComponent } from './consoles/williams/williams.component';
 import { SternComponent } from './consoles/stern/stern.component';
+import { RaktarComponent } from './raktar/raktar.component';
 
 export const appRoutes: Routes = [
   { path: '', component: BodyComponent },
@@ -38,5 +39,6 @@ export const appRoutes: Routes = [
   { path: 'bally', component: BallyComponent },
   { path: 'williams', component: WilliamsComponent },
   { path: 'stern', component: SternComponent },
+  { path: 'raktar', component: RaktarComponent },
   { path: '**', redirectTo: '' }
 ];

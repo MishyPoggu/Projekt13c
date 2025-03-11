@@ -1,0 +1,36 @@
+<div style="width: 60%; float: left;">
+    <table>
+    <tr>
+        <th>Név</th>
+        <th>Kiadás</th>
+        <th>Műfaj</th>
+        <th>Kiadó</th>
+        <th>Részletek</th>
+    </tr>
+
+    <tr *ngFor="let arcade of arcades">
+        <td>{{arcade.name}}</td>
+        <td>{{arcade.release}}</td>
+        <td>{{arcade.genre}}</td>
+        <td>{{arcade.publisher}}</td>
+        <td><button (click)="openData(arcade)" style="cursor: pointer;">Megnyitás</button></td>
+    </tr>
+</table>
+</div>
+
+<div style="width: 40%; float: left;">
+<form>
+    <div>
+    <label for="">Név</label>
+    <input type="text" name="name"  [(ngModel)]="arcade.name">
+</div>
+    <label for="">Műfaj</label>
+    <input type="text" name="genre"  [(ngModel)]="arcade.genre">
+
+    <label for="">Kiadás</label>
+    <input type="text" name="relesae" [(ngModel)]="arcade.release">
+
+    <label for="">Kiadó</label>
+    <input type="text" name="publisher" [(ngModel)]="arcade.publisher">
+</form>
+</div>

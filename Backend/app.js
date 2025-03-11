@@ -19,6 +19,8 @@ const pinballMachineRoute = require("./Routes/pinballMachineRoute");
 const companyRoutes = require("./Routes/companyRoute");
 
 app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({extended:true}))
 
 sequelize
   .query("DROP TABLE IF EXISTS Advertisements;")
@@ -41,13 +43,14 @@ sequelize
     console.error("Failed to create tables:", err.message);
   });
 
+  /*
 app.use(
   cors({
     origin: "http://localhost:4200/",
     methods: "GET, POST, PUT, DELETE",
     credentials: true,
   })
-);
+);*/
 
 app.use("/users", userRoute);
 app.use("/admins", adminRoute);
@@ -60,6 +63,7 @@ app.use("/pinball", pinballMachineRoute);
 
 // Cégek
 app.use("/companies", companyRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
