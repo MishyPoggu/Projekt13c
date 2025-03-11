@@ -1,36 +1,74 @@
-<div style="width: 60%; float: left;">
-    <table>
-    <tr>
-        <th>Név</th>
-        <th>Kiadás</th>
-        <th>Műfaj</th>
-        <th>Kiadó</th>
-        <th>Részletek</th>
-    </tr>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <tr *ngFor="let arcade of arcades">
-        <td>{{arcade.name}}</td>
-        <td>{{arcade.release}}</td>
-        <td>{{arcade.genre}}</td>
-        <td>{{arcade.publisher}}</td>
-        <td><button (click)="openData(arcade)" style="cursor: pointer;">Megnyitás</button></td>
-    </tr>
-</table>
+<div style="width: 60%; float: left;">
+    <h2>Arcade Gépek</h2>
+    <table>
+        <tr>
+            <th>Név</th>
+            <th>Kiadás</th>
+            <th>Műfaj</th>
+            <th>Kiadó</th>
+            <th>Részletek</th>
+        </tr>
+        <tr *ngFor="let arcade of arcades">
+            <td>{{arcade.name}}</td>
+            <td>{{arcade.release}}</td>
+            <td>{{arcade.genre}}</td>
+            <td>{{arcade.publisher}}</td>
+            <td><button (click)="openData(arcade)" style="cursor: pointer;">Megnyitás</button></td>
+        </tr>
+    </table>
+
+    <h2>Flippergépek</h2>
+    <table>
+        <tr>
+            <th>Név</th>
+            <th>Kiadás</th>
+            <th>Műfaj</th>
+            <th>Kiadó</th>
+            <th>Részletek</th>
+        </tr>
+        <tr *ngFor="let pinball of pinballMachines">
+            <td>{{pinball.name}}</td>
+            <td>{{pinball.release}}</td>
+            <td>{{pinball.genre}}</td>
+            <td>{{pinball.publisher}}</td>
+            <td><button (click)="openData(pinball)" style="cursor: pointer;">Megnyitás</button></td>
+        </tr>
+    </table>
+
+    <h2>Konzolok</h2>
+    <table>
+        <tr>
+            <th>Név</th>
+            <th>Kiadás</th>
+            <th>Műfaj</th>
+            <th>Kiadó</th>
+            <th>Részletek</th>
+        </tr>
+        <tr *ngFor="let console of consoles">
+            <td>{{console.name}}</td>
+            <td>{{console.release}}</td>
+            <td>{{console.genre}}</td>
+            <td>{{console.publisher}}</td>
+            <td><button (click)="openData(console)" style="cursor: pointer;">Megnyitás</button></td>
+        </tr>
+    </table>
 </div>
 
 <div style="width: 40%; float: left;">
-<form>
-    <div>
-    <label for="">Név</label>
-    <input type="text" name="name"  [(ngModel)]="arcade.name">
-</div>
-    <label for="">Műfaj</label>
-    <input type="text" name="genre"  [(ngModel)]="arcade.genre">
+    <form>
+        <div>
+            <label for="">Név</label>
+            <input type="text" name="name" [(ngModel)]="arcade.name">
+        </div>
+        <label for="">Műfaj</label>
+        <input type="text" name="genre" [(ngModel)]="arcade.genre">
 
-    <label for="">Kiadás</label>
-    <input type="text" name="relesae" [(ngModel)]="arcade.release">
+        <label for="">Kiadás</label>
+        <input type="text" name="release" [(ngModel)]="arcade.release">
 
-    <label for="">Kiadó</label>
-    <input type="text" name="publisher" [(ngModel)]="arcade.publisher">
-</form>
+        <label for="">Kiadó</label>
+        <input type="text" name="publisher" [(ngModel)]="arcade.publisher">
+    </form>
 </div>

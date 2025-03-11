@@ -6,11 +6,21 @@ import { Injectable } from '@angular/core';
 })
 export class ArcadeService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
+  baseURL = "http://localhost:3000/arcade/";
+  pinballURL = "http://localhost:3000/pinball/";
+  consoleURL = "http://localhost:3000/consoles/";
 
-  baseURL = "http://localhost:3000/arcade/"
   getAllArcade() {
     return this.http.get(this.baseURL);
+  }
+
+  getAllPinballMachines() {
+    return this.http.get(this.pinballURL);
+  }
+
+  getAllConsole() {
+    return this.http.get(this.consoleURL);
   }
 }

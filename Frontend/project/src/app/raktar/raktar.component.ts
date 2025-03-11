@@ -11,28 +11,46 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './raktar.component.html',
   styleUrl: './raktar.component.css'
 })
-export class RaktarComponent implements OnInit{
+export class RaktarComponent implements OnInit {
 
-  constructor(private arcadeService:ArcadeService) { }
+  constructor(private arcadeService: ArcadeService) { }
 
   arcades: Arcade[] = [];
+  pinballMachines: Arcade[] = [];
+  consoles: Arcade[] = [];
 
-  arcade:Arcade= {id:0, name:"", genre:"", publisher:"", release:""};
+  arcade: Arcade = { id: 0, name: "", genre: "", publisher: "", release: "" };
 
   ngOnInit(): void {
     this.arcadeService.getAllArcade().subscribe({
-      next:(res:any) =>{
+      next: (res: any) => {
         this.arcades = res.data;
       },
-      error:(err:HttpErrorResponse)=> {
-        alert(err.message)
+      error: (err: HttpErrorResponse) => {
+        alert(err.message);
       }
-    })
+    });
+
+    this.arcadeService.getAllPinballMachines().subscribe({
+      next: (res: any) => {
+        this.pinballMachines = res.data;
+      },
+      error: (err: HttpErrorResponse) => {
+        alert(err.message);
+      }
+    });
+
+    this.arcadeService.getAllConsole().subscribe({
+      next: (res: any) => {
+        this.consoles = res.data;
+      },
+      error: (err: HttpErrorResponse) => {
+        alert(err.message);
+      }
+    });
   }
 
-
-  openData(arcade:Arcade) {
-    this.arcade = arcade
+  openData(arcade: Arcade) {
+    this.arcade = arcade;
   }
-
 }
