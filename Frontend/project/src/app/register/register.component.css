@@ -1,29 +1,28 @@
-.register {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .register label {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  
-  .register input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .register button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-  }
-  
+* {
+  background-color: #1d1b1b;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.container .row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container .col-md-6 {
+  width: 100%;
+  margin-bottom: 15px; 
+}
+
+button.btn-primary {
+  font-size: 1.2rem; 
+  padding: 10px 20px; 
+  width: 100%; 
+}

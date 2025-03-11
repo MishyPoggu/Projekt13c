@@ -4,8 +4,15 @@
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
+    display: flex; 
+    flex-direction: column; 
+}
+
+.login button {
+    padding: 1rem; 
+    font-size: 1.2rem; 
+}
+
   .login label {
     display: block;
     margin-bottom: 0.5rem;
@@ -26,4 +33,3 @@
     padding: 0.5rem 1rem;
     cursor: pointer;
   }
-  

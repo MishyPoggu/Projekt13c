@@ -15,8 +15,9 @@
     </div>
 
       <div class="col-md-6">
-        <label for="password" class="form-label">Jelszó</label>
-        <input type="password" formControlName="password" id="password" class="form-control" required>
+        <label for="passwordHash" class="form-label">Jelszó</label>
+        <input type="password" formControlName="passwordHash" id="passwordHash" class="form-control" required>
+
         <small class="text-danger" *ngIf="registerForm.get('password')!.invalid && registerForm.get('password')!.touched">Jelszót kötelező megadni!</small>
       </div>
 

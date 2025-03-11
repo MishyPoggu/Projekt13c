@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      passwordHash: ['', Validators.required]
     });
   }  
 
@@ -26,12 +26,13 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      this.userService.login(username, password).subscribe({
+      const { username, passwordHash } = this.loginForm.value;
+      console.log('Login Form Values:', this.loginForm.value);
+
+
+      this.userService.login(username, passwordHash).subscribe({
         next: (res) => {
-         
           console.log('Login successful', res);
-       
         },
         error: (err: HttpErrorResponse) => {
           alert('Login failed: ' + err.message);

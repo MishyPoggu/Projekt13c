@@ -6,16 +6,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private baseURL = "localhost:3000/users";
+  private baseURL = "http://localhost:3000/users";
+
+
 
   constructor(private http: HttpClient) { }
 
   register(user: any): Observable<any> {
-    return this.http.post(`${this.baseURL}/register`, user);
+    return this.http.put(`${this.baseURL}/register`, user);
+
   }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseURL}/login`, { username, password });
+  login(username: string, passwordHash: string): Observable<any> {
+    return this.http.post(`${this.baseURL}/login`, { username, passwordHash });
   }
 
   logout() {
