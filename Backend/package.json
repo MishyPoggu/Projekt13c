@@ -4,7 +4,8 @@
   "description": "exam project Baráth Levente, Karsai Mihály Ferenc, Klubert Ádám",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon app.js"
+    "test": "nodemon app.js",
+    "start": "nodemon app"
   },
   "author": "Karsai Mihály Ferenc",
   "license": "ISC",

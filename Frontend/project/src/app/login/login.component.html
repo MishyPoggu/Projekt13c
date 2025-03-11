@@ -2,20 +2,20 @@
   <div class="container mt-4">
     <div class="row">
       <div class="col-md-6">
-        <label for="username" class="form-label">Username</label>
+        <label for="username" class="form-label">Felhasználónév/email</label>
         <input type="text" formControlName="username" id="username" class="form-control" required>
-        <small style="color: red;" *ngIf="loginForm.get('username')!.invalid && loginForm.get('username')!.touched">Username is required</small>
+        <small style="color: red;" *ngIf="loginForm.get('username')!.invalid && loginForm.get('username')!.touched">Felhasználónevet kötelező megadni!</small>
       </div>
 
       <div class="col-md-6">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label">Jelszó</label>
         <input type="password" formControlName="password" id="password" class="form-control" required>
-        <small style="color: red;" *ngIf="loginForm.get('password')!.invalid && loginForm.get('password')!.touched">Password is required</small>
+        <small style="color: red;" *ngIf="loginForm.get('password')!.invalid && loginForm.get('password')!.touched">Jelszót kötelező megadni!</small>
       </div>
     </div>
 
     <div class="mt-4">
-      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Bejelentkezés</button>
     </div>
   </div>
 </form>

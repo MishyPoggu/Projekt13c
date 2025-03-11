@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { ReactiveFormsModule } from '@angular/forms'; 
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,7 +9,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-register',
   templateUrl: './register.component.html',
   imports: [CommonModule, ReactiveFormsModule], 
-
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
