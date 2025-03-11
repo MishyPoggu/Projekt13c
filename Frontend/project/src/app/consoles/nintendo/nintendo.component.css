@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  height: 100vh;
+  height: 120vh;
   justify-content: space-between;
   position: relative;
   background-color: #000;

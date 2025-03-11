@@ -1,9 +1,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-<video #videoPlayer muted loop playsinline preload="auto" class="background-video">
+  <video #videoPlayer muted loop playsinline preload="auto" class="background-video">
     <source src="assets/Arcade.mp4" type="video/mp4" />
   </video>
+  
   <div class="dark-overlay"></div>
   
+<div style="width: 100%; padding: 20px;">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Keresés..." (input)="filterData()" />
+  </div>
+  
+  <div style="width: 100%; padding: 20px;">
+    <label for="publisherFilter">Kiadó</label>
+    <select id="publisherFilter" [(ngModel)]="publisherFilter" (change)="filterData()">
+      <option value="">-- Kiadó szűrése --</option>
+      <option *ngFor="let publisher of uniquePublishers" [value]="publisher">{{publisher}}</option>
+    </select>
+  </div>
+  
+  <div style="width: 100%; padding: 20px;">
+    <label for="genreFilter">Műfaj</label>
+    <select id="genreFilter" [(ngModel)]="genreFilter" (change)="filterData()">
+      <option value="">-- Műfaj szűrése --</option>
+      <option *ngFor="let genre of uniqueGenres" [value]="genre">{{genre}}</option>
+    </select>
+  </div>
+
   <div style="width: 60%; float: left;">
     <h2>Arcade Gépek</h2>
     <table>
@@ -14,7 +35,7 @@
         <th>Kiadó</th>
         <th>Részletek</th>
       </tr>
-      <tr *ngFor="let arcade of arcades">
+      <tr *ngFor="let arcade of filteredArcades">
         <td>{{arcade.name}}</td>
         <td>{{arcade.release}}</td>
         <td>{{arcade.genre}}</td>
@@ -32,7 +53,7 @@
         <th>Kiadó</th>
         <th>Részletek</th>
       </tr>
-      <tr *ngFor="let pinball of pinballMachines">
+      <tr *ngFor="let pinball of filteredPinballs">
         <td>{{pinball.name}}</td>
         <td>{{pinball.release}}</td>
         <td>{{pinball.genre}}</td>
@@ -50,7 +71,7 @@
         <th>Kiadó</th>
         <th>Részletek</th>
       </tr>
-      <tr *ngFor="let console of consoles">
+      <tr *ngFor="let console of filteredConsoles">
         <td>{{console.name}}</td>
         <td>{{console.release}}</td>
         <td>{{console.genre}}</td>
@@ -58,22 +79,21 @@
         <td><button (click)="openData(console)" style="cursor: pointer;">Megnyitás</button></td>
       </tr>
     </table>
-  </div>
-  
-  <div style="width: 40%; float: left;">
-    <form>
-      <div>
-        <label for="">Név</label>
-        <input type="text" name="name" [(ngModel)]="arcade.name">
+    <div style="width: 40%; float: left;">
+        <form>
+          <div>
+            <label for="">Név</label>
+            <input type="text" name="name" [(ngModel)]="arcade.name">
+          </div>
+          <label for="">Műfaj</label>
+          <input type="text" name="genre" [(ngModel)]="arcade.genre">
+      
+          <label for="">Kiadás</label>
+          <input type="text" name="release" [(ngModel)]="arcade.release">
+      
+          <label for="">Kiadó</label>
+          <input type="text" name="publisher" [(ngModel)]="arcade.publisher">
+        </form>
       </div>
-      <label for="">Műfaj</label>
-      <input type="text" name="genre" [(ngModel)]="arcade.genre">
-  
-      <label for="">Kiadás</label>
-      <input type="text" name="release" [(ngModel)]="arcade.release">
-  
-      <label for="">Kiadó</label>
-      <input type="text" name="publisher" [(ngModel)]="arcade.publisher">
-    </form>
   </div>
   

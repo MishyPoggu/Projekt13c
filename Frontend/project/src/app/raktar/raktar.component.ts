@@ -21,12 +21,26 @@ export class RaktarComponent implements OnInit, AfterViewInit {
 
   arcade: Arcade = { id: 0, name: "", genre: "", publisher: "", release: "" };
 
+  searchTerm: string = '';
+  publisherFilter: string = '';
+  genreFilter: string = '';
+
+  filteredArcades: Arcade[] = [];
+  filteredPinballs: Arcade[] = [];
+  filteredConsoles: Arcade[] = [];
+
+  uniquePublishers: string[] = [];
+  uniqueGenres: string[] = [];
+
   constructor(private arcadeService: ArcadeService) { }
 
   ngOnInit(): void {
     this.arcadeService.getAllArcade().subscribe({
       next: (res: any) => {
         this.arcades = res.data;
+        this.filteredArcades = res.data; 
+        this.uniquePublishers = this.getUniquePublishers(this.arcades);
+        this.uniqueGenres = this.getUniqueGenres(this.arcades);
       },
       error: (err: HttpErrorResponse) => {
         alert(err.message);
@@ -36,6 +50,9 @@ export class RaktarComponent implements OnInit, AfterViewInit {
     this.arcadeService.getAllPinballMachines().subscribe({
       next: (res: any) => {
         this.pinballMachines = res.data;
+        this.filteredPinballs = res.data;
+        this.uniquePublishers = [...new Set([...this.uniquePublishers, ...this.getUniquePublishers(this.pinballMachines)])];
+        this.uniqueGenres = [...new Set([...this.uniqueGenres, ...this.getUniqueGenres(this.pinballMachines)])];
       },
       error: (err: HttpErrorResponse) => {
         alert(err.message);
@@ -45,6 +62,9 @@ export class RaktarComponent implements OnInit, AfterViewInit {
     this.arcadeService.getAllConsole().subscribe({
       next: (res: any) => {
         this.consoles = res.data;
+        this.filteredConsoles = res.data;
+        this.uniquePublishers = [...new Set([...this.uniquePublishers, ...this.getUniquePublishers(this.consoles)])];
+        this.uniqueGenres = [...new Set([...this.uniqueGenres, ...this.getUniqueGenres(this.consoles)])];
       },
       error: (err: HttpErrorResponse) => {
         alert(err.message);
@@ -77,5 +97,40 @@ export class RaktarComponent implements OnInit, AfterViewInit {
 
   openData(arcade: Arcade) {
     this.arcade = arcade;
+  }
+
+  filterData() {
+    const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
+  
+    this.filteredArcades = this.arcades.filter((arcade) =>
+      (arcade.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+        arcade.genre.toLowerCase().includes(lowerCaseSearchTerm) ||
+        arcade.publisher.toLowerCase().includes(lowerCaseSearchTerm)) &&
+      (this.publisherFilter ? arcade.publisher.toLowerCase().includes(this.publisherFilter.toLowerCase()) : true) &&
+      (this.genreFilter ? arcade.genre.toLowerCase().includes(this.genreFilter.toLowerCase()) : true)
+    );
+  
+    this.filteredPinballs = this.pinballMachines.filter((pinball) =>
+      (pinball.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+        pinball.genre.toLowerCase().includes(lowerCaseSearchTerm) ||
+        pinball.publisher.toLowerCase().includes(lowerCaseSearchTerm)) &&
+      (this.publisherFilter ? pinball.publisher.toLowerCase().includes(this.publisherFilter.toLowerCase()) : true) &&
+      (this.genreFilter ? pinball.genre.toLowerCase().includes(this.genreFilter.toLowerCase()) : true)
+    );
+  
+    this.filteredConsoles = this.consoles.filter((console) =>
+      (console.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+        console.genre.toLowerCase().includes(lowerCaseSearchTerm) ||
+        console.publisher.toLowerCase().includes(lowerCaseSearchTerm)) &&
+      (this.publisherFilter ? console.publisher.toLowerCase().includes(this.publisherFilter.toLowerCase()) : true) &&
+      (this.genreFilter ? console.genre.toLowerCase().includes(this.genreFilter.toLowerCase()) : true)
+    );
+  }
+  
+  getUniquePublishers(data: Arcade[]): string[] {
+    return [...new Set(data.map(item => item.publisher))];
+  }
+  getUniqueGenres(data: Arcade[]): string[] {
+    return [...new Set(data.map(item => item.genre))];
   }
 }
