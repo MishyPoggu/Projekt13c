@@ -24,3 +24,15 @@
     padding: 20px; 
   }
   
+  button {
+  background: #e20000;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  border: 3px solid #fff;
+  padding: 3px 7px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 1em;
+  border-radius: 5px;
+  box-shadow: 0 0 15px #e20000;
+  }
