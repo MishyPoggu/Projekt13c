@@ -104,9 +104,9 @@ const registerCompany = async (req, res) => {
 };
 
 const loginCompany = async (req, res) => {
-  const { contactEmail, password } = req.body;
+  const { contactEmail, passwordHash } = req.body;
 
-  if (!contactEmail || !password) {
+  if (!contactEmail || !passwordHash) {
     return res.status(400).json({
       status: 400,
       message: msg.company.failure.loginunfilled,
@@ -125,9 +125,10 @@ const loginCompany = async (req, res) => {
     }
 
     const isPasswordValid = await bcrypt.compare(
-      password,
+      passwordHash,
       company.passwordHash
     );
+
     if (!isPasswordValid) {
       return res.status(401).json({
         status: 401,
@@ -145,6 +146,7 @@ const loginCompany = async (req, res) => {
       SECRET_KEY,
       { expiresIn: "2h" }
     );
+
     res.status(200).json({
       status: 200,
       companyId: company.companyId,
@@ -153,6 +155,8 @@ const loginCompany = async (req, res) => {
       üzenet: uzn.company.success.loggedin,
     });
   } catch (error) {
+    console.error("Login error:", error.message);
+
     res.status(500).json({
       status: 500,
       message: msg.company.failure.unknown,
@@ -163,8 +167,14 @@ const loginCompany = async (req, res) => {
 
 const addAddress = async (req, res) => {
   try {
-    const { companyId, streetAddress, city, postalCode, stateOrRegion, country } =
-      req.body;
+    const {
+      companyId,
+      streetAddress,
+      city,
+      postalCode,
+      stateOrRegion,
+      country,
+    } = req.body;
 
     if (!streetAddress || !city || !postalCode || !country) {
       return res.status(400).json({
@@ -219,7 +229,9 @@ const getAddresses = async (req, res) => {
 const getAdvertisements = async (req, res) => {
   const { companyId } = req.params;
   try {
-    const advertisements = await Advertisements.findAll({ where: { companyId } });
+    const advertisements = await Advertisements.findAll({
+      where: { companyId },
+    });
     res.status(200).json({
       status: 200,
       data: advertisements,

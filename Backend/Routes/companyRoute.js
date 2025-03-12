@@ -10,7 +10,7 @@ const {
 } = require("../Controllers/companyController");
 
 router.post("/add-address", addAddress);
-router.post("/register", registerCompany);
+router.put("/register", registerCompany);
 router.post("/login", loginCompany);
 router.get("", getAllCompanies);
 router.get("/:companyId/addresses", getAddresses);
