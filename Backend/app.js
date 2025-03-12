@@ -10,7 +10,7 @@ require("dotenv").config();
 const userRoute = require("./Routes/userRoute");
 const tokenRoute = require("./Routes/tokenRoute");
 
-// Konzolok, Arcade gépek, pinball gépek
+// Konzolok, Arcade gépek, Pinball gépek
 const consoleRoute = require("./Routes/consoleRoute");
 const arcadeMachineRoute = require("./Routes/arcadeMachineRoute");
 const pinballMachineRoute = require("./Routes/pinballMachineRoute");
@@ -18,10 +18,15 @@ const pinballMachineRoute = require("./Routes/pinballMachineRoute");
 // Cégek
 const companyRoutes = require("./Routes/companyRoute");
 
+// Posztok és kommentek (új)
+const postRoute = require("./Routes/postRoute");
+const commentRoute = require("./Routes/commentRoute");
+
 app.use(express.json());
 app.use(cors());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }));
 
+// Eredeti tábla droppolás és szinkronizálás megtartása
 sequelize
   .query("DROP TABLE IF EXISTS Advertisements;")
   .then(() => {
@@ -30,12 +35,9 @@ sequelize
   .then(() => {
     return sequelize.query("DROP TABLE IF EXISTS Companies;");
   })
-
   .then(() => {
     return sequelize.sync({ force: true });
   })
-
-
   .then(() => {
     console.log("All tables created successfully!");
   })
@@ -43,15 +45,17 @@ sequelize
     console.error("Failed to create tables:", err.message);
   });
 
-  /*
+/*
 app.use(
   cors({
     origin: "http://localhost:4200/",
     methods: "GET, POST, PUT, DELETE",
     credentials: true,
   })
-);*/
+);
+*/
 
+// Meglévő route-ok
 app.use("/users", userRoute);
 app.use("/admins", adminRoute);
 app.use("/tokens", tokenRoute);
@@ -64,6 +68,9 @@ app.use("/pinball", pinballMachineRoute);
 // Cégek
 app.use("/companies", companyRoutes);
 
+// Új route-ok posztokhoz és kommentekhez
+app.use("/posts", postRoute);
+app.use("/comments", commentRoute);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

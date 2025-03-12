@@ -1,12 +1,38 @@
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <div class="forum-container">
     <div class="main-content">
+      <div class="post-create">
+        <input [(ngModel)]="newPost.title" placeholder="Poszt címe" />
+        <textarea [(ngModel)]="newPost.content" placeholder="Poszt tartalma"></textarea>
+        <button (click)="createPost()">Poszt létrehozása</button>
+      </div>
+
+      <div class="post-list">
+        <div *ngFor="let post of posts" class="post">
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.content }}</p>
+          <small>Írta: {{ post.User.username }} - {{ post.createdAt | date }}</small>
+          
+          <div class="comments">
+            <div *ngFor="let comment of post.comments" class="comment">
+              <p>{{ comment.content }}</p>
+              <small>Írta: {{ comment.User.username }} - {{ comment.createdAt | date }}</small>
+              <button (click)="deleteComment(comment.commentId)">Törlés</button>
+            </div>
+            
+            <input [(ngModel)]="newComment[post.postId]" placeholder="Új komment" />
+            <button (click)="createComment(post.postId)">Kommentelés</button>
+          </div>
+          
+          <button (click)="deletePost(post.postId)">Poszt törlése</button>
+        </div>
+      </div>
     </div>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  
     <div class="sidebar">
-        <h3>Videójáték hírek</h3>
-        <ul>
-            <!-- Elfsight RSS Feed -->
+      <h3>Videójáték hírek</h3>
+      <ul>
         <div class="elfsight-app-cb217884-8a82-44ec-962c-c5767780f5d2" data-elfsight-app-lazy></div>
-        </ul>
+      </ul>
     </div>
-</div>
+  </div>

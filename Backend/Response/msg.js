@@ -178,6 +178,29 @@ const upload = {
     imguploaderror: "There was an error while uploading the image.",
   },
 };
+const post = {
+  failure: {
+    unknown: "Hiba történt a poszt feldolgozása közben. Próbálja újra később.",
+    fetcherror: "Hiba történt a posztok lekérdezése közben.",
+    notfound: "A poszt nem található.",
+  },
+  success: {
+    created: "Poszt sikeresen létrehozva!",
+    deleted: "Poszt sikeresen törölve!",
+  },
+};
+
+const comment = {
+  failure: {
+    unknown: "Hiba történt a komment feldolgozása közben. Próbálja újra később.",
+    fetcherror: "Hiba történt a kommentek lekérdezése közben.",
+    notfound: "A komment nem található.",
+  },
+  success: {
+    created: "Komment sikeresen létrehozva!",
+    deleted: "Komment sikeresen törölve!",
+  },
+};
 
 module.exports = {
   user,
@@ -191,4 +214,6 @@ module.exports = {
   data,
   token,
   upload,
+  post,    
+  comment,
 };

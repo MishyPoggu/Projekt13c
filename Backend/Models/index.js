@@ -2,7 +2,6 @@ const connections = require("../Connections/connections");
 
 const Users = require("./users");
 const Administrators = require("./admin");
-
 const Token = require("./token");
 
 // Ezeknek az értéke nem fog változni, csak a szerveren tárolni kell őket
@@ -15,7 +14,11 @@ const Addresses = require("./addresses");
 const Advertisements = require("./advertisements");
 const Companies = require("./companies");
 
-// Összekötések
+// Posztok és kommentek (új)
+const Posts = require("./posts");
+const Comments = require("./comments");
+
+// Összekötések (meglévő)
 Users.hasMany(Token, { foreignKey: "userId" });
 Token.belongsTo(Users, { foreignKey: "userId" });
 
@@ -35,6 +38,11 @@ Advertisements.belongsTo(Companies, {
   onDelete: "CASCADE",
 });
 
+// Új összekötések posztokhoz és kommentekhez
+Posts.belongsTo(Users, { foreignKey: "userId" });
+Comments.belongsTo(Users, { foreignKey: "userId" });
+Comments.belongsTo(Posts, { foreignKey: "postId" });
+
 module.exports = {
   connections,
   ArcadeMachines,
@@ -46,4 +54,6 @@ module.exports = {
   Advertisements,
   Addresses,
   Administrators,
+  Posts,       // Új
+  Comments,    // Új
 };
