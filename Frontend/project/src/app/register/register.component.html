@@ -1,6 +1,9 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div class="container mt-4">
-    <div class="row">
+  <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px;; max-width: 500px; height: 600px;">
+    <div class="text-center mb-4">
+      <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Regisztráció</h2>
+    </div>
+    <div>
       <div class="col-md-6">
         <label for="username" class="form-label">Felhasználónév</label>
         <input type="text" formControlName="username" id="username" class="form-control" required>
@@ -22,8 +25,8 @@
       </div>
 
 
-    <div class="mt-4">
-      <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Regisztráció</button>
-    </div>
+      <div class="text-center mt-5" >
+        <button type="submit" class="btn btn-secondary w-100" [ngClass]="{'btn-success': !registerForm.invalid}" [disabled]="registerForm.invalid">Regisztráció</button>
+      </div>
   </div>
 </form>

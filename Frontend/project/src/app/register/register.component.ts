@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -14,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService,  private router: Router) {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
       passwordHash: ['', Validators.required],
@@ -33,9 +34,9 @@ export class RegisterComponent implements OnInit {
       const user = this.registerForm.value;
       this.userService.register(user).subscribe({
         next: (res) => {
-          // Handle successful registration
+          alert('Sikeres regisztráció!');
           console.log('Registration successful', res);
-          // Redirect or perform other actions
+          this.router.navigate(['/login']);
         },
         error: (err: HttpErrorResponse) => {
           alert('Registration failed: ' + err.message);
