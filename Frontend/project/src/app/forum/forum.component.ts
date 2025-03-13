@@ -46,6 +46,7 @@ export class ForumComponent implements OnInit {
     console.log(this.post)
     this.postService.createPost(this.post).subscribe({
       next:(res:any)=> {
+        window.location.reload();
         alert("Post sikeresen hozzáadva")
       },
       error:(err:HttpErrorResponse)=> {
