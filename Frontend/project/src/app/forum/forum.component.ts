@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PostService } from '../services/post.service';
+import { Post } from '../post';
+import { Environment } from '../environment';
 
 @Component({
   selector: 'app-forum',
@@ -11,15 +14,24 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./forum.component.css']
 })
 export class ForumComponent implements OnInit {
-  posts: any[] = [];
-  newPost = { title: '', content: '' };
-  newComment: { [key: number]: string } = {};
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private postService:PostService) {}
 
+  posts_:Post[] = [];
+  userId :number=0;
   ngOnInit() {
-    this.loadPosts();
     this.loadElfsightScript();
+    this.userId = Environment.userId;
+
+
+    this.postService.getPost().subscribe({
+      next:(res:any)=> {
+        this.posts_ = res.data;
+      },
+      error:(err:HttpErrorResponse)=> {
+        alert(err.message);
+      }
+    })
   }
 
   loadElfsightScript() {
@@ -29,60 +41,30 @@ export class ForumComponent implements OnInit {
     document.body.appendChild(script);
   }
 
-  loadPosts() {
-    this.http.get<any>('http://localhost:3000/posts').subscribe({
-      next: (response) => {
-        this.posts = response.data;
-        this.posts.forEach(post => this.loadComments(post.postId));
+  post:Post= {postId: 0, userId:Number(localStorage.getItem("userId")), title:"", content:"", createdAt:"", User:{username:""}};
+  createPost() { 
+    console.log(this.post)
+    this.postService.createPost(this.post).subscribe({
+      next:(res:any)=> {
+        alert("Post sikeresen hozzáadva")
       },
-      error: (err) => console.error('Hiba a posztok betöltésekor:', err)
-    });
+      error:(err:HttpErrorResponse)=> {
+        alert(err.message);
+      }
+    })
   }
 
-  loadComments(postId: number) {
-    this.http.get<any>(`http://localhost:3000/comments/post/${postId}`).subscribe({
-      next: (response) => {
-        const post = this.posts.find(p => p.postId === postId);
-        if (post) post.comments = response.data;
+  deletePost(postId:number) {
+    this.postService.deletePost(postId).subscribe({
+      next:(res:any)=> {
+        window.location.reload();
       },
-      error: (err) => console.error('Hiba a kommentek betöltésekor:', err)
-    });
+      error:(err:HttpErrorResponse)=> {
+        alert(err.message);
+      }
+    })
   }
 
-  createPost() {
-    const userId = 1; // Hardcoded, autentikációval kell lecserélni
-    this.http.post('http://localhost:3000/posts/create', { userId, ...this.newPost }).subscribe({
-      next: () => {
-        this.newPost = { title: '', content: '' };
-        this.loadPosts();
-      },
-      error: (err) => console.error('Hiba a poszt létrehozásakor:', err)
-    });
-  }
-
-  createComment(postId: number) {
-    const userId = 1; // Hardcoded, autentikációval kell lecserélni
-    const content = this.newComment[postId] || '';
-    this.http.post('http://localhost:3000/comments/create', { userId, postId, content }).subscribe({
-      next: () => {
-        this.newComment[postId] = '';
-        this.loadComments(postId);
-      },
-      error: (err) => console.error('Hiba a komment létrehozásakor:', err)
-    });
-  }
-
-  deletePost(postId: number) {
-    this.http.delete(`http://localhost:3000/posts/${postId}`).subscribe({
-      next: () => this.loadPosts(),
-      error: (err) => console.error('Hiba a poszt törlésekor:', err)
-    });
-  }
-
-  deleteComment(commentId: number) {
-    this.http.delete(`http://localhost:3000/comments/${commentId}`).subscribe({
-      next: () => this.loadPosts(),
-      error: (err) => console.error('Hiba a komment törlésekor:', err)
-    });
-  }
+  
+  
 }

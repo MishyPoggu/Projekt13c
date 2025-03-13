@@ -28,6 +28,7 @@ const createPost = async (req, res) => {
       status: 500,
       message: msg.user.failure.unknown,
       üzenet: uzn.user.failure.unknown,
+      err:error
     });
   }
 };
@@ -36,6 +37,7 @@ const getAllPosts = async (req, res) => {
   try {
     const posts = await Posts.findAll({
       include: [{ model: Users, attributes: ["username"] }],
+      order: [["createdAt", "DESC"]]
     });
     res.status(200).json({
       status: 200,

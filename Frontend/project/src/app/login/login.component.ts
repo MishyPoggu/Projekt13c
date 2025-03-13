@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Environment } from '../environment';
 
 @Component({
   selector: 'app-login',
@@ -34,9 +35,13 @@ export class LoginComponent implements OnInit {
 
       this.userService.login(username, passwordHash).subscribe({
         next: (res) => {
+           Environment.userId = res.userId;
+          console.log(Environment.userId);
+          localStorage.setItem("userId", res.userId);
           alert('Sikeres bejelentkezés!');
           console.log('Login successful', res);
           this.router.navigate(['/body']);
+         
         },
         error: (err: HttpErrorResponse) => {
           alert('Login failed: ' + err.message);

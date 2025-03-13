@@ -2,28 +2,31 @@
 <div class="forum-container">
     <div class="main-content">
       <div class="post-create">
-        <input [(ngModel)]="newPost.title" placeholder="Poszt címe" />
-        <textarea [(ngModel)]="newPost.content" placeholder="Poszt tartalma"></textarea>
-        <button (click)="createPost()">Poszt létrehozása</button>
+        <form #addPostForm="ngForm">
+        <input [(ngModel)]="post.title" placeholder="Poszt címe" name="title" required/>
+        <textarea [(ngModel)]="post.content" placeholder="Poszt tartalma" name="content" required></textarea>
+        <button type="submit" (click)="createPost()" [disabled]="addPostForm.invalid">Poszt létrehozása</button>
+      
+      </form>
       </div>
 
       <div class="post-list">
-        <div *ngFor="let post of posts" class="post">
+        <div *ngFor="let post of posts_" class="post">
           <h3>{{ post.title }}</h3>
           <p>{{ post.content }}</p>
           <small>Írta: {{ post.User.username }} - {{ post.createdAt | date }}</small>
-          
+          <!--
           <div class="comments">
             <div *ngFor="let comment of post.comments" class="comment">
               <p>{{ comment.content }}</p>
               <small>Írta: {{ comment.User.username }} - {{ comment.createdAt | date }}</small>
-              <button (click)="deleteComment(comment.commentId)">Törlés</button>
+              <button >Törlés</button>
             </div>
             
             <input [(ngModel)]="newComment[post.postId]" placeholder="Új komment" />
-            <button (click)="createComment(post.postId)">Kommentelés</button>
+            <button >Kommentelés</button>
           </div>
-          
+          -->
           <button (click)="deletePost(post.postId)">Poszt törlése</button>
         </div>
       </div>
