@@ -36,7 +36,7 @@ sequelize
     return sequelize.query("DROP TABLE IF EXISTS Companies;");
   })
   .then(() => {
-    return sequelize.sync({ force: true });
+    return sequelize.sync({ force: false });
   })
   .then(() => {
     console.log("All tables created successfully!");
