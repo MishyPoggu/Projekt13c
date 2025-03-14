@@ -22,6 +22,7 @@ const user = {
     registered: "User registered successfully!",
     loggedin: "Logged in successfully!",
     deleted: "User deleted successfully!",
+    adminUpdated: "User successfully granted admin privilages",
   },
 };
 
@@ -180,25 +181,25 @@ const upload = {
 };
 const post = {
   failure: {
-    unknown: "Hiba történt a poszt feldolgozása közben. Próbálja újra később.",
-    fetcherror: "Hiba történt a posztok lekérdezése közben.",
-    notfound: "A poszt nem található.",
+    unknown: "An error occurred while processing the post. Please try again later.",
+    fetcherror: "An error occurred while fetching posts.",
+    notfound: "Post not found.",
   },
   success: {
-    created: "Poszt sikeresen létrehozva!",
-    deleted: "Poszt sikeresen törölve!",
+    created: "Post successfully created!",
+    deleted: "Post successfully deleted!",
   },
 };
 
 const comment = {
   failure: {
-    unknown: "Hiba történt a komment feldolgozása közben. Próbálja újra később.",
-    fetcherror: "Hiba történt a kommentek lekérdezése közben.",
-    notfound: "A komment nem található.",
+    unknown: "An error occurred while processing the comment. Please try again later.",
+    fetcherror: "An error occurred while fetching comments.",
+    notfound: "Comment not found.",
   },
   success: {
-    created: "Komment sikeresen létrehozva!",
-    deleted: "Komment sikeresen törölve!",
+    created: "Comment successfully created!",
+    deleted: "Comment successfully deleted!",
   },
 };
 

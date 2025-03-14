@@ -22,6 +22,7 @@ const user = {
     registered: "Felhasználó sikeresen regisztrálva!",
     loggedin: "Sikeres bejelentkezés!",
     deleted: "Felhasználó sikeresen törölve!",
+    adminUpdated: "Felhasználó sikeresen adminisztrátorrá téve!",
   },
 };
 
@@ -177,6 +178,31 @@ const upload = {
   },
 };
 
+const post = {
+  failure: {
+    unknown: "Hiba történt a poszt feldolgozása közben. Próbálja újra később.",
+    fetcherror: "Hiba történt a posztok lekérdezése közben.",
+    notfound: "A poszt nem található.",
+  },
+  success: {
+    created: "Poszt sikeresen létrehozva!",
+    deleted: "Poszt sikeresen törölve!",
+  },
+};
+
+const comment = {
+  failure: {
+    unknown:
+      "Hiba történt a megjegyzés feldolgozása közben. Próbálja újra később.",
+    fetcherror: "Hiba történt a megjegyzések lekérdezése közben.",
+    notfound: "A megjegyzés nem található.",
+  },
+  success: {
+    created: "Megjegyzés sikeresen létrehozva!",
+    deleted: "Megjegyzés sikeresen törölve!",
+  },
+};
+
 module.exports = {
   user,
   company,
@@ -189,4 +215,6 @@ module.exports = {
   data,
   token,
   upload,
+  post,
+  comment,
 };
