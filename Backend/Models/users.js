@@ -28,6 +28,10 @@ const Users = connections.define(
     },
   },
   {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  {
     timestamps: true,
     tableName: "Users",
   }

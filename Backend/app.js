@@ -3,7 +3,6 @@ const mysql = require("mysql2");
 const sequelize = require("./Connections/connections.js");
 const app = express();
 const cors = require("cors");
-const adminRoute = require("./Routes/adminRoute");
 
 require("dotenv").config();
 
@@ -57,7 +56,6 @@ app.use(
 
 // Meglévő route-ok
 app.use("/users", userRoute);
-app.use("/admins", adminRoute);
 app.use("/tokens", tokenRoute);
 
 // Konzolok, Arcade gépek, Pinball gépek

@@ -1,7 +1,6 @@
 const connections = require("../Connections/connections");
 
 const Users = require("./users");
-const Administrators = require("./admin");
 const Token = require("./token");
 
 // Ezeknek az értéke nem fog változni, csak a szerveren tárolni kell őket
@@ -53,7 +52,6 @@ module.exports = {
   Companies,
   Advertisements,
   Addresses,
-  Administrators,
-  Posts,       // Új
-  Comments,    // Új
+  Posts,       
+  Comments,    
 };

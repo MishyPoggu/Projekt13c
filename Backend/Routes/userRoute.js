@@ -3,6 +3,7 @@ const {
   getAllUsers,
   registerUser,
   loginUser,
+  makeAdmin,
   removeUser,
 } = require("../Controllers/userController");
 
@@ -12,5 +13,6 @@ router.get("", getAllUsers);
 router.put("/register", registerUser);
 router.post("/login", loginUser);
 router.delete("/remove", removeUser);
+router.post("/grant-admin", makeAdmin);
 
 module.exports = router;

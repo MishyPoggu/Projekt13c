@@ -274,4 +274,5 @@ module.exports = {
   registerUser,
   loginUser,
   removeUser,
+  makeAdmin
 };
