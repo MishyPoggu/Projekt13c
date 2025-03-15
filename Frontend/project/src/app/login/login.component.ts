@@ -27,7 +27,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  errorMessage: string = '';
+
   onSubmit(): void {
+    this.errorMessage = ''; 
+
     if (this.loginForm.valid) {
       const { username, passwordHash } = this.loginForm.value;
       console.log('Login Form Values:', this.loginForm.value);
@@ -44,7 +48,9 @@ export class LoginComponent implements OnInit {
          
         },
         error: (err: HttpErrorResponse) => {
-          alert('Login failed: ' + err.message);
+          this.errorMessage = 'A felhasználónév/jelszó hibásan lett megadva';
+          console.log('Login failed: ', err.message);
+
         }
       });
     }

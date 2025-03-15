@@ -6,11 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+  isLoggedIn() {
+      throw new Error('Method not implemented.');
+  }
   private baseURL = "http://localhost:3004/users";
+  router: any;
 
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient ) { }
 
   register(user: any): Observable<any> {
     return this.http.put(`${this.baseURL}/register`, user);
@@ -23,6 +27,7 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   saveToken(token: string) {

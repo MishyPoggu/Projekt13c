@@ -1,19 +1,29 @@
 import { Component } from '@angular/core';
+import { UserService } from '../services/user.service'; 
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-head',
   templateUrl: './head.component.html',
+  imports: [CommonModule],
   styleUrls: ['./head.component.css']
 })
 export class HeadComponent {
-  isMenuOpen = false;
-  isUserDropdownOpen = false;
+  constructor(private userService: UserService) {}
 
-    toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen;
-    }
+  logout() {
+    this.userService.logout(); 
+  }
 
-    toggleUserDropdown() {
-        this.isUserDropdownOpen = !this.isUserDropdownOpen;
-    }
+  isMenuOpen = false; 
+  isUserDropdownOpen = false; 
+  isLoggedIn = false; 
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  toggleUserDropdown() {
+    this.isUserDropdownOpen = !this.isUserDropdownOpen;
+  }
 }

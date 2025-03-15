@@ -18,6 +18,8 @@ import { BallyComponent } from './consoles/bally/bally.component';
 import { WilliamsComponent } from './consoles/williams/williams.component';
 import { SternComponent } from './consoles/stern/stern.component';
 import { RaktarComponent } from './raktar/raktar.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
+import { AuthGuard } from './services/authguard.service';
 
 export const appRoutes: Routes = [
   { path: '', component: BodyComponent },
@@ -40,5 +42,6 @@ export const appRoutes: Routes = [
   { path: 'williams', component: WilliamsComponent },
   { path: 'stern', component: SternComponent },
   { path: 'raktar', component: RaktarComponent },
+  { path: 'userprofile', component: UserprofileComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];
