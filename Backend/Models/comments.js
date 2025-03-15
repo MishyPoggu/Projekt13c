@@ -40,4 +40,5 @@ const Comments = connections.define(
 
 Comments.belongsTo(Users, { foreignKey: "userId" });
 Comments.belongsTo(Posts, { foreignKey: "postId" });
+
 module.exports = Comments;

@@ -15,19 +15,20 @@
           <h3>{{ post.title }}</h3>
           <p>{{ post.content }}</p>
           <small>Írta: {{ post.User.username }} - {{ post.createdAt | date }}</small>
-          <!--
-          <div class="comments">
+          <button (click)="deletePost(post.postId)">Poszt törlése</button>
+          
+          <div class="comments-section">
+            <h4>Hozzászólások</h4>
             <div *ngFor="let comment of post.comments" class="comment">
               <p>{{ comment.content }}</p>
               <small>Írta: {{ comment.User.username }} - {{ comment.createdAt | date }}</small>
-              <button >Törlés</button>
+              <button (click)="deleteComment(comment.commentId)">Hozzászólás törlése</button>
             </div>
-            
-            <input [(ngModel)]="newComment[post.postId]" placeholder="Új komment" />
-            <button >Kommentelés</button>
+            <form #addCommentForm="ngForm">
+              <textarea [(ngModel)]="newComment.content" placeholder="Írj egy hozzászólást..." name="content" required></textarea>
+              <button type="submit" (click)="createComment(post.postId)" [disabled]="addCommentForm.invalid">Hozzászólás</button>
+            </form>
           </div>
-          -->
-          <button (click)="deletePost(post.postId)">Poszt törlése</button>
         </div>
       </div>
     </div>

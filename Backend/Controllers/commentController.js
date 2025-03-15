@@ -1,4 +1,4 @@
-const { Comments, Users, Posts } = require("../Models/index");
+const { Comments, Users } = require("../Models/index");
 const msg = require("../Response/msg");
 const uzn = require("../Response/uzenet");
 
@@ -18,8 +18,8 @@ const createComment = async (req, res) => {
     res.status(201).json({
       status: 201,
       commentId: newComment.commentId,
-      message: "Komment sikeresen létrehozva",
-      üzenet: "Komment sikeresen létrehozva",
+      message: "Post created successfully",
+      üzenet: "Hozzászólás sikeresen létrehozva",
     });
   } catch (error) {
     console.error(error);
@@ -27,6 +27,7 @@ const createComment = async (req, res) => {
       status: 500,
       message: msg.user.failure.unknown,
       üzenet: uzn.user.failure.unknown,
+      err: error,
     });
   }
 };
@@ -37,6 +38,7 @@ const getCommentsByPostId = async (req, res) => {
     const comments = await Comments.findAll({
       where: { postId },
       include: [{ model: Users, attributes: ["username"] }],
+      order: [["createdAt", "DESC"]],
     });
     res.status(200).json({
       status: 200,
@@ -59,15 +61,15 @@ const deleteComment = async (req, res) => {
     if (!comment) {
       return res.status(404).json({
         status: 404,
-        message: "Komment nem található",
-        üzenet: "Komment nem található",
+        message: "No comment found",
+        üzenet: "Hozzászólás nem található",
       });
     }
     await comment.destroy();
     res.status(200).json({
       status: 200,
-      message: "Komment sikeresen törölve",
-      üzenet: "Komment sikeresen törölve",
+      message: "Comment successfully deleted",
+      üzenet: "Hozzászólás sikeresen törölve",
     });
   } catch (error) {
     console.error(error);
