@@ -1,6 +1,6 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-
+  <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-successful">{{ successMessage }}</div>
 
   <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px;; max-width: 500px; height: 400px;">
     <div class="text-center mb-4">
