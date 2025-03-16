@@ -23,7 +23,7 @@
 
     <ul class="user-dropdown" [class.open]="isUserDropdownOpen">
       <ng-container *ngIf="isLoggedIn; else guestLinks">
-        <li><a href="/profile">Profil</a></li>
+        <li><a href="/userprofile">Profil</a></li>
         <li><a href="#" (click)="logout(); $event.preventDefault()">Kijelentkezés</a></li>
       </ng-container>
       <ng-template #guestLinks>

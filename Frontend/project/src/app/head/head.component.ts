@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service'; 
 import { CommonModule } from '@angular/common';
 
@@ -8,8 +8,16 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   styleUrls: ['./head.component.css']
 })
-export class HeadComponent {
+export class HeadComponent implements OnInit {
+  isLoggedIn = false; 
+
   constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.userService.isLoggedIn().subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
+  }
 
   logout() {
     this.userService.logout(); 
@@ -17,7 +25,6 @@ export class HeadComponent {
 
   isMenuOpen = false; 
   isUserDropdownOpen = false; 
-  isLoggedIn = false; 
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;

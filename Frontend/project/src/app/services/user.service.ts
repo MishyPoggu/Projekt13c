@@ -1,24 +1,29 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  isLoggedIn() {
-      throw new Error('Method not implemented.');
-  }
   private baseURL = "http://localhost:3004/users";
-  router: any;
+  private router: Router; 
 
+  constructor(private http: HttpClient, router: Router) { 
+    this.router = router; 
+  }
 
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.isAuthenticated()); 
 
-  constructor(private http: HttpClient ) { }
+  isLoggedIn() {
+      return this.isLoggedInSubject.asObservable(); 
+  }
+
 
   register(user: any): Observable<any> {
     return this.http.put(`${this.baseURL}/register`, user);
-
   }
 
   login(username: string, passwordHash: string): Observable<any> {
@@ -27,11 +32,15 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('token');
+    this.isLoggedInSubject.next(false); 
     this.router.navigate(['/login']);
   }
 
-  saveToken(token: string) {
-    localStorage.setItem('token', token)
+
+  saveToken(token: string) { 
+    this.isLoggedInSubject.next(true); 
+
+    localStorage.setItem('token', token);
   }
 
   getToken(): string | null {
@@ -41,5 +50,4 @@ export class UserService {
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
-  
 }
