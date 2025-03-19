@@ -1,0 +1,22 @@
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    background-color: #111; 
+}
+
+iframe {
+    width: 960px;
+    height: 540px;
+    border: none;
+    border-radius: 10px; 
+    box-shadow: 0px 0px 30px 10px rgba(125, 2, 130, 0.8); 
+    transition: all 0.3s ease-in-out;
+}
+
+:fullscreen iframe,
+:-webkit-full-screen iframe,
+:-moz-full-screen iframe {
+    box-shadow: none;
+}
