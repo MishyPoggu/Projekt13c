@@ -1,4 +1,4 @@
-const { Users, Token } = require("../Models/index");
+const { Users, Token, UserMachines, ArcadeMachines, Consoles, PinballMachines } = require("../Models/index");
 const msg = require("../Response/msg");
 const uzn = require("../Response/uzenet");
 
@@ -345,6 +345,121 @@ const updateUser = async (req, res) => {
   }
 };
 
+const addMachineToUser = async (req, res) => {
+  const { userId, machineId, machineType } = req.body;
+
+  if (!userId || !machineId || !machineType) {
+    return res.status(400).json({
+      status: 400,
+      message: "Missing required fields: userId, machineId, machineType",
+    });
+  }
+
+  try {
+    const userMachine = await UserMachines.create({
+      userId,
+      machineId,
+      machineType,
+    });
+
+    res.status(201).json({
+      status: 201,
+      message: "Machine added successfully",
+      userMachine,
+    });
+  } catch (error) {
+    console.error("Error adding machine:", error);
+    res.status(500).json({
+      status: 500,
+      message: "Failed to add machine",
+    });
+  }
+};
+
+const getUserMachines = async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    const userMachines = await UserMachines.findAll({ where: { userId } });
+
+    const arcadeMachineIds = userMachines
+      .filter(machine => machine.machineType === 'ArcadeMachine')
+      .map(machine => machine.machineId);
+
+    const consoleIds = userMachines
+      .filter(machine => machine.machineType === 'Console')
+      .map(machine => machine.machineId);
+
+    const pinballMachineIds = userMachines
+      .filter(machine => machine.machineType === 'PinballMachine')
+      .map(machine => machine.machineId);
+
+    const arcadeMachines = await ArcadeMachines.findAll({
+      where: { id: arcadeMachineIds },
+    });
+
+    const consoles = await Consoles.findAll({
+      where: { id: consoleIds },
+    });
+
+    const pinballMachines = await PinballMachines.findAll({
+      where: { id: pinballMachineIds },
+    });
+
+    res.status(200).json({
+      status: 200,
+      machines: {
+        arcadeMachines,
+        consoles,
+        pinballMachines,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching user machines:", error);
+    res.status(500).json({
+      status: 500,
+      message: "Failed to fetch user machines",
+    });
+  }
+};
+
+
+const removeMachineFromUser = async (req, res) => {
+  const { userId, machineId, machineType } = req.body;
+
+  if (!userId || !machineId || !machineType) {
+    return res.status(400).json({
+      status: 400,
+      message: "Missing required fields: userId, machineId, machineType",
+    });
+  }
+
+  try {
+    const deleted = await UserMachines.destroy({
+      where: { userId, machineId, machineType },
+    });
+
+    if (deleted) {
+      res.status(200).json({
+        status: 200,
+        message: "Machine removed successfully",
+      });
+    } else {
+      res.status(404).json({
+        status: 404,
+        message: "Machine not found in user's collection",
+      });
+    }
+  } catch (error) {
+    console.error("Error removing machine:", error);
+    res.status(500).json({
+      status: 500,
+      message: "Failed to remove machine",
+    });
+  }
+};
+
+
 module.exports = {
   getUser,
   getAllUsers,
@@ -353,4 +468,7 @@ module.exports = {
   removeUser,
   makeAdmin,
   updateUser,
+  addMachineToUser,
+  getUserMachines,
+  removeMachineFromUser
 };

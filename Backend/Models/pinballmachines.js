@@ -20,6 +20,9 @@ const PinballMachines = connections.define("PinballMachine", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  timestamps: true,
+  tableName: "PinballMachines",
 });
 
 module.exports = PinballMachines;

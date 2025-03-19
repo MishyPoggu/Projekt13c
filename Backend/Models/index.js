@@ -3,6 +3,8 @@ const connections = require("../Connections/connections");
 const Users = require("./users");
 const Token = require("./token");
 
+const UserMachines = require("./usermachines");
+
 // Ezeknek az értéke nem fog változni, csak a szerveren tárolni kell őket
 const ArcadeMachines = require("./arcademachines");
 const Consoles = require("./consoles");
@@ -17,9 +19,24 @@ const Companies = require("./companies");
 const Posts = require("./posts");
 const Comments = require("./comments");
 
-// Összekötések (meglévő)
+// Gépek hozzákötése a felhasználókhoz
+Users.belongsToMany(ArcadeMachines, { through: UserMachines, foreignKey: "userId", otherKey: "machineId" });
+ArcadeMachines.belongsToMany(Users, { through: UserMachines, foreignKey: "machineId", otherKey: "userId" });
+
+Users.belongsToMany(Consoles, { through: UserMachines, foreignKey: "userId", otherKey: "machineId" });
+Consoles.belongsToMany(Users, { through: UserMachines, foreignKey: "machineId", otherKey: "userId" });
+
+Users.belongsToMany(PinballMachines, { through: UserMachines, foreignKey: "userId", otherKey: "machineId" });
+PinballMachines.belongsToMany(Users, { through: UserMachines, foreignKey: "machineId", otherKey: "userId" });
+
 Users.hasMany(Token, { foreignKey: "userId" });
 Token.belongsTo(Users, { foreignKey: "userId" });
+
+// Gépek hozzáfűzése
+Users.hasMany(ArcadeMachines, { foreignKey: "userId" });
+Users.hasMany(Consoles, { foreignKey: "userId" });
+Users.hasMany(PinballMachines, { foreignKey: "userId" });
+
 
 Advertisements.belongsTo(Addresses, {
   foreignKey: "addressId",
@@ -53,5 +70,6 @@ module.exports = {
   Advertisements,
   Addresses,
   Posts,       
-  Comments,    
+  Comments,   
+  UserMachines, 
 };
