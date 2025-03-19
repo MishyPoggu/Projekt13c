@@ -1,13 +1,27 @@
+body {
+  background-color: #1a0525;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .forum-container {
   display: flex;
   justify-content: center;
   gap: 20px;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
+  align-items: flex-start;
 }
 
 .main-content {
-  width: 600px; 
+  width: 600px;
   padding: 20px;
   background-color: rgba(56, 22, 102, 0.8);
   border-radius: 20px;
@@ -23,26 +37,33 @@
 .post-create textarea {
   width: 100%;
   margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #29094a;
+  color: white;
 }
 
 .post-create button,
 .comment button,
 .post button {
-  padding: 10px;
-  background-color: #aa2aff;
+  padding: 12px;
+  background: linear-gradient(135deg, #aa2aff, #c84cff);
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition: all 0.3s ease-in-out;
 }
 
 .post-create button:hover,
 .comment button:hover,
 .post button:hover {
-  background-color: #c84cff;
-  box-shadow: 0 0 10px rgba(200, 76, 255, 0.8);
+  background: linear-gradient(135deg, #c84cff, #e37bff);
+  box-shadow: 0 0 15px rgba(200, 76, 255, 0.8);
+  transform: scale(1.05);
 }
 
 .post-list {
@@ -52,20 +73,26 @@
 }
 
 .post {
-  border-bottom: 1px solid #91fcfe;
-  padding: 10px 0;
+  background-color: rgba(45, 12, 84, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-.comments {
-  margin-top: 10px;
-  padding-left: 20px;
+.comments-section {
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(56, 22, 102, 0.8);
+  border-radius: 10px;
 }
 
 .comment {
   border-top: 1px dashed #df4a42;
-  padding: 5px 0;
+  padding: 10px 0;
+  font-size: 12px;
 }
 
+/* Sidebar */
 .sidebar {
   width: 400px;
   background-color: rgba(56, 22, 102, 0.8);
@@ -76,12 +103,12 @@
   z-index: 2;
   color: white;
   font-family: 'Press Start 2P', cursive;
+  text-align: center;
 }
 
 .sidebar h3 {
-  text-align: center;
   font-size: 1.5rem;
-  text-shadow: 
+  text-shadow:
     -2px 0 0 #fdff2a,
     -4px 0 0 #df4a42,
     2px 0 0 #91fcfe,

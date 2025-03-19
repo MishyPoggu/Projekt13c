@@ -17,11 +17,30 @@ import { Comment } from '../comment';
 })
 export class ForumComponent implements OnInit {
 
-  constructor(private http: HttpClient, private postService: PostService, private commentService: CommentService) {}
-
   posts_: Post[] = [];
   userId: number = 0;
-  
+  newComments: { [postId: number]: Comment } = {}; 
+
+  post: Post = { 
+    postId: 0, 
+    userId: Number(localStorage.getItem("userId")), 
+    title: "", 
+    content: "", 
+    createdAt: "", 
+    User: { username: "" } 
+  };
+
+  newComment: Comment = { 
+    commentId: 0, 
+    userId: Number(localStorage.getItem("userId")), 
+    postId: 0, 
+    content: "", 
+    createdAt: "", 
+    User: { username: "" } 
+  };
+
+  constructor(private http: HttpClient, private postService: PostService, private commentService: CommentService) {}
+
   ngOnInit() {
     this.loadElfsightScript();
     this.userId = Environment.userId;
@@ -29,6 +48,18 @@ export class ForumComponent implements OnInit {
     this.postService.getPost().subscribe({
       next: (res: any) => {
         this.posts_ = res.data;
+        this.posts_.forEach(post => {
+          if (!this.newComments[post.postId]) {
+            this.newComments[post.postId] = { 
+              commentId: 0, 
+              userId: Number(localStorage.getItem("userId")), 
+              postId: post.postId, 
+              content: "", 
+              createdAt: "", 
+              User: { username: "" } 
+            };
+          }
+        });
       },
       error: (err: HttpErrorResponse) => {
         alert(err.message);
@@ -43,9 +74,7 @@ export class ForumComponent implements OnInit {
     document.body.appendChild(script);
   }
 
-  post: Post = { postId: 0, userId: Number(localStorage.getItem("userId")), title: "", content: "", createdAt: "", User: { username: "" } };
   createPost() { 
-    console.log(this.post);
     this.postService.createPost(this.post).subscribe({
       next: (res: any) => {
         window.location.reload();
@@ -68,11 +97,13 @@ export class ForumComponent implements OnInit {
     });
   }
 
-  newComment: Comment = { commentId: 0, userId: Number(localStorage.getItem("userId")), postId: 0, content: "", createdAt: "", User: { username: "" } };
   createComment(postId: number) {
-    this.newComment.postId = postId;
-    this.commentService.createComment(this.newComment).subscribe({
-      next: (res: any) => {
+    const commentToSend = this.newComments[postId];
+
+    if (!commentToSend || !commentToSend.content.trim()) return;
+
+    this.commentService.createComment(commentToSend).subscribe({
+      next: () => {
         window.location.reload();
         alert("Hozzászólás sikeresen hozzáadva");
       },
@@ -80,6 +111,8 @@ export class ForumComponent implements OnInit {
         alert(err.message);
       }
     });
+
+    this.newComments[postId].content = ""; 
   }
 
   deleteComment(commentId: number) {

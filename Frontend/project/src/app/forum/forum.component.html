@@ -1,42 +1,43 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <div class="forum-container">
-    <div class="main-content">
-      <div class="post-create">
-        <form #addPostForm="ngForm">
+  <div class="main-content">
+    <div class="post-create">
+      <form #addPostForm="ngForm">
         <input [(ngModel)]="post.title" placeholder="Poszt címe" name="title" required/>
         <textarea [(ngModel)]="post.content" placeholder="Poszt tartalma" name="content" required></textarea>
         <button type="submit" (click)="createPost()" [disabled]="addPostForm.invalid">Poszt létrehozása</button>
-      
       </form>
-      </div>
+    </div>
 
-      <div class="post-list">
-        <div *ngFor="let post of posts_" class="post">
-          <h3>{{ post.title }}</h3>
-          <p>{{ post.content }}</p>
-          <small>Írta: {{ post.User.username }} - {{ post.createdAt | date }}</small>
-          <button (click)="deletePost(post.postId)">Poszt törlése</button>
-          
-          <div class="comments-section">
-            <h4>Hozzászólások</h4>
-            <div *ngFor="let comment of post.comments" class="comment">
-              <p>{{ comment.content }}</p>
-              <small>Írta: {{ comment.User.username }} - {{ comment.createdAt | date }}</small>
-              <button (click)="deleteComment(comment.commentId)">Hozzászólás törlése</button>
-            </div>
-            <form #addCommentForm="ngForm">
-              <textarea [(ngModel)]="newComment.content" placeholder="Írj egy hozzászólást..." name="content" required></textarea>
-              <button type="submit" (click)="createComment(post.postId)" [disabled]="addCommentForm.invalid">Hozzászólás</button>
-            </form>
+    <div class="post-list">
+      <div *ngFor="let post of posts_" class="post">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content }}</p>
+        <small>Írta: {{ post.User.username }} - {{ post.createdAt | date }}</small>
+        <button (click)="deletePost(post.postId)">Poszt törlése</button>
+
+        <div class="comments-section">
+          <h4>Hozzászólások</h4>
+          <div *ngFor="let comment of post.comments" class="comment">
+            <p>{{ comment.content }}</p>
+            <small>Írta: {{ comment.User.username }} - {{ comment.createdAt | date }}</small>
+            <button (click)="deleteComment(comment.commentId)">Hozzászólás törlése</button>
           </div>
+
+          <form #addCommentForm="ngForm">
+            <textarea [(ngModel)]="newComments[post.postId].content" placeholder="Írj egy hozzászólást..." name="content" required></textarea>
+            <button type="submit" (click)="createComment(post.postId)" [disabled]="addCommentForm.invalid">Hozzászólás</button>
+          </form>
+          
         </div>
       </div>
     </div>
-  
-    <div class="sidebar">
-      <h3>Videójáték hírek</h3>
-      <ul>
-        <div class="elfsight-app-cb217884-8a82-44ec-962c-c5767780f5d2" data-elfsight-app-lazy></div>
-      </ul>
-    </div>
   </div>
+
+  <div class="sidebar">
+    <h3>Videójáték hírek</h3>
+    <ul>
+      <div class="elfsight-app-cb217884-8a82-44ec-962c-c5767780f5d2" data-elfsight-app-lazy></div>
+    </ul>
+  </div>
+</div>
