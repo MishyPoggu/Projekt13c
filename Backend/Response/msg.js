@@ -179,9 +179,11 @@ const upload = {
     imguploaderror: "There was an error while uploading the image.",
   },
 };
+
 const post = {
   failure: {
-    unknown: "An error occurred while processing the post. Please try again later.",
+    unknown:
+      "An error occurred while processing the post. Please try again later.",
     fetcherror: "An error occurred while fetching posts.",
     notfound: "Post not found.",
   },
@@ -193,7 +195,8 @@ const post = {
 
 const comment = {
   failure: {
-    unknown: "An error occurred while processing the comment. Please try again later.",
+    unknown:
+      "An error occurred while processing the comment. Please try again later.",
     fetcherror: "An error occurred while fetching comments.",
     notfound: "Comment not found.",
   },
@@ -215,6 +218,6 @@ module.exports = {
   data,
   token,
   upload,
-  post,    
+  post,
   comment,
 };

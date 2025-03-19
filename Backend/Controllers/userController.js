@@ -1,10 +1,10 @@
 const { Users, Token } = require("../Models/index");
+const msg = require("../Response/msg");
+const uzn = require("../Response/uzenet");
+
 const connections = require("../Connections/connections");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
-const msg = require("../Response/msg");
-const uzn = require("../Response/uzenet");
 
 const SECRET_KEY = "1234";
 
@@ -26,6 +26,41 @@ const getAllUsers = async (req, res) => {
       status: 500,
       message: msg.user.failure.fetcherror,
       üzenet: uzn.user.failure.fetcherror,
+    });
+  }
+};
+
+const getUser = async (req, res) => {
+  const { userId, email, username } = req.body;
+
+  try {
+    let user;
+    if (userId) {
+      user = await Users.findOne({ where: { userId: userId } });
+    } else if (email) {
+      user = await Users.findOne({ where: { email } });
+    } else if (username) {
+      user = await Users.findOne({ where: { username } });
+    }
+
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        message: msg.user.failure.idnotfound,
+        üzenet: uzn.user.failure.idnotfound,
+      });
+    }
+
+    res.status(200).json({
+      status: 200,
+      data: user,
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({
+      status: 500,
+      message: msg.user.failure.unknown,
+      üzenet: uzn.user.failure.unknown,
     });
   }
 };
@@ -151,7 +186,7 @@ const loginUser = async (req, res) => {
       { expiresIn: "2h" }
     );
 
-    const expiresAt = new Date(Date.now() + 6 * 60 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000);
     await Token.create({
       userId: user.userId,
       token,
@@ -269,10 +304,53 @@ const removeUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  const { userId, username, age, phoneNumber } = req.body;
+
+  try {
+    const user = await Users.findOne({ where: { userId } });
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        message: "User not found",
+      });
+    }
+
+    if (username && username !== user.username) {
+      const existingUser = await Users.findOne({ where: { username } });
+      if (existingUser) {
+        return res.status(409).json({
+          status: 409,
+          message: "Username is already taken",
+        });
+      }
+    }
+
+    await user.update({
+      username: username !== undefined ? username : user.username,
+      age: age !== undefined ? age : user.age,
+      phoneNumber: phoneNumber !== undefined ? phoneNumber : user.phoneNumber,
+    });
+
+    res.status(200).json({
+      status: 200,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({
+      status: 500,
+      message: "An error occurred while updating the user",
+    });
+  }
+};
+
 module.exports = {
+  getUser,
   getAllUsers,
   registerUser,
   loginUser,
   removeUser,
-  makeAdmin
+  makeAdmin,
+  updateUser,
 };
