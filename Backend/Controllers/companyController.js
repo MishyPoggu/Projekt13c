@@ -115,7 +115,10 @@ const loginCompany = async (req, res) => {
   }
 
   try {
+    console.log("Attempting to find company with email:", contactEmail);
     const company = await Companies.findOne({ where: { contactEmail } });
+    console.log("Retrieved company:", company);
+
     if (!company) {
       return res.status(401).json({
         status: 401,
@@ -124,7 +127,9 @@ const loginCompany = async (req, res) => {
       });
     }
 
+    console.log("Comparing password with hash:", company.passwordHash);
     const isPasswordValid = await bcrypt.compare(
+
       passwordHash,
       company.passwordHash
     );
@@ -155,7 +160,9 @@ const loginCompany = async (req, res) => {
       üzenet: uzn.company.success.loggedin,
     });
   } catch (error) {
-    console.error("Login error:", error.message);
+    console.error("Login error:", error);
+    console.log("Login attempt with:", { contactEmail, passwordHash });
+
 
     res.status(500).json({
       status: 500,

@@ -19,8 +19,8 @@ const createPost = async (req, res) => {
     res.status(201).json({
       status: 201,
       postId: newPost.postId,
-      message: "Post created successfully",
-      üzenet: "Poszt sikeresen létrehozva",
+      message: msg.post.success.created,
+      üzenet: uzn.post.success.created,
     });
   } catch (error) {
     console.error(error);
@@ -63,8 +63,8 @@ const getPostById = async (req, res) => {
     if (!post) {
       return res.status(404).json({
         status: 404,
-        message: "Post not found",
-        üzenet: "Poszt nem található",
+        message: msg.post.failure.notfound,
+        üzenet: uzn.post.failure.notfound,
       });
     }
     res.status(200).json({
@@ -88,15 +88,15 @@ const deletePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({
         status: 404,
-        message: "Post not found",
-        üzenet: "Poszt nem található",
+        message: msg.post.failure.notfound,
+        üzenet: uzn.post.failure.notfound,
       });
     }
     await post.destroy();
     res.status(200).json({
       status: 200,
-      message: "Post successfully deleted",
-      üzenet: "Poszt sikeresen törölve",
+      message: msg.post.success.deleted,
+      üzenet: uzn.post.success.deleted,
     });
   } catch (error) {
     console.error(error);

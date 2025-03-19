@@ -18,8 +18,8 @@ const createComment = async (req, res) => {
     res.status(201).json({
       status: 201,
       commentId: newComment.commentId,
-      message: "Post created successfully",
-      üzenet: "Hozzászólás sikeresen létrehozva",
+      message: msg.comment.success.created,
+      üzenet: uzn.comment.success.created,
     });
   } catch (error) {
     console.error(error);
@@ -61,15 +61,15 @@ const deleteComment = async (req, res) => {
     if (!comment) {
       return res.status(404).json({
         status: 404,
-        message: "No comment found",
-        üzenet: "Hozzászólás nem található",
+        message: msg.comment.failure.notfound,
+        üzenet: uzn.comment.failure.notfound,
       });
     }
     await comment.destroy();
     res.status(200).json({
       status: 200,
-      message: "Comment successfully deleted",
-      üzenet: "Hozzászólás sikeresen törölve",
+      message: msg.comment.success.deleted,
+      üzenet: uzn.comment.success.deleted,
     });
   } catch (error) {
     console.error(error);

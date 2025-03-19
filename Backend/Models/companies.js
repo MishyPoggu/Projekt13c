@@ -35,6 +35,10 @@ const Companies = connections.define(
         isEmail: true,
       },
     },
+    passwordHash: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     websiteUrl: {
       type: DataTypes.STRING,
       allowNull: true,
