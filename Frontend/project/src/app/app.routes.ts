@@ -20,6 +20,7 @@ import { SternComponent } from './consoles/stern/stern.component';
 import { RaktarComponent } from './raktar/raktar.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import { AuthGuard } from './services/authguard.service';
+import { PaddlebattleComponent } from './paddlebattle/paddlebattle.component';
 
 export const appRoutes: Routes = [
   { path: '', component: BodyComponent },
@@ -43,5 +44,6 @@ export const appRoutes: Routes = [
   { path: 'stern', component: SternComponent },
   { path: 'raktar', component: RaktarComponent },
   { path: 'userprofile', component: UserprofileComponent, canActivate: [AuthGuard] },
+  { path: 'paddlebattle', component: PaddlebattleComponent },
   { path: '**', redirectTo: '' }
 ];

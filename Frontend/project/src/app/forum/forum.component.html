@@ -24,10 +24,11 @@
             <button (click)="deleteComment(comment.commentId)">Hozzászólás törlése</button>
           </div>
 
-          <form #addCommentForm="ngForm">
+          <form #addCommentForm="ngForm" (ngSubmit)="createComment(post.postId)">
             <textarea [(ngModel)]="newComments[post.postId].content" placeholder="Írj egy hozzászólást..." name="content" required></textarea>
-            <button type="submit" (click)="createComment(post.postId)" [disabled]="addCommentForm.invalid">Hozzászólás</button>
+            <button type="submit" [disabled]="addCommentForm.invalid">Hozzászólás</button>
           </form>
+          
           
         </div>
       </div>
