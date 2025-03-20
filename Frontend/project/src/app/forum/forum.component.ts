@@ -99,7 +99,7 @@ export class ForumComponent implements OnInit {
 
   createComment(postId: number) {
     const commentToSend = this.newComments[postId];
-
+  
     if (!commentToSend || !commentToSend.content.trim()) return;
   
     this.commentService.createComment(commentToSend).subscribe({
@@ -107,12 +107,12 @@ export class ForumComponent implements OnInit {
         const post = this.posts_.find(p => p.postId === postId);
         if (post) {
           const newComment = res.data || {
-            commentId: res.commentId, 
+            commentId: res.commentId,
             userId: commentToSend.userId,
             postId: postId,
             content: commentToSend.content,
             createdAt: new Date(),
-            User: { username: localStorage.getItem("username") || "ismeretlen" }
+            User: { username: res.data?.User?.username || "ismeretlen" }
           };
   
           if (!post.comments) {
@@ -128,6 +128,7 @@ export class ForumComponent implements OnInit {
       }
     });
   }
+  
 
   deleteComment(commentId: number) {
     this.commentService.deleteComment(commentId).subscribe({

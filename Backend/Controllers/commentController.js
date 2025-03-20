@@ -15,9 +15,15 @@ const createComment = async (req, res) => {
 
   try {
     const newComment = await Comments.create({ userId, postId, content });
+
+    const commentWithUser = await Comments.findOne({
+      where: { commentId: newComment.commentId },
+      include: [{ model: Users, attributes: ["username"] }],
+    });
+
     res.status(201).json({
       status: 201,
-      commentId: newComment.commentId,
+      data: commentWithUser, 
       message: msg.comment.success.created,
       üzenet: uzn.comment.success.created,
     });
@@ -31,6 +37,7 @@ const createComment = async (req, res) => {
     });
   }
 };
+
 
 const getCommentsByPostId = async (req, res) => {
   const { postId } = req.params;
