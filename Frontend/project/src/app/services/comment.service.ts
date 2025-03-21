@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Environment } from '../environment';
 import { Comment } from '../comment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,19 @@ export class CommentService {
   getCommentsEnd = "comments/";
   deleteCommentEnd = "comments/";
 
-  createComment(comment: Comment) {
+  createComment(comment: Comment): Observable<any> {
     return this.http.post(this.baseURL + this.addCommentEnd, comment);
   }
 
-  getComments() {
+  getComments(): Observable<any> {
     return this.http.get(this.baseURL + this.getCommentsEnd);
   }
 
-  deleteComment(commentId: number) {
+  getCommentsByPostId(postId: number): Observable<any> {
+    return this.http.get(`${this.baseURL}comments/post/${postId}`);
+  }
+
+  deleteComment(commentId: number): Observable<any> {
     return this.http.delete(`${this.baseURL}${this.deleteCommentEnd}${commentId}`);
   }
 }

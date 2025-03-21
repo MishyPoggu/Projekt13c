@@ -30,24 +30,16 @@ export class ForumComponent implements OnInit {
     User: { username: "" } 
   };
 
-  newComment: Comment = { 
-    commentId: 0, 
-    userId: Number(localStorage.getItem("userId")), 
-    postId: 0, 
-    content: "", 
-    createdAt: "", 
-    User: { username: "" } 
-  };
-
   constructor(private http: HttpClient, private postService: PostService, private commentService: CommentService) {}
 
   ngOnInit() {
     this.loadElfsightScript();
     this.userId = Environment.userId;
-
+  
     this.postService.getPost().subscribe({
       next: (res: any) => {
         this.posts_ = res.data;
+
         this.posts_.forEach(post => {
           if (!this.newComments[post.postId]) {
             this.newComments[post.postId] = { 
@@ -59,6 +51,15 @@ export class ForumComponent implements OnInit {
               User: { username: "" } 
             };
           }
+
+          this.commentService.getCommentsByPostId(post.postId).subscribe({
+            next: (commentRes: any) => {
+              post.comments = commentRes.data || [];
+            },
+            error: (err: HttpErrorResponse) => {
+              console.error("Error loading comments: ", err.message);
+            }
+          });
         });
       },
       error: (err: HttpErrorResponse) => {
@@ -77,7 +78,19 @@ export class ForumComponent implements OnInit {
   createPost() { 
     this.postService.createPost(this.post).subscribe({
       next: (res: any) => {
-        window.location.reload();
+        window.location.reload()
+        const newPost = res.data;
+        newPost.comments = []; 
+  
+        this.posts_.push(newPost);
+        this.newComments[newPost.postId] = { 
+          commentId: 0, 
+          userId: this.post.userId, 
+          postId: newPost.postId, 
+          content: "", 
+          createdAt: "", 
+          User: { username: "" } 
+        };
         alert("Post sikeresen hozzáadva");
       },
       error: (err: HttpErrorResponse) => {
@@ -85,11 +98,12 @@ export class ForumComponent implements OnInit {
       }
     });
   }
+  
 
   deletePost(postId: number) {
     this.postService.deletePost(postId).subscribe({
-      next: (res: any) => {
-        window.location.reload();
+      next: () => {
+        this.posts_ = this.posts_.filter(post => post.postId !== postId);
       },
       error: (err: HttpErrorResponse) => {
         alert(err.message);
@@ -111,10 +125,10 @@ export class ForumComponent implements OnInit {
             userId: commentToSend.userId,
             postId: postId,
             content: commentToSend.content,
-            createdAt: new Date(),
+            createdAt: new Date().toISOString(),
             User: { username: res.data?.User?.username || "ismeretlen" }
           };
-  
+
           if (!post.comments) {
             post.comments = [];
           }
@@ -128,12 +142,15 @@ export class ForumComponent implements OnInit {
       }
     });
   }
-  
 
   deleteComment(commentId: number) {
     this.commentService.deleteComment(commentId).subscribe({
-      next: (res: any) => {
-        window.location.reload();
+      next: () => {
+        this.posts_.forEach(post => {
+          if (post.comments) {
+            post.comments = post.comments.filter(comment => comment.commentId !== commentId);
+          }
+        });
       },
       error: (err: HttpErrorResponse) => {
         alert(err.message);
