@@ -1,5 +1,7 @@
 {
-"arcadeMachines": [
+    "username": "admin",
+    "adminPassword": "admin",
+    "arcadeMachines": [
     {
         "name": "Space Invaders",
         "release": "1978",

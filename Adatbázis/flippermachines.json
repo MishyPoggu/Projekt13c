@@ -1,0 +1,256 @@
+{
+  "username": "admin",
+  "adminPassword": "admin",
+  "pinballMachines": [
+  {
+      "name": "Godzilla",
+      "release": "2021",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Jurassic Park",
+      "release": "2019",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Medieval Madness",
+      "release": "1997",
+      "publisher": "Williams"
+    },
+    {
+      "name": "Attack from Mars",
+      "release": "1995",
+      "publisher": "Bally"
+    },
+    {
+      "name": "The Addams Family",
+      "release": "1992",
+      "publisher": "Bally"
+    },
+    {
+      "name": "Monster Bash",
+      "release": "1998",
+      "publisher": "Williams"
+    },
+    {
+      "name": "Jaws",
+      "release": "2024",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Iron Maiden",
+      "release": "2018",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Deadpool",
+      "release": "2018",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Twilight Zone",
+      "release": "1993",
+      "publisher": "Bally"
+    },
+    {
+      "name": "Elvira’s House of Horrors",
+      "release": "2019",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Metallica",
+      "release": "2013",
+      "publisher": "Stern"
+    },
+    {
+      "name": "AC/DC",
+      "release": "2012",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Foo Fighters",
+      "release": "2023",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Rush",
+      "release": "2022",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Avengers: Infinity Quest",
+      "release": "2020",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Lord of the Rings",
+      "release": "2003",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Indiana Jones",
+      "release": "1993",
+      "publisher": "Williams"
+    },
+    {
+      "name": "Guardians of the Galaxy",
+      "release": "2017",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Batman 66",
+      "release": "2016",
+      "publisher": "Stern"
+    },
+    {
+      "name": "The Walking Dead",
+      "release": "2014",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Star Trek: The Next Generation",
+      "release": "1993",
+      "publisher": "Williams"
+    },
+    {
+      "name": "Stranger Things",
+      "release": "2019",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Tales of the Arabian Nights",
+      "release": "1996",
+      "publisher": "Williams"
+    },
+    {
+      "name": "The Simpsons Pinball Party",
+      "release": "2003",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Star Trek",
+      "release": "2013",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Cactus Canyon",
+      "release": "1998",
+      "publisher": "Bally"
+    },
+    {
+      "name": "White Water",
+      "release": "1993",
+      "publisher": "Williams"
+    },
+    {
+      "name": "Cirqus Voltaire",
+      "release": "1997",
+      "publisher": "Bally"
+    },
+    {
+      "name": "TRON: Legacy",
+      "release": "2011",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Funhouse",
+      "release": "1990",
+      "publisher": "Willliams"
+    },
+    {
+      "name": "Teenage Mutant Ninja Turtles",
+      "release": "2020",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Theatre of Magic",
+      "release": "1995",
+      "publisher": "Bally"
+    },
+    {
+      "name": "KISS",
+      "release": "2015",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Scared Stiff",
+      "release": "1996",
+      "publisher": "Bally"
+    },
+    {
+      "name": "Led Zeppelin",
+      "release": "2021",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Ghostbusters",
+      "release": "2016",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Creature from the Black Lagoon",
+      "release": "1992",
+      "publisher": "Bally"
+    },
+    {
+      "name": "Pirates of the Caribbean",
+      "release": "2006",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Spider-Man",
+      "release": "2007",
+      "publisher": "Stern"
+    },
+    {
+      "name": "The Beatles",
+      "release": "2018",
+      "publisher": "Stern"
+    },
+    {
+      "name": "The Sopranos",
+      "release": "2005",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Game of Thrones",
+      "release": "2015",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Family Guy",
+      "release": "2007",
+      "publisher": "Stern"
+    },
+    {
+      "name": "X-Men",
+      "release": "2012",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Aerosmith",
+      "release": "2017",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Iron Man",
+      "release": "2010",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Fish Tales",
+      "release": "1992",
+      "publisher": "Williams"
+    },
+    {
+      "name": "Star Wars",
+      "release": "2017",
+      "publisher": "Stern"
+    },
+    {
+      "name": "Munsters",
+      "release": "2019",
+      "publisher": "Stern"
+    }
+  ]
+}
