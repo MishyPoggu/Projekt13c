@@ -30,53 +30,49 @@ const addArcadeMachine = async (req, res) => {
   const transaction = await connections.transaction();
 
   try {
-    if (isAdmin(req)) {
-      const { name, release, genre, publisher } = req.body;
-
-      if (!name || !release || !genre || !publisher) {
-        return res.status(400).json({
-          status: 400,
-          message: msg.data.failure.unfilled,
-          üzenet: uzn.data.failure.unfilled,
-        });
-      }
-
-      console.log("Checking for existing arcade machine...");
-      const existingName = await ArcadeMachines.findOne({
-        where: { name },
-        transaction,
-      });
-      if (existingName) {
-        return res.status(409).json({
-          status: 409,
-          message: msg.arcade.failure.nametaken,
-          üzenet: uzn.arcade.failure.nametaken,
-        });
-      }
-
-      console.log("Creating new arcade machine...");
-      const newArcadeMachine = await ArcadeMachines.create(
-        {
-          name,
-          release,
-          genre,
-          publisher,
-        },
-        { transaction }
-      );
-
-      console.log("New arcade machine created with ID:", newArcadeMachine.id);
-
-      await transaction.commit();
-
-      console.log("Transaction committed successfully.");
-      res.status(201).json({
-        status: 201,
-        arcadeMachineId: newArcadeMachine.id,
-        message: msg.arcade.success.added,
-        üzenet: uzn.arcade.success.added,
+    if (!name || !release || !genre || !publisher) {
+      return res.status(400).json({
+        status: 400,
+        message: msg.data.failure.unfilled,
+        üzenet: uzn.data.failure.unfilled,
       });
     }
+
+    console.log("Checking for existing arcade machine...");
+    const existingName = await ArcadeMachines.findOne({
+      where: { name },
+      transaction,
+    });
+    if (existingName) {
+      return res.status(409).json({
+        status: 409,
+        message: msg.arcade.failure.nametaken,
+        üzenet: uzn.arcade.failure.nametaken,
+      });
+    }
+
+    console.log("Creating new arcade machine...");
+    const newArcadeMachine = await ArcadeMachines.create(
+      {
+        name,
+        release,
+        genre,
+        publisher,
+      },
+      { transaction }
+    );
+
+    console.log("New arcade machine created with ID:", newArcadeMachine.id);
+
+    await transaction.commit();
+
+    console.log("Transaction committed successfully.");
+    res.status(201).json({
+      status: 201,
+      arcadeMachineId: newArcadeMachine.id,
+      message: msg.arcade.success.added,
+      üzenet: uzn.arcade.success.added,
+    });
   } catch (error) {
     console.error("Error occurred:", error);
     if (transaction) await transaction.rollback();
@@ -173,71 +169,61 @@ const addArcadeMachines = async (req, res) => {
   const transaction = await connections.transaction();
 
   try {
-    if (isAdmin(req)) {
-      const { arcadeMachines } = req.body;
+    const { arcadeMachines } = req.body;
 
-      if (
-        !arcadeMachines ||
-        !Array.isArray(arcadeMachines) ||
-        arcadeMachines.length === 0
-      ) {
-        return res.status(400).json({
-          status: 400,
-          message: msg.arcade.failure.invalidformat,
-          üzenet: uzn.arcade.failure.invalidformat,
-        });
-      }
-
-      for (const arcadeData of arcadeMachines) {
-        const { name, release, genre, publisher } = arcadeData;
-
-        if (!name || !release || !publisher) {
-          await transaction.rollback();
-          return res.status(400).json({
-            status: 400,
-            message: msg.arcade.failure.unfilled,
-            üzenet: uzn.arcade.failure.unfilled,
-          });
-        }
-
-        console.log(
-          `Checking for existing arcade machine with name: ${name}...`
-        );
-        const existingArcade = await ArcadeMachines.findOne({
-          where: { name },
-          transaction,
-        });
-        if (existingArcade) {
-          await transaction.rollback();
-          return res.status(409).json({
-            status: 409,
-            message: msg.arcade.failure.thisnametaken(name),
-            üzenet: uzn.arcade.failure.thisnametaken(name),
-          });
-        }
-
-        console.log(`Creating arcade machine: ${name}...`);
-        await ArcadeMachines.create(
-          { name, release, genre, publisher },
-          { transaction }
-        );
-      }
-
-      console.log("All arcade machines added successfully.");
-      await transaction.commit();
-
-      res.status(201).json({
-        status: 201,
-        message: msg.arcade.success.addedall,
-        üzenet: uzn.arcade.success.addedall,
-      });
-    } else {
-      return res.status(403).json({
-        status: 403,
-        message: msg.admin.failure.unauthorized,
-        üzenet: uzn.admin.failure.unauthorized,
+    if (
+      !arcadeMachines ||
+      !Array.isArray(arcadeMachines) ||
+      arcadeMachines.length === 0
+    ) {
+      return res.status(400).json({
+        status: 400,
+        message: msg.arcade.failure.invalidformat,
+        üzenet: uzn.arcade.failure.invalidformat,
       });
     }
+
+    for (const arcadeData of arcadeMachines) {
+      const { name, release, genre, publisher } = arcadeData;
+
+      if (!name || !release || !publisher) {
+        await transaction.rollback();
+        return res.status(400).json({
+          status: 400,
+          message: msg.arcade.failure.unfilled,
+          üzenet: uzn.arcade.failure.unfilled,
+        });
+      }
+
+      console.log(`Checking for existing arcade machine with name: ${name}...`);
+      const existingArcade = await ArcadeMachines.findOne({
+        where: { name },
+        transaction,
+      });
+      if (existingArcade) {
+        await transaction.rollback();
+        return res.status(409).json({
+          status: 409,
+          message: msg.arcade.failure.thisnametaken(name),
+          üzenet: uzn.arcade.failure.thisnametaken(name),
+        });
+      }
+
+      console.log(`Creating arcade machine: ${name}...`);
+      await ArcadeMachines.create(
+        { name, release, genre, publisher },
+        { transaction }
+      );
+    }
+
+    console.log("All arcade machines added successfully.");
+    await transaction.commit();
+
+    res.status(201).json({
+      status: 201,
+      message: msg.arcade.success.addedall,
+      üzenet: uzn.arcade.success.addedall,
+    });
   } catch (error) {
     console.error("Error adding arcade machines:", error);
     res.status(500).json({

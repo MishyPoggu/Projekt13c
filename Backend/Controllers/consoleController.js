@@ -30,52 +30,48 @@ const addConsole = async (req, res) => {
   const transaction = await connections.transaction();
 
   try {
-    if (isAdmin(req)) {
-      const { name, release, publisher } = req.body;
-
-      if (!name || !release || !publisher) {
-        return res.status(400).json({
-          status: 400,
-          message: msg.data.failure.unfilled,
-          üzenet: uzn.data.failure.unfilled,
-        });
-      }
-
-      console.log("Checking for existing console...");
-      const existingName = await Consoles.findOne({
-        where: { name },
-        transaction,
-      });
-      if (existingName) {
-        return res.status(409).json({
-          status: 409,
-          message: msg.console.failure.nametaken,
-          üzenet: uzn.console.failure.nametaken,
-        });
-      }
-
-      console.log("Creating new console...");
-      const newConsole = await Consoles.create(
-        {
-          name,
-          release,
-          publisher,
-        },
-        { transaction }
-      );
-
-      console.log("New console created with ID:", newConsole.id);
-
-      await transaction.commit();
-
-      console.log("Transaction committed successfully.");
-      res.status(201).json({
-        status: 201,
-        consoleId: newConsole.id,
-        message: msg.console.success.added,
-        üzenet: uzn.console.success.added,
+    if (!name || !release || !publisher) {
+      return res.status(400).json({
+        status: 400,
+        message: msg.data.failure.unfilled,
+        üzenet: uzn.data.failure.unfilled,
       });
     }
+
+    console.log("Checking for existing console...");
+    const existingName = await Consoles.findOne({
+      where: { name },
+      transaction,
+    });
+    if (existingName) {
+      return res.status(409).json({
+        status: 409,
+        message: msg.console.failure.nametaken,
+        üzenet: uzn.console.failure.nametaken,
+      });
+    }
+
+    console.log("Creating new console...");
+    const newConsole = await Consoles.create(
+      {
+        name,
+        release,
+        publisher,
+      },
+      { transaction }
+    );
+
+    console.log("New console created with ID:", newConsole.id);
+
+    await transaction.commit();
+
+    console.log("Transaction committed successfully.");
+    res.status(201).json({
+      status: 201,
+      consoleId: newConsole.id,
+      message: msg.console.success.added,
+      üzenet: uzn.console.success.added,
+    });
   } catch (error) {
     console.error("Error occurred:", error);
     if (transaction) await transaction.rollback();
@@ -169,62 +165,54 @@ const addConsoles = async (req, res) => {
   const transaction = await connections.transaction();
 
   try {
-    if (isAdmin(req)) {
-      const { consoles } = req.body;
+    const { consoles } = req.body;
 
-      if (!consoles || !Array.isArray(consoles) || consoles.length === 0) {
-        return res.status(400).json({
-          status: 400,
-          message: msg.console.failure.invalidformat,
-          üzenet: uzn.console.failure.invalidformat,
-        });
-      }
-
-      for (const consoleData of consoles) {
-        const { name, release, publisher } = consoleData;
-
-        if (!name || !release || !publisher) {
-          await transaction.rollback();
-          return res.status(400).json({
-            status: 400,
-            message: msg.console.failure.unfilled,
-            üzenet: uzn.console.failure.unfilled,
-          });
-        }
-
-        console.log(`Checking for existing console with name: ${name}...`);
-        const existingConsole = await Consoles.findOne({
-          where: { name },
-          transaction,
-        });
-        if (existingConsole) {
-          await transaction.rollback();
-          return res.status(409).json({
-            status: 409,
-            message: msg.console.failure.thisnametaken(name),
-            üzenet: uzn.console.failure.thisnametaken(name),
-          });
-        }
-
-        console.log(`Creating console: ${name}...`);
-        await Consoles.create({ name, release, publisher }, { transaction });
-      }
-
-      console.log("All consoles added successfully.");
-      await transaction.commit();
-
-      res.status(201).json({
-        status: 201,
-        message: msg.console.success.addedall,
-        üzenet: uzn.console.success.addedall,
-      });
-    } else {
-      return res.status(403).json({
-        status: 403,
-        message: msg.admin.failure.unauthorized,
-        üzenet: uzn.admin.failure.unauthorized,
+    if (!consoles || !Array.isArray(consoles) || consoles.length === 0) {
+      return res.status(400).json({
+        status: 400,
+        message: msg.console.failure.invalidformat,
+        üzenet: uzn.console.failure.invalidformat,
       });
     }
+
+    for (const consoleData of consoles) {
+      const { name, release, publisher } = consoleData;
+
+      if (!name || !release || !publisher) {
+        await transaction.rollback();
+        return res.status(400).json({
+          status: 400,
+          message: msg.console.failure.unfilled,
+          üzenet: uzn.console.failure.unfilled,
+        });
+      }
+
+      console.log(`Checking for existing console with name: ${name}...`);
+      const existingConsole = await Consoles.findOne({
+        where: { name },
+        transaction,
+      });
+      if (existingConsole) {
+        await transaction.rollback();
+        return res.status(409).json({
+          status: 409,
+          message: msg.console.failure.thisnametaken(name),
+          üzenet: uzn.console.failure.thisnametaken(name),
+        });
+      }
+
+      console.log(`Creating console: ${name}...`);
+      await Consoles.create({ name, release, publisher }, { transaction });
+    }
+
+    console.log("All consoles added successfully.");
+    await transaction.commit();
+
+    res.status(201).json({
+      status: 201,
+      message: msg.console.success.addedall,
+      üzenet: uzn.console.success.addedall,
+    });
   } catch (error) {
     console.error("Error adding consoles:", error);
     res.status(500).json({

@@ -3,8 +3,8 @@ const mysql = require("mysql2");
 const sequelize = require("./Connections/connections.js");
 const app = express();
 const cors = require("cors");
-const fs = require('fs');
-const axios = require('axios');
+const fs = require("fs");
+const axios = require("axios");
 
 require("dotenv").config();
 
@@ -76,33 +76,47 @@ app.use("/comments", commentRoute);
 const loadJsonData = (filePath) => {
   return new Promise((resolve, reject) => {
     console.log(`Attempting to read file: ${filePath}`);
-    fs.readFile(filePath, 'utf-8', (err, data) => {
+    fs.readFile(filePath, "utf-8", (err, data) => {
       if (err) {
         console.error(`Error reading file at ${filePath}:`, err);
-        reject(`Error reading file at ${filePath}: ${err.message}`);
-      } else {
-        console.log('Raw file data:', data);  // Log raw file content
-        try {
-          const jsonData = JSON.parse(data);
-          console.log("Admin data:", jsonData.username, jsonData.adminPassword);  // Log the admin data
-          console.log("Arcade machines:", jsonData.arcadeMachines);  // Log the arcade machines data
-          resolve(jsonData.arcadeMachines);  // Only resolve arcade machines data
-        } catch (parseError) {
-          console.error(`Error parsing JSON data from ${filePath}:`, parseError);
-          reject(`Error parsing JSON data from ${filePath}: ${parseError.message}`);
-        }
+        return reject(`Error reading file: ${err.message}`);
       }
-    });    
+
+      try {
+        const jsonData = JSON.parse(data);
+        console.log("Raw file data:", jsonData);
+
+        // Determine which key to extract based on file name
+        let key;
+        if (filePath.includes("consoles")) {
+          key = "consoles";
+        } else if (filePath.includes("arcademachines")) {
+          key = "arcadeMachines";
+        } else if (filePath.includes("flippermachines")) {
+          key = "pinballMachines";
+        } else {
+          return reject(`Unknown JSON format in file: ${filePath}`);
+        }
+
+        if (!jsonData[key]) {
+          return reject(`Key "${key}" not found in ${filePath}`);
+        }
+
+        console.log(`Loaded ${jsonData[key].length} items from ${filePath}`);
+        resolve(jsonData[key]);
+      } catch (parseError) {
+        console.error(`Error parsing JSON from ${filePath}:`, parseError);
+        reject(`Error parsing JSON: ${parseError.message}`);
+      }
+    });
   });
 };
-
-
 
 const sendDataToAPI = async (data, url) => {
   console.log(`Sending data to ${url}:`, data.length);
   try {
-    const response = await axios.post(url, data);
-    console.log('Data inserted successfully:', response.data);
+    const response = await axios.put(url, data);
+    console.log("Data inserted successfully:", response.data);
   } catch (error) {
     console.error(`Error inserting data into ${url}:`, error.message);
   }
@@ -111,31 +125,42 @@ const sendDataToAPI = async (data, url) => {
 // gépek autómatikus betöltése
 const insertDataIntoDB = async () => {
   try {
-    // Load JSON files from the Adatbázis/ folder
-    console.log('Loading data from JSON files...');
-    
-    const consoles = await loadJsonData('../Adatbázis/consoles.json');
+    console.log("Loading data from JSON files...");
+
+    const consoles = await loadJsonData("../Adatbázis/consoles.json");
     console.log(`Loaded ${consoles.length} consoles from JSON.`);
-    
-    const arcademachines = await loadJsonData('../Adatbázis/arcademachines.json');
+
+    const arcademachines = await loadJsonData(
+      "../Adatbázis/arcademachines.json"
+    );
     console.log(`Loaded ${arcademachines.length} arcade machines from JSON.`);
-    
-    const pinballmachines = await loadJsonData('../Adatbázis/flippermachines.json');
+
+    const pinballmachines = await loadJsonData(
+      "../Adatbázis/flippermachines.json"
+    );
     console.log(`Loaded ${pinballmachines.length} pinball machines from JSON.`);
 
-    // Send data to the corresponding API endpoints
-    await sendDataToAPI(consoles, 'http://localhost:3004/consoles/addMultiple');
-    await sendDataToAPI(arcademachines, 'http://localhost:3004/arcade/addMultiple');
-    await sendDataToAPI(pinballmachines, 'http://localhost:3004/pinball/addMultiple');
+    await sendDataToAPI(
+      { consoles },
+      "http://localhost:3004/consoles/addMultiple"
+    );
+    await sendDataToAPI(
+      { arcadeMachines: arcademachines },
+      "http://localhost:3004/arcade/addMultiple"
+    );
+    await sendDataToAPI(
+      { pinballMachines: pinballmachines },
+      "http://localhost:3004/pinball/addMultiple"
+    );
 
-    console.log('All data inserted successfully!');
+    console.log("All data inserted successfully!");
   } catch (error) {
-    console.error('Error during data insertion:', error.message);
+    console.error("Error during data insertion:", error.message);
   }
 };
-insertDataIntoDB();
 
 const PORT = process.env.PORT || 3004;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  insertDataIntoDB();
 });
