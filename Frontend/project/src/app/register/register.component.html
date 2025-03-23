@@ -1,5 +1,8 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px; max-width: 500px; height: 600px;">
+    <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-successful">{{ successMessage }}</div>
+   
     <div class="text-center mb-4">
       <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Regisztráció</h2>
     </div>

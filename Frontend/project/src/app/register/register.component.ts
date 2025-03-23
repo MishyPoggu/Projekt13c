@@ -29,6 +29,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  errorMessage: string = '';
+  successMessage: string = '';
+
+
   isInvalid(field: string): boolean {
     return this.registerForm.get(field)!.invalid && this.registerForm.get(field)!.touched;
   }
@@ -42,10 +46,12 @@ export class RegisterComponent implements OnInit {
         this.companyService.register(user).subscribe({
           next: (res) => {
             alert('Céges regisztráció sikeres!');
+            this.successMessage = 'Sikeresen regisztrálta a céget!';
             console.log('Company registration successful', res);
             this.router.navigate(['/login']);
           },
           error: (err: HttpErrorResponse) => {
+            this.errorMessage = 'Sikertelenül regisztrálta a cégét';
             alert('Céges regisztráció sikertelen: ' + err.message);
           }
         });
@@ -55,10 +61,12 @@ export class RegisterComponent implements OnInit {
         this.userService.register(user).subscribe({
           next: (res) => {
             alert('Személyes regisztráció sikeres!');
+            this.successMessage = 'Sikeres regisztrált!';
             console.log('User registration successful', res);
             this.router.navigate(['/login']);
           },
           error: (err: HttpErrorResponse) => {
+            this.errorMessage = 'Sikertelenül regisztrálta';
             alert('Személyes regisztráció sikertelen: ' + err.message);
           }
         });
