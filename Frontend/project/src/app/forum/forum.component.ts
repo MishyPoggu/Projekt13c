@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PostService } from '../services/post.service';
 import { Post } from '../post';
-import { Environment } from '../environment';
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../comment';
 
@@ -34,7 +33,7 @@ export class ForumComponent implements OnInit {
 
   ngOnInit() {
     this.loadElfsightScript();
-    this.userId = Number(localStorage.getItem("userId")); // Bejelentkezett felhasználó ID-je
+    this.userId = Number(localStorage.getItem("userId")); 
 
     this.postService.getPost().subscribe({
       next: (res: any) => {

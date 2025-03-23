@@ -21,6 +21,7 @@ export class HeadComponent implements OnInit {
 
   logout() {
     this.userService.logout(); 
+    this.isLoggedIn = false;
   }
 
   isMenuOpen = false; 
