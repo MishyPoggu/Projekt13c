@@ -77,6 +77,24 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.post h3,
+.post p,
+.comment p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.post p,
+.comment p {
+  max-height: 200px;
+  overflow: auto;
 }
 
 .comments-section {
@@ -84,6 +102,8 @@ body {
   padding: 10px;
   background: rgba(56, 22, 102, 0.8);
   border-radius: 10px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .comment {

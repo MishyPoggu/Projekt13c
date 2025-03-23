@@ -32,10 +32,10 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     this.isLoggedInSubject.next(false); 
     this.router.navigate(['/login']);
   }
-
 
   saveToken(token: string) { 
     this.isLoggedInSubject.next(true); 
