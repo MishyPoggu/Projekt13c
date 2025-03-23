@@ -11,15 +11,20 @@
       <label for="toggleRegistration" class="form-check-label">Cégként regisztrálok</label>
     </div>
 
-    <div *ngIf="isCompanyRegistration; else userReg" class="col-md-6">
+
+    <div *ngIf="isCompanyRegistration; else userReg" class="col-md-12">
+    <div class="col-md-6">
       <label for="taxNumber" class="form-label">Adószám</label>
       <input type="text" formControlName="taxNumber" id="taxNumber" class="form-control">
       <small class="text-danger" *ngIf="isInvalid('taxNumber')">Adószám kötelező!</small>
+    </div>
 
+    <div class="col-md-6">
       <label for="companyName" class="form-label">Cég neve</label>
       <input type="text" formControlName="companyName" id="companyName" class="form-control">
       <small class="text-danger" *ngIf="isInvalid('companyName')">Cégnevet kötelező megadni!</small>
     </div>
+  </div>
 
     <ng-template #userReg>
       <div class="col-md-6">
