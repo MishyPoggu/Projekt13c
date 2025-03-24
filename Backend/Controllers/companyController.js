@@ -30,23 +30,9 @@ const registerCompany = async (req, res) => {
   const transaction = await connections.transaction();
 
   try {
-    const {
-      companyName,
-      passwordHash,
-      registrationNumber,
-      taxNumber,
-      contactPerson,
-      contactEmail,
-      websiteUrl,
-    } = req.body;
+    const { companyName, passwordHash, taxNumber, contactEmail } = req.body;
 
-    if (
-      !companyName ||
-      !registrationNumber ||
-      !taxNumber ||
-      !contactEmail ||
-      !passwordHash
-    ) {
+    if (!companyName || !taxNumber || !contactEmail || !passwordHash) {
       return res.status(400).json({
         status: 400,
         message: msg.data.failure.unfilled,
@@ -74,11 +60,8 @@ const registerCompany = async (req, res) => {
       {
         companyName,
         passwordHash: hashedPassword,
-        registrationNumber,
         taxNumber,
-        contactPerson,
         contactEmail,
-        websiteUrl,
       },
       { transaction }
     );
@@ -104,9 +87,9 @@ const registerCompany = async (req, res) => {
 };
 
 const loginCompany = async (req, res) => {
-  const { contactEmail, passwordHash } = req.body;
+  const { taxNumber, passwordHash } = req.body;
 
-  if (!contactEmail || !passwordHash) {
+  if (!taxNumber || !passwordHash) {
     return res.status(400).json({
       status: 400,
       message: msg.company.failure.loginunfilled,
@@ -115,9 +98,7 @@ const loginCompany = async (req, res) => {
   }
 
   try {
-    console.log("Attempting to find company with email:", contactEmail);
-    const company = await Companies.findOne({ where: { contactEmail } });
-    console.log("Retrieved company:", company);
+    const company = await Companies.findOne({ where: { taxNumber } });
 
     if (!company) {
       return res.status(401).json({
@@ -127,9 +108,7 @@ const loginCompany = async (req, res) => {
       });
     }
 
-    console.log("Comparing password with hash:", company.passwordHash);
     const isPasswordValid = await bcrypt.compare(
-
       passwordHash,
       company.passwordHash
     );
@@ -146,7 +125,7 @@ const loginCompany = async (req, res) => {
       {
         companyId: company.companyId,
         companyName: company.companyName,
-        contactEmail: company.contactEmail,
+        taxNumber: company.taxNumber,
       },
       SECRET_KEY,
       { expiresIn: "2h" }
@@ -161,14 +140,29 @@ const loginCompany = async (req, res) => {
     });
   } catch (error) {
     console.error("Login error:", error);
-    console.log("Login attempt with:", { contactEmail, passwordHash });
-
-
     res.status(500).json({
       status: 500,
       message: msg.company.failure.unknown,
       üzenet: uzn.company.failure.unknown,
     });
+  }
+};
+
+const updateCompany = async (req, res) => {
+  const { companyId, registrationNumber, contactPerson, websiteUrl } = req.body;
+  try {
+    const company = await Companies.findByPk(companyId);
+    if (!company) {
+      return res
+        .status(404)
+        .json({ status: 404, message: "Company not found" });
+    }
+    await company.update({ registrationNumber, contactPerson, websiteUrl });
+    res
+      .status(200)
+      .json({ status: 200, message: "Company updated successfully" });
+  } catch (error) {
+    res.status(500).json({ status: 500, message: "Error updating company" });
   }
 };
 
@@ -312,4 +306,5 @@ module.exports = {
   loginCompany,
   addAddress,
   postAdvertisement,
+  updateCompany,
 };

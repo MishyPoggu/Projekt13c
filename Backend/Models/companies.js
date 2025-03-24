@@ -16,7 +16,7 @@ const Companies = connections.define(
     },
     registrationNumber: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
     },
     taxNumber: {
