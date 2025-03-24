@@ -16,6 +16,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegisterComponent implements OnInit {
   isCompanyRegistration: boolean = false;
   registerForm: FormGroup;
+  errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(private formBuilder: FormBuilder, private userService: UserService,private companyService: CompanyService, private router: Router) {
     this.registerForm = this.formBuilder.group({
@@ -29,8 +31,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  errorMessage: string = '';
-  successMessage: string = '';
+
 
 
   isInvalid(field: string): boolean {
@@ -51,7 +52,7 @@ export class RegisterComponent implements OnInit {
             this.router.navigate(['/login']);
           },
           error: (err: HttpErrorResponse) => {
-            this.errorMessage = 'Sikertelenül regisztrálta a cégét';
+            this.errorMessage = 'Sikertelenül regisztrálta a cégét!';
             alert('Céges regisztráció sikertelen: ' + err.message);
           }
         });
@@ -66,7 +67,7 @@ export class RegisterComponent implements OnInit {
             this.router.navigate(['/login']);
           },
           error: (err: HttpErrorResponse) => {
-            this.errorMessage = 'Sikertelenül regisztrálta';
+            this.errorMessage = 'Sikertelenül regisztrált!';
             alert('Személyes regisztráció sikertelen: ' + err.message);
           }
         });

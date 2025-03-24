@@ -33,6 +33,7 @@ export class CompanyService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('companyId');
     this.isLoggedInSubject.next(false); 
     this.router.navigate(['/login']);
   }

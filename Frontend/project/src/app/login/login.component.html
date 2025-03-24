@@ -1,23 +1,37 @@
+<div class="bg">
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-  <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-successful">{{ successMessage }}</div>
-
-  <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px;; max-width: 500px; height: 400px;">
+  <div style="text-align: center;" *ngIf="successMessage" class="alert alert-successful">{{ successMessage }}</div>
+  
+  <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px; max-width: 500px; min-height: 600px;">
+    
     <div class="text-center mb-4">
       <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Bejelentkezés</h2>
     </div>
-    <div>
-      <label for="username" class="form-label">Felhasználónév</label>
-      <input type="text" formControlName="username" id="username" class="form-control" required>
-      <small class="text-danger" *ngIf="loginForm.get('username')!.invalid && loginForm.get('username')!.touched">Felhasználónevet kötelező megadni!</small>
+
+    <div class="form-check form-switch text-center mb-3">
+      <input class="form-check-input" type="checkbox" id="companyLoginSwitch" (change)="toggleLoginType()">
+      <label class="form-check-label" for="companyLoginSwitch">
+        {{ isCompanyLogin ? 'Céges bejelentkezés' : 'Felhasználói bejelentkezés' }}
+      </label>
     </div>
+
+    <div class="form-group">
+      <label for="hitelesitő">{{ isCompanyLogin ? 'Adószám' : 'Felhasználónév' }}</label>
+      <input type="text" formControlName="hitelesitő" id="hitelesitő" class="form-control" required>
+      <small class="text-danger" *ngIf="loginForm.get('hitelesitő')!.invalid && loginForm.get('hitelesitő')!.touched">
+        {{ isCompanyLogin ? 'Adószám megadása kötelező!' : 'Felhasználónév megadása kötelező!' }}
+      </small>
+    </div>
+
     <div class="mt-3">
       <label for="password" class="form-label">Jelszó</label>
       <input type="password" formControlName="passwordHash" id="passwordHash" class="form-control" required>
       <small class="text-danger" *ngIf="loginForm.get('passwordHash')!.invalid && loginForm.get('passwordHash')!.touched">Jelszót kötelező megadni!</small>
     </div>
-    <div class="text-center mt-5" >
+    <div class="text-center mt-5">
       <button type="submit" class="btn btn-secondary w-100" [ngClass]="{'btn-success': !loginForm.invalid}" [disabled]="loginForm.invalid">Bejelentkezés</button>
     </div>
   </div>
 </form>
+</div>

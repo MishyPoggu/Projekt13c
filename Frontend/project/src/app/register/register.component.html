@@ -1,16 +1,20 @@
+<div class="bg">
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px; max-width: 500px; height: 600px;">
-    <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-    <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-successful">{{ successMessage }}</div>
+  <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-successful">{{ successMessage }}</div>
+
+  <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px; max-width: 500px; min-height: 600px;">
    
     <div class="text-center mb-4">
       <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Regisztráció</h2>
     </div>
-    <div class="form-check">
-      <input type="checkbox" id="toggleRegistration" (change)="toggleRegistrationType()" class="form-check-input">
-      <label for="toggleRegistration" class="form-check-label">Cégként regisztrálok</label>
+    
+    <div class="form-check form-switch text-center mb-3">
+      <input class="form-check-input" type="checkbox" id="toggleRegistration" (change)="toggleRegistrationType()">
+      <label class="form-check-label" for="toggleRegistration">
+        {{ isCompanyRegistration ? 'Céges regisztráció' : 'Felhasználói regisztráció' }}
+      </label>
     </div>
-
 
     <div *ngIf="isCompanyRegistration; else userReg" class="col-md-12">
     <div class="col-md-6">
@@ -55,3 +59,4 @@
     </div>
   </div>
 </form>
+</div>
