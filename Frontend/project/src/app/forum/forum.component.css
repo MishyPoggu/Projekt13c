@@ -18,6 +18,7 @@ body {
   width: 100%;
   margin: 0 auto;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .main-content {
@@ -137,6 +138,48 @@ body {
 
 .sidebar .elfsight-app-cb217884-8a82-44ec-962c-c5767780f5d2 {
   margin-top: 10px;
+}
+
+.jump-to-news {
+  display: none;  
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);  
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+@media (max-width: 800px) {
+  .forum-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar {
+    width: 100%;
+    order: 1; 
+    margin-top: 20px;
+  }
+
+  .main-content {
+    width: 100%;
+  }
+
+  .jump-to-news {
+    display: block; 
+  }
+  
+  .jump-to-news:hover {
+    background-color: rgba(0, 0, 0, 0.8); 
+  }
 }
 
 @keyframes blink {
