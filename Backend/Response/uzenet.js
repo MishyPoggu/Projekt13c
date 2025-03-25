@@ -17,6 +17,7 @@ const user = {
     logininvalid: "Érvénytelen e-mail cím/felhasználónév vagy jelszó.",
 
     idoremail: "Adjon meg vagy egy felhasználó id-jét, vagy e-mail címét.",
+    machineAlreadyExists: "Ez a gép már szerepel a könyvtárában.",
   },
   success: {
     registered: "Felhasználó sikeresen regisztrálva!",

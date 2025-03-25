@@ -17,6 +17,7 @@ const user = {
     logininvalid: "Invalid email/username or password.",
 
     idoremail: "Provide either user id or email address.",
+    machineAlreadyExists: "This machine is already in your library.",
   },
   success: {
     registered: "User registered successfully!",

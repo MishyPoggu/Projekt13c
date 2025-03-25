@@ -1,4 +1,11 @@
-const { Users, Token, UserMachines, ArcadeMachines, Consoles, PinballMachines } = require("../Models/index");
+const {
+  Users,
+  Token,
+  UserMachines,
+  ArcadeMachines,
+  Consoles,
+  PinballMachines,
+} = require("../Models/index");
 const msg = require("../Response/msg");
 const uzn = require("../Response/uzenet");
 
@@ -354,8 +361,23 @@ const addMachineToUser = async (req, res) => {
       message: "Missing required fields: userId, machineId, machineType",
     });
   }
+  console.log("Received Data:", { userId, machineId, machineType });
 
   try {
+    // Check if the machine is already in the user's library
+    const existingEntry = await UserMachines.findOne({
+      where: { userId, machineId, machineType },
+    });
+
+    if (existingEntry) {
+      return res.status(409).json({
+        // 409 Conflict
+        status: 409,
+        message: "Machine already exists in the user's library",
+      });
+    }
+
+    // Add new entry
     const userMachine = await UserMachines.create({
       userId,
       machineId,
@@ -378,31 +400,36 @@ const addMachineToUser = async (req, res) => {
 
 const getUserMachines = async (req, res) => {
   try {
-    const userMachines = await UserMachines.findAll({ where: {userId: req.params.id } });
-
-    const arcadeMachineIds = userMachines
-      .filter(machine => machine.machineType === 'ArcadeMachine')
-      .map(machine => machine.machineId);
-
-    const consoleIds = userMachines
-      .filter(machine => machine.machineType === 'Console')
-      .map(machine => machine.machineId);
-
-    const pinballMachineIds = userMachines
-      .filter(machine => machine.machineType === 'PinballMachine')
-      .map(machine => machine.machineId);
-
-    const arcadeMachines = await ArcadeMachines.findAll({
-      where: { id: arcadeMachineIds },
+    const userMachines = await UserMachines.findAll({
+      where: { userId: req.params.id },
+      attributes: ["machineId", "machineType"],
     });
 
-    const consoles = await Consoles.findAll({
-      where: { id: consoleIds },
+    // Group machine IDs by type
+    const machineGroups = {
+      ArcadeMachine: [],
+      Console: [],
+      PinballMachine: [],
+    };
+
+    userMachines.forEach(({ machineId, machineType }) => {
+      machineGroups[machineType].push(machineId);
     });
 
-    const pinballMachines = await PinballMachines.findAll({
-      where: { id: pinballMachineIds },
-    });
+    // Fetch all machine details in parallel
+    const [arcadeMachines, consoles, pinballMachines] = await Promise.all([
+      machineGroups.ArcadeMachine.length
+        ? ArcadeMachines.findAll({ where: { id: machineGroups.ArcadeMachine } })
+        : [],
+      machineGroups.Console.length
+        ? Consoles.findAll({ where: { id: machineGroups.Console } })
+        : [],
+      machineGroups.PinballMachine.length
+        ? PinballMachines.findAll({
+            where: { id: machineGroups.PinballMachine },
+          })
+        : [],
+    ]);
 
     res.status(200).json({
       status: 200,
@@ -417,11 +444,10 @@ const getUserMachines = async (req, res) => {
     res.status(500).json({
       status: 500,
       message: "Failed to fetch user machines",
-      err:error
+      error,
     });
   }
 };
-
 
 const removeMachineFromUser = async (req, res) => {
   const { userId, machineId, machineType } = req.body;
@@ -458,7 +484,6 @@ const removeMachineFromUser = async (req, res) => {
   }
 };
 
-
 module.exports = {
   getUser,
   getAllUsers,
@@ -469,5 +494,5 @@ module.exports = {
   updateUser,
   addMachineToUser,
   getUserMachines,
-  removeMachineFromUser
+  removeMachineFromUser,
 };
