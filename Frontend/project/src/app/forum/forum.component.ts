@@ -166,4 +166,11 @@ export class ForumComponent implements OnInit {
       alert("Nem törölheted más hozzászólását!");
     }
   }
+  scrollToNews() {
+    const newsSection = document.getElementById("news");
+    if (newsSection) {
+      newsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+  
 }

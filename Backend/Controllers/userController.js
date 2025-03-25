@@ -377,10 +377,8 @@ const addMachineToUser = async (req, res) => {
 };
 
 const getUserMachines = async (req, res) => {
-  const { userId } = req.body;
-
   try {
-    const userMachines = await UserMachines.findAll({ where: { userId } });
+    const userMachines = await UserMachines.findAll({ where: {userId: req.params.id } });
 
     const arcadeMachineIds = userMachines
       .filter(machine => machine.machineType === 'ArcadeMachine')
@@ -419,6 +417,7 @@ const getUserMachines = async (req, res) => {
     res.status(500).json({
       status: 500,
       message: "Failed to fetch user machines",
+      err:error
     });
   }
 };

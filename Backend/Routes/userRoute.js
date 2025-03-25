@@ -22,7 +22,7 @@ router.post("/login", loginUser);
 router.delete("/remove", removeUser);
 router.post("/grant-admin", makeAdmin);
 router.post("/update", updateUser);
-router.get("/machines", getUserMachines);
+router.get("/machines/:id", getUserMachines);
 router.post("/machines/add", addMachineToUser);
 router.delete("/machines/remove", removeMachineFromUser);
 

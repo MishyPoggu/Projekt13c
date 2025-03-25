@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router'; 
+import { Arcade } from '../arcade';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,21 @@ export class UserService {
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+
+  getUserMachines(userID:number) {
+    return this.http.get(`${this.baseURL}/machines/${userID}`)
+  }
+
+  addMachineToUser(machine:Arcade, machineType:string) {
+   const data= {
+        userId: Number(localStorage.getItem("userId")),
+        machineId: machine.id,
+        machineType:machineType
+    }
+    console.log(data)
+    //alert("megnyomva")
+    return this.http.post(`${this.baseURL}/machines/add`, data)
   }
 }

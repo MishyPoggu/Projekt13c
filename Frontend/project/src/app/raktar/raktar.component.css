@@ -36,3 +36,17 @@
   border-radius: 5px;
   box-shadow: 0 0 15px #e20000;
   }
+
+  table tr td {
+    padding: 20px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  table {
+    width: 100%;
+  }
+  table tr th, table tr td {
+    text-align: center;
+  }

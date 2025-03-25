@@ -4,6 +4,8 @@ import { Arcade } from '../arcade';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../services/user.service';
+import { UserMachine } from '../user-machine';
 
 @Component({
   selector: 'app-raktar',
@@ -32,9 +34,42 @@ export class RaktarComponent implements OnInit, AfterViewInit {
   uniquePublishers: string[] = [];
   uniqueGenres: string[] = [];
 
-  constructor(private arcadeService: ArcadeService) { }
+  constructor(private arcadeService: ArcadeService, private userService:UserService) { }
+
+  addMachineToUser(arcade:Arcade, machineType:string) {
+    this.userService.addMachineToUser(arcade, machineType).subscribe({
+      next:(res:any)=> {
+        window.location.reload();
+      },
+      error:(err:HttpErrorResponse)=> {
+        alert(err.message)
+      }
+    })
+  }
+
+  userMachines:any;
+  arcadeMachines:any;
+  consolesMachines:any;
+  pinball:any;
 
   ngOnInit(): void {
+
+    this.userService.getUserMachines(Number(localStorage.getItem("userId"))).subscribe({
+      next:(res:any)=> {
+        this.userMachines = res.machines;
+        this.arcadeMachines=this.userMachines.arcadeMachines;
+        this.consolesMachines=this.userMachines.consoles;
+        this.pinball=this.userMachines.pinballMachines;
+      },
+      error:(err:HttpErrorResponse)=> {
+        alert(err.message)
+      }
+    })
+
+
+
+
+
     this.arcadeService.getAllArcade().subscribe({
       next: (res: any) => {
         this.arcades = res.data;
