@@ -15,25 +15,34 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: 400px;
-  margin: 0 auto;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.container label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.9rem;
 }
 
 .container .row {
   display: flex;
   flex-direction: column;
   width: 100%;
-}
+} 
 
 .container .col-md-6 {
   width: 100%; 
   margin-bottom: 15px; 
 }
 
-
-button.btn-primary {
-  font-size: 1.2rem; 
-  padding: 10px 20px; 
+.container .col-mt-5 {
   width: 100%; 
+  margin-bottom: 15px; 
 }

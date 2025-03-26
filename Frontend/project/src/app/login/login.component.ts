@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { CompanyService } from '../services/companies.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Environment } from '../environment';
 
 @Component({
   selector: 'app-login',
@@ -32,40 +31,52 @@ export class LoginComponent implements OnInit {
 
   toggleLoginType(): void {
     this.isCompanyLogin = !this.isCompanyLogin;
+    this.loginForm.reset()
     this.loginForm.get('hitelesitő')?.setValidators(Validators.required);
     this.loginForm.get('passwordHash')?.setValidators(Validators.required);
     this.loginForm.get('hitelesitő')?.updateValueAndValidity();
     this.loginForm.get('passwordHash')?.updateValueAndValidity();
   }
 
-  onSubmit(): void {
-    this.errorMessage = ''; 
-    this.successMessage = '';
+    onSubmit(): void {
+      this.errorMessage = ''; 
+      this.successMessage = '';
 
-    if (this.loginForm.valid) {
-      const { hitelesitő, passwordHash } = this.loginForm.value;
-      console.log('Belépési próbálkozás', this.loginForm.value);
+      if (this.loginForm.valid) {
+        let { hitelesitő, passwordHash } = this.loginForm.value;
 
-      const loginService = this.isCompanyLogin ? this.companyService : this.userService;
-
-      this.userService.login(hitelesitő, passwordHash).subscribe({
-        next: (res) => {
-           Environment.userId = res.userId;
-          console.log(Environment.userId);
-          localStorage.setItem("userId", res.userId);
-          this.successMessage = 'Sikeres bejelentkezés!';
-          console.log('Login successful', res);
-          this.userService.saveToken(res.token);
-          this.router.navigate(['/body']);
-
-         
-        },
-        error: (err: HttpErrorResponse) => {
-          this.errorMessage = 'A bejelentkezési adatok hibásan lettek megadva!';
-          console.log('Login failed: ', err.message);
-
+        if (this.isCompanyLogin) {
+          hitelesitő = this.loginForm.value.taxNumber;
+        } else {
+          hitelesitő = this.loginForm.value.username;
         }
-      });
+        
+        console.log('Belépési próbálkozás', this.loginForm.value);
+
+        const loginService = this.isCompanyLogin ? this.companyService : this.userService;
+
+        loginService.login(hitelesitő, passwordHash).subscribe({
+          next: (res) => {
+            if (this.isCompanyLogin){
+              localStorage.setItem('companyId', res.companyId);
+              console.log('Sikeresen bejelentkezett cégként', res.companyId);
+              this.companyService.saveToken(res.token);
+            }else {
+              localStorage.setItem("userId", res.userId);
+              console.log('Sikeres személyes bejelentkezés', res.userId);
+              this.userService.saveToken(res.token);
+            }
+            this.successMessage = 'Sikeres bejelentkezés!';
+             this.router.navigate(['/body']);
+
+          
+          },
+          error: (err: HttpErrorResponse) => {
+            this.errorMessage = 'A bejelentkezési adatok hibásan lettek megadva!';
+            console.log('Login failed: ', err.message);
+
+          }
+        });
+      }
     }
   }
-}

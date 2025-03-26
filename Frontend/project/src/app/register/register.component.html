@@ -4,6 +4,7 @@
   <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-successful">{{ successMessage }}</div>
 
   <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px; max-width: 500px; min-height: 600px;">
+    
    
     <div class="text-center mb-4">
       <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Regisztráció</h2>
@@ -28,6 +29,12 @@
       <input type="text" formControlName="companyName" id="companyName" class="form-control">
       <small class="text-danger" *ngIf="isInvalid('companyName')">Cégnevet kötelező megadni!</small>
     </div>
+
+    <div class="col-md-6">
+      <label for="contactEmail" class="form-label">Email</label>
+      <input type="contactEmail" formControlName="contactEmail" id="contactEmail" class="form-control" required>
+      <small class="text-danger" *ngIf="isInvalid('contactEmail')">E-mail címet helyesen megadni kötelező!</small>
+    </div>
   </div>
 
     <ng-template #userReg>
@@ -36,13 +43,14 @@
         <input type="text" formControlName="username" id="username" class="form-control" required>
         <small class="text-danger" *ngIf="isInvalid('username')">Felhasználónevet kötelező megadni!</small>
       </div>
-    </ng-template>
+
 
     <div class="col-md-6">
       <label for="email" class="form-label">Email</label>
       <input type="email" formControlName="email" id="email" class="form-control" required>
       <small class="text-danger" *ngIf="isInvalid('email')">E-mail címet helyesen megadni kötelező!</small>
     </div>
+  </ng-template>
 
     <div class="col-md-6">
       <label for="passwordHash" class="form-label">Jelszó</label>
@@ -57,6 +65,9 @@
         {{ isCompanyRegistration ? 'Céges Regisztráció' : 'Regisztráció' }}
       </button>
     </div>
+            <div class="text-left mt-5">
+      <a href="/login">Már van fiókja?</a>
+            </div>
   </div>
 </form>
 </div>

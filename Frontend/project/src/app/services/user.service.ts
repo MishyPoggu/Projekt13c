@@ -10,9 +10,8 @@ import { Arcade } from '../arcade';
 })
 export class UserService {
   private baseURL = "http://localhost:3004/users";
-  private router: Router; 
 
-  constructor(private http: HttpClient, router: Router) { 
+  constructor(private http: HttpClient,private router: Router) { 
     this.router = router; 
   }
 
@@ -27,8 +26,8 @@ export class UserService {
     return this.http.put(`${this.baseURL}/register`, user);
   }
 
-  login(username: string, passwordHash: string): Observable<any> {
-    return this.http.post(`${this.baseURL}/login`, { username, passwordHash });
+  login(hitelesitő: string, passwordHash: string): Observable<any> {
+    return this.http.post(`${this.baseURL}/login`, { hitelesitő, passwordHash });
   }
 
   logout() {
@@ -40,7 +39,6 @@ export class UserService {
 
   saveToken(token: string) { 
     this.isLoggedInSubject.next(true); 
-
     localStorage.setItem('token', token);
   }
 

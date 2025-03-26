@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   min-height: 89.7vh;
-  background-size: cover;
+  background-size:  cover;
   background-position: center; 
   background-repeat: no-repeat; 
   background-attachment: fixed; 
@@ -12,38 +12,38 @@
   background-image:linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1)), url('/assets/log_reg.jpg'); /* https://wallpaperaccess.com/retro-arcade */
 }
 
-.login {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex; 
-    flex-direction: column; 
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
 }
 
-.login button {
-    padding: 1rem; 
-    font-size: 1.2rem; 
+
+.container label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.9rem;
 }
 
-  .login label {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  
-  .login input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .login button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-  }
+.container .row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+} 
+
+.container .col-md-6 {
+  width: 100%; 
+  margin-bottom: 15px; 
+}
+
+.container .col-mt-5 {
+  width: 100%; 
+  margin-bottom: 15px; 
+}

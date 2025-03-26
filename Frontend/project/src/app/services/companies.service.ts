@@ -10,9 +10,8 @@ import { Router } from '@angular/router';
 export class CompanyService {
 
   private baseURL = "http://localhost:3004/companies";
-  private router: Router; 
 
-  constructor(private http: HttpClient, router: Router) { 
+  constructor(private http: HttpClient, private router: Router) { 
     this.router = router; 
   }
 
@@ -27,8 +26,8 @@ export class CompanyService {
     return this.http.put(`${this.baseURL}/register`, company);
   }
 
-  login(username: string, passwordHash: string): Observable<any> {
-    return this.http.post(`${this.baseURL}/login`, { username, passwordHash });
+  login(hitelesitő: string, passwordHash: string): Observable<any> {
+    return this.http.post(`${this.baseURL}/login`, { hitelesitő, passwordHash });
   }
 
   logout() {
@@ -39,10 +38,13 @@ export class CompanyService {
   }
 
 
-  saveToken(token: string) { 
+  saveToken(token: string, companyId?: string): void { 
     this.isLoggedInSubject.next(true); 
-
     localStorage.setItem('token', token);
+    
+    if (companyId) {
+      localStorage.setItem('companyId', companyId);
+    }
   }
 
   getToken(): string | null {
@@ -50,6 +52,6 @@ export class CompanyService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+      return !!this.getToken() && !!localStorage.getItem('companyId');
   }
 }

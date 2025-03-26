@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit {
       username: ['', Validators.required],
       passwordHash: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      contactEmail: ['', [Validators.required, Validators.email]],
       taxNumber: [''],
       companyName: ['']
     });
@@ -48,6 +49,7 @@ export class RegisterComponent implements OnInit {
           next: (res) => {
             alert('Céges regisztráció sikeres!');
             this.successMessage = 'Sikeresen regisztrálta a céget!';
+
             console.log('Company registration successful', res);
             this.router.navigate(['/login']);
           },
@@ -57,7 +59,7 @@ export class RegisterComponent implements OnInit {
           }
         });
       } 
-      //Személyi regisztráció
+      //Személyes regisztráció
       else {
         this.userService.register(user).subscribe({
           next: (res) => {
@@ -77,16 +79,19 @@ export class RegisterComponent implements OnInit {
 
   toggleRegistrationType() {
     this.isCompanyRegistration = !this.isCompanyRegistration;
+    this.registerForm.reset();
 
     if (this.isCompanyRegistration) {
       this.registerForm.get('taxNumber')?.setValidators(Validators.required);
       this.registerForm.get('companyName')?.setValidators(Validators.required);
-      this.registerForm.get('email')?.setValidators([Validators.required, Validators.email]);
+      this.registerForm.get('contactEmail')?.setValidators([Validators.required, Validators.email]);
       this.registerForm.get('passwordHash')?.setValidators(Validators.required);
       this.registerForm.get('username')?.clearValidators();
+      this.registerForm.get('email')?.clearValidators();
     } else {
       this.registerForm.get('taxNumber')?.clearValidators();
-      this.registerForm.get('companyName')?.clearValidators();
+      this.registerForm.get('companyName')?.clearValidators();  
+      this.registerForm.get('contactEmail')?.clearValidators();
       this.registerForm.get('email')?.setValidators([Validators.required, Validators.email]);
       this.registerForm.get('passwordHash')?.setValidators(Validators.required);
       this.registerForm.get('username')?.setValidators(Validators.required);
@@ -94,6 +99,7 @@ export class RegisterComponent implements OnInit {
 
     this.registerForm.get('taxNumber')?.updateValueAndValidity();
     this.registerForm.get('companyName')?.updateValueAndValidity();
+    this.registerForm.get('contactEmail')?.updateValueAndValidity();
     this.registerForm.get('email')?.updateValueAndValidity();
     this.registerForm.get('passwordHash')?.updateValueAndValidity();
     this.registerForm.get('username')?.updateValueAndValidity();
