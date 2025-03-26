@@ -30,7 +30,12 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.registerForm.get('taxNumber')?.clearValidators();
+    this.registerForm.get('companyName')?.clearValidators();
+    this.registerForm.get('contactEmail')?.clearValidators();
+    this.registerForm.updateValueAndValidity();
+  }
 
 
 
