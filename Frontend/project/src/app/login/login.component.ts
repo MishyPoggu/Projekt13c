@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   toggleLoginType(): void {
     this.isCompanyLogin = !this.isCompanyLogin;
     this.loginForm.reset()
+    this.loginForm.markAllAsTouched(); 
     this.loginForm.get('hitelesitő')?.setValidators(Validators.required);
     this.loginForm.get('passwordHash')?.setValidators(Validators.required);
     this.loginForm.get('hitelesitő')?.updateValueAndValidity();
@@ -44,6 +45,11 @@ export class LoginComponent implements OnInit {
 
       if (this.loginForm.valid) {
         let { hitelesitő, passwordHash } = this.loginForm.value;
+
+        const loginData = this.isCompanyLogin 
+      ? { taxNumber: hitelesitő, passwordHash }  // Ha cég loginol akkor az adószám lesz a "hitelesítő amugy meg a felhasználónév."
+      : { username: hitelesitő, passwordHash };
+
 
         if (this.isCompanyLogin) {
           hitelesitő = this.loginForm.value.taxNumber;

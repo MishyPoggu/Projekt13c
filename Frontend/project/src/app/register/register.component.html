@@ -60,8 +60,12 @@
 
     <div class="text-center mt-5">
       <button type="submit" class="btn btn-secondary w-100"
-        [ngClass]="{'btn-success': isCompanyRegistration ? registerForm.get('companyName')?.valid && registerForm.get('taxNumber')?.valid && registerForm.get('email')?.valid && registerForm.get('passwordHash')?.valid : !registerForm.invalid}"
-        [disabled]="isCompanyRegistration ? !(registerForm.get('companyName')?.valid && registerForm.get('taxNumber')?.valid && registerForm.get('email')?.valid && registerForm.get('passwordHash')?.valid ) : registerForm.invalid">
+        [ngClass]="{'btn-success': isCompanyRegistration 
+        ? registerForm.get('companyName')?.valid && registerForm.get('taxNumber')?.valid && registerForm.get('contactEmail')?.valid && registerForm.get('passwordHash')?.valid
+        : registerForm.get('username')?.valid && registerForm.get('email')?.valid && registerForm.get('passwordHash')?.valid}"
+        [disabled]="isCompanyRegistration 
+        ? !(registerForm.get('companyName')?.valid && registerForm.get('taxNumber')?.valid && registerForm.get('contactEmail')?.valid && registerForm.get('passwordHash')?.valid)
+        : !(registerForm.get('username')?.valid && registerForm.get('email')?.valid && registerForm.get('passwordHash')?.valid)">
         {{ isCompanyRegistration ? 'Céges Regisztráció' : 'Regisztráció' }}
       </button>
     </div>
