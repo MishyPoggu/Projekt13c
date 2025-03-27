@@ -7,11 +7,11 @@ const {
   removeUser,
   updateUser,
   getUser,
-  addMachineToUser, 
-  getUserMachines, 
-  removeMachineFromUser
+  addMachineToUser,
+  getUserMachines,
+  removeMachineFromUser,
+  changeProfile,
 } = require("../Controllers/userController");
-
 
 const router = express.Router();
 
@@ -22,6 +22,7 @@ router.post("/login", loginUser);
 router.delete("/remove", removeUser);
 router.post("/grant-admin", makeAdmin);
 router.post("/update", updateUser);
+router.patch("/profile", changeProfile);
 router.get("/machines/:id", getUserMachines);
 router.post("/machines/add", addMachineToUser);
 router.delete("/machines/remove", removeMachineFromUser);

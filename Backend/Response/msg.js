@@ -24,6 +24,8 @@ const user = {
     loggedin: "Logged in successfully!",
     deleted: "User deleted successfully!",
     adminUpdated: "User successfully granted admin privilages",
+    profileupdated: "Profile successfully updated",
+    machineAdded: "Machine successfully added to library",
   },
 };
 

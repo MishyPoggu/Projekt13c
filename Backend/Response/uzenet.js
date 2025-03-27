@@ -24,6 +24,8 @@ const user = {
     loggedin: "Sikeres bejelentkezés!",
     deleted: "Felhasználó sikeresen törölve!",
     adminUpdated: "Felhasználó sikeresen adminisztrátorrá téve!",
+    profileupdated: "Profil sikeresen megváltoztatva",
+    machineAdded: "Gép sikeresen hozzáadva a könyvtárhoz",
   },
 };
 

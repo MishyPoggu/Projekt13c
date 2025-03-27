@@ -250,6 +250,37 @@ const makeAdmin = async (req, res) => {
   }
 };
 
+const changeProfile = async (req, res) => {
+  const { userId, profile } = req.body;
+
+  try {
+    const user = await Users.findOne({ where: { userId } });
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        message: msg.user.failure.idnotfound,
+        üzenet: uzn.user.failure.idnotfound,
+      });
+    }
+
+    user.profile = profile;
+    await user.save();
+
+    res.status(200).json({
+      status: 200,
+      message: msg.user.success.profileupdated,
+      üzenet: uzn.user.success.profileupdated,
+    });
+  } catch (error) {
+    console.error("Error updating user to profile:", error);
+    res.status(500).json({
+      status: 500,
+      message: msg.user.failure.unknown,
+      üzenet: uzn.user.failure.unknown,
+    });
+  }
+};
+
 const removeUser = async (req, res) => {
   try {
     if (isAdmin(req)) {
@@ -513,6 +544,7 @@ module.exports = {
   loginUser,
   removeUser,
   makeAdmin,
+  changeProfile,
   updateUser,
   addMachineToUser,
   getUserMachines,
