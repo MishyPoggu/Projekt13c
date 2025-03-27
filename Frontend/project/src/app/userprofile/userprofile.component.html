@@ -1,5 +1,5 @@
 <form (ngSubmit)="saveProfile()" *ngIf="userProfile">
-    <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px; max-width: 500px; height: 550px;">
+    <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 10px; max-width: 1500px; height: 550px;">
       <div class="text-center mb-4">
         <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Profil</h2>
       </div>
@@ -7,7 +7,7 @@
       <div class="mt-3">
         <label class="form-label">Profilkép választás</label>
         <div class="profile-pictures">
-          <label>
+          <label class="profile-picture-label">
             <input type="radio" name="profilePic" [value]="'pfp1.png'" [formControl]="profilePic">
             <img src="/Frontend/project/src/assets/pfp1.png" alt="Profilkép 1">
           </label>
