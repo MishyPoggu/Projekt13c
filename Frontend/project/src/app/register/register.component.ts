@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
       passwordHash: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       contactEmail: ['', [Validators.required, Validators.email]],
-      taxNumber: [''],
+      taxNumber: ['', [Validators.required, Validators.pattern(/^\d{8}-\d{1}-\d{2}$/), Validators.maxLength(13)]],
       companyName: ['']
     });
   }
@@ -109,4 +109,22 @@ export class RegisterComponent implements OnInit {
     this.registerForm.get('passwordHash')?.updateValueAndValidity();
     this.registerForm.get('username')?.updateValueAndValidity();
   }
+
+  onTaxNumberInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, ''); 
+  
+    if (value.length > 8) {
+      value = value.slice(0, 8) + '-' + value.slice(8); // kőtőjel
+    }
+    if (value.length > 10) {
+      value = value.slice(0, 10) + '-' + value.slice(10); // második kötőjel
+    }
+  
+    value = value.slice(0, 13);
+
+    input.value = value; // Frissíti az input mezőt
+    this.registerForm.get('taxNumber')?.setValue(value); // Szinkronizálja az űrlappal
+  }
+  
 }

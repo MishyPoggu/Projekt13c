@@ -32,7 +32,20 @@ export class LoginComponent implements OnInit {
   toggleLoginType(): void {
     this.isCompanyLogin = !this.isCompanyLogin;
     this.loginForm.reset()
-    this.loginForm.markAllAsTouched(); 
+
+    if (this.isCompanyLogin) {
+      this.loginForm.get('hitelesitő')?.setValidators([
+        Validators.required,
+        Validators.pattern(/^\d{8}-\d{1}-\d{2}$/),
+        Validators.maxLength(13)
+      ]);
+    } else {
+      this.loginForm.get('hitelesitő')?.setValidators([
+        Validators.required
+      ]);
+    }
+   
+
     this.loginForm.get('hitelesitő')?.setValidators(Validators.required);
     this.loginForm.get('passwordHash')?.setValidators(Validators.required);
     this.loginForm.get('hitelesitő')?.updateValueAndValidity();
@@ -85,4 +98,24 @@ export class LoginComponent implements OnInit {
         });
       }
     }
+
+    onHitelesitoInput(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      let value = input.value.replace(/\D/g, ''); 
+    
+
+      if (this.isCompanyLogin){
+      if (value.length > 8) {
+        value = value.slice(0, 8) + '-' + value.slice(8); // kőtőjel
+      }
+      if (value.length > 10) {
+        value = value.slice(0, 10) + '-' + value.slice(10); // második kötőjel
+      }
+    
+      value = value.slice(0, 13);
+  
+      input.value = value; // Frissíti az input mezőt
+      this.loginForm.get('hitelesitő')?.setValue(value); // Szinkronizálja az űrlappal
+    }
+  }
   }

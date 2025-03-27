@@ -18,9 +18,9 @@
 
     <div class="form-group">
       <label for="hitelesitő">{{ isCompanyLogin ? 'Adószám' : 'Felhasználónév' }}</label>
-      <input type="text" formControlName="hitelesitő" id="hitelesitő" class="form-control" required>
+      <input type="text" formControlName="hitelesitő" id="hitelesitő" class="form-control" [placeholder]="isCompanyLogin ? '12345678-1-23' : 'Arcade fan'" [maxlength]="isCompanyLogin ? 13 : 50" (input)="onHitelesitoInput($event)" required>
       <small class="text-danger" *ngIf="loginForm.get('hitelesitő')!.invalid && loginForm.get('hitelesitő')!.touched">
-        {{ isCompanyLogin ? 'Adószám megadása kötelező!' : 'Felhasználónév megadása kötelező!' }}
+        {{ isCompanyLogin ? 'Adószám megadása kötelező, a fenti formában!' : 'Felhasználónév megadása kötelező!' }}
       </small>
     </div>
 
