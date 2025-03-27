@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-stern',
+  selector: 'app-nutting',
   templateUrl: './nutting.component.html',
   styleUrls: ['./nutting.component.css'],
   standalone: true,
