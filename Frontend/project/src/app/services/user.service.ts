@@ -9,7 +9,7 @@ import { Arcade } from '../arcade';
   providedIn: 'root'
 })
 export class UserService {
-  private baseURL = "http://localhost:3004/users";
+  private baseURL = "http://localhost:3000/users";
 
   constructor(private http: HttpClient,private router: Router) { 
     this.router = router; 
