@@ -12,9 +12,10 @@ const UserMachines = connections.define(
         key: "userId",
       },
     },
-    machineId: {
-      type: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
+      primaryKey: true,
     },
     machineType: {
       type: DataTypes.ENUM("ArcadeMachine", "Console", "PinballMachine"),
@@ -24,12 +25,6 @@ const UserMachines = connections.define(
   {
     timestamps: true,
     tableName: "UserMachines",
-    indexes: [
-      {
-        unique: true,
-        fields: ["userId", "machineId", "machineType"],
-      },
-    ],
   }
 );
 

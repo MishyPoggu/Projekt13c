@@ -353,34 +353,59 @@ const updateUser = async (req, res) => {
 };
 
 const addMachineToUser = async (req, res) => {
-  const { userId, machineId, machineType } = req.body;
+  const { userId, name, machineType } = req.body;
 
-  if (!userId || !machineId || !machineType) {
+  if (!userId || !name || !machineType) {
     return res.status(400).json({
       status: 400,
-      message: "Missing required fields: userId, machineId, machineType",
+      message: "Missing required fields: userId, name, machineType",
     });
   }
-  console.log("Received Data:", { userId, machineId, machineType });
 
   try {
-    // Check if the machine is already in the user's library
+    // Validate if the machine exists in the correct table
+    let machineExists = false;
+
+    switch (machineType) {
+      case "ArcadeMachine":
+        machineExists = await ArcadeMachines.findOne({ where: { name } });
+        break;
+      case "Console":
+        machineExists = await Consoles.findOne({ where: { name } });
+        break;
+      case "PinballMachine":
+        machineExists = await PinballMachines.findOne({ where: { name } });
+        break;
+      default:
+        return res.status(400).json({
+          status: 400,
+          message: "Invalid machine type",
+        });
+    }
+
+    if (!machineExists) {
+      return res.status(404).json({
+        status: 404,
+        message: `Machine '${name}' not found in ${machineType}`,
+      });
+    }
+
+    // Check if user already has this machine
     const existingEntry = await UserMachines.findOne({
-      where: { userId, machineId, machineType },
+      where: { userId, name, machineType },
     });
 
     if (existingEntry) {
       return res.status(409).json({
-        // 409 Conflict
         status: 409,
-        message: "Machine already exists in the user's library",
+        message: "Machine already exists in the user's collection",
       });
     }
 
-    // Add new entry
+    // Add machine to user
     const userMachine = await UserMachines.create({
       userId,
-      machineId,
+      name,
       machineType,
     });
 
@@ -393,7 +418,7 @@ const addMachineToUser = async (req, res) => {
     console.error("Error adding machine:", error);
     res.status(500).json({
       status: 500,
-      message: "Failed to add machine",
+      message: "Failed to add machine " + machineType,
     });
   }
 };
@@ -402,66 +427,63 @@ const getUserMachines = async (req, res) => {
   try {
     const userMachines = await UserMachines.findAll({
       where: { userId: req.params.id },
-      attributes: ["machineId", "machineType"],
+      attributes: ["name", "machineType"],
     });
 
-    // Group machine IDs by type
+    // Group machines by type
     const machineGroups = {
       ArcadeMachine: [],
       Console: [],
       PinballMachine: [],
     };
 
-    userMachines.forEach(({ machineId, machineType }) => {
-      machineGroups[machineType].push(machineId);
+    userMachines.forEach(({ name, machineType }) => {
+      machineGroups[machineType].push(name);
     });
 
-    // Fetch all machine details in parallel
+    // Fetch full details
     const [arcadeMachines, consoles, pinballMachines] = await Promise.all([
       machineGroups.ArcadeMachine.length
-        ? ArcadeMachines.findAll({ where: { id: machineGroups.ArcadeMachine } })
+        ? ArcadeMachines.findAll({
+            where: { name: machineGroups.ArcadeMachine },
+          })
         : [],
       machineGroups.Console.length
-        ? Consoles.findAll({ where: { id: machineGroups.Console } })
+        ? Consoles.findAll({ where: { name: machineGroups.Console } })
         : [],
       machineGroups.PinballMachine.length
         ? PinballMachines.findAll({
-            where: { id: machineGroups.PinballMachine },
+            where: { name: machineGroups.PinballMachine },
           })
         : [],
     ]);
 
     res.status(200).json({
       status: 200,
-      machines: {
-        arcadeMachines,
-        consoles,
-        pinballMachines,
-      },
+      machines: { arcadeMachines, consoles, pinballMachines },
     });
   } catch (error) {
     console.error("Error fetching user machines:", error);
     res.status(500).json({
       status: 500,
       message: "Failed to fetch user machines",
-      error,
     });
   }
 };
 
 const removeMachineFromUser = async (req, res) => {
-  const { userId, machineId, machineType } = req.body;
+  const { userId, name } = req.body;
 
-  if (!userId || !machineId || !machineType) {
+  if (!userId || !name) {
     return res.status(400).json({
       status: 400,
-      message: "Missing required fields: userId, machineId, machineType",
+      message: "Missing required fields: userId, name",
     });
   }
 
   try {
     const deleted = await UserMachines.destroy({
-      where: { userId, machineId, machineType },
+      where: { userId, name },
     });
 
     if (deleted) {

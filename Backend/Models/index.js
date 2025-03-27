@@ -20,14 +20,38 @@ const Posts = require("./posts");
 const Comments = require("./comments");
 
 // Gépek hozzákötése a felhasználókhoz
-Users.belongsToMany(ArcadeMachines, { through: UserMachines, foreignKey: "userId", otherKey: "machineId" });
-ArcadeMachines.belongsToMany(Users, { through: UserMachines, foreignKey: "machineId", otherKey: "userId" });
+Users.belongsToMany(ArcadeMachines, {
+  through: UserMachines,
+  foreignKey: "userId",
+  otherKey: "name",
+});
+ArcadeMachines.belongsToMany(Users, {
+  through: UserMachines,
+  foreignKey: "name",
+  otherKey: "userId",
+});
 
-Users.belongsToMany(Consoles, { through: UserMachines, foreignKey: "userId", otherKey: "machineId" });
-Consoles.belongsToMany(Users, { through: UserMachines, foreignKey: "machineId", otherKey: "userId" });
+Users.belongsToMany(Consoles, {
+  through: UserMachines,
+  foreignKey: "userId",
+  otherKey: "name",
+});
+Consoles.belongsToMany(Users, {
+  through: UserMachines,
+  foreignKey: "name",
+  otherKey: "userId",
+});
 
-Users.belongsToMany(PinballMachines, { through: UserMachines, foreignKey: "userId", otherKey: "machineId" });
-PinballMachines.belongsToMany(Users, { through: UserMachines, foreignKey: "machineId", otherKey: "userId" });
+Users.belongsToMany(PinballMachines, {
+  through: UserMachines,
+  foreignKey: "userId",
+  otherKey: "name",
+});
+PinballMachines.belongsToMany(Users, {
+  through: UserMachines,
+  foreignKey: "name",
+  otherKey: "userId",
+});
 
 Users.hasMany(Token, { foreignKey: "userId" });
 Token.belongsTo(Users, { foreignKey: "userId" });
@@ -36,7 +60,6 @@ Token.belongsTo(Users, { foreignKey: "userId" });
 Users.hasMany(ArcadeMachines, { foreignKey: "userId" });
 Users.hasMany(Consoles, { foreignKey: "userId" });
 Users.hasMany(PinballMachines, { foreignKey: "userId" });
-
 
 Advertisements.belongsTo(Addresses, {
   foreignKey: "addressId",
@@ -69,7 +92,7 @@ module.exports = {
   Companies,
   Advertisements,
   Addresses,
-  Posts,       
-  Comments,   
-  UserMachines, 
+  Posts,
+  Comments,
+  UserMachines,
 };
