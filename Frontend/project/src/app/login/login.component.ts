@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'; 
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { CompanyService } from '../services/companies.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -17,105 +16,104 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
-  isCompanyLogin: boolean = false;
-  
+  isCompanyLogin: boolean = true;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private companyService: CompanyService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder, 
+    private userService: UserService, 
+    private companyService: CompanyService, 
+    private router: Router
+  ) {
     this.loginForm = this.formBuilder.group({
-      hitelesitő: ['', Validators.required], // Cégek esetében ez az adószám lesz és személyeknél a felhasználó név.
+      username: [''], 
+      taxNumber: [''], 
       passwordHash: ['', Validators.required]
     });
-  }  
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.toggleLoginType();
+  }
 
   toggleLoginType(): void {
     this.isCompanyLogin = !this.isCompanyLogin;
-    this.loginForm.reset()
 
     if (this.isCompanyLogin) {
-      this.loginForm.get('hitelesitő')?.setValidators([
+      this.loginForm.get('taxNumber')?.setValidators([
         Validators.required,
         Validators.pattern(/^\d{8}-\d{1}-\d{2}$/),
         Validators.maxLength(13)
       ]);
+      this.loginForm.get('username')?.clearValidators();
     } else {
-      this.loginForm.get('hitelesitő')?.setValidators([
-        Validators.required
-      ]);
+      this.loginForm.get('username')?.setValidators(Validators.required);
+      this.loginForm.get('taxNumber')?.clearValidators();
     }
-   
 
-    this.loginForm.get('hitelesitő')?.setValidators(Validators.required);
-    this.loginForm.get('passwordHash')?.setValidators(Validators.required);
-    this.loginForm.get('hitelesitő')?.updateValueAndValidity();
+    this.loginForm.get('taxNumber')?.updateValueAndValidity();
+    this.loginForm.get('username')?.updateValueAndValidity();
     this.loginForm.get('passwordHash')?.updateValueAndValidity();
   }
 
-    onSubmit(): void {
-      this.errorMessage = ''; 
-      this.successMessage = '';
+  onTaxNumberInput(event: Event): void {
+    if (!this.isCompanyLogin) return;
 
-      if (this.loginForm.valid) {
-        let { hitelesitő, passwordHash } = this.loginForm.value;
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, '');
 
-        const loginData = this.isCompanyLogin 
-      ? { taxNumber: hitelesitő, passwordHash }  // Ha cég loginol akkor az adószám lesz a "hitelesítő amugy meg a felhasználónév."
-      : { username: hitelesitő, passwordHash };
+    if (value.length > 8) {
+      value = value.slice(0, 8) + '-' + value.slice(8);
+    }
+    if (value.length > 10) {
+      value = value.slice(0, 10) + '-' + value.slice(10);
+    }
+    value = value.slice(0, 13);
 
+    input.value = value;
+    this.loginForm.get('taxNumber')?.setValue(value);
+  }
 
-        if (this.isCompanyLogin) {
-          hitelesitő = this.loginForm.value.taxNumber;
-        } else {
-          hitelesitő = this.loginForm.value.username;
-        }
-        
-        console.log('Belépési próbálkozás', this.loginForm.value);
+  isInvalid(controlName: string): boolean {
+    const control = this.loginForm.get(controlName);
+    return control ? control.invalid && control.touched : false;
+  }
 
-        const loginService = this.isCompanyLogin ? this.companyService : this.userService;
+  onSubmit(): void {
+    this.errorMessage = ''; 
+    this.successMessage = '';
 
-        loginService.login(hitelesitő, passwordHash).subscribe({
+    if (this.loginForm.valid) {
+      const passwordHash = this.loginForm.value.passwordHash;
+
+      if (this.isCompanyLogin) {
+        const taxNumber = this.loginForm.value.taxNumber;
+        this.companyService.login(taxNumber, passwordHash).subscribe({
           next: (res) => {
-            if (this.isCompanyLogin){
-              localStorage.setItem('companyId', res.companyId);
-              console.log('Sikeresen bejelentkezett cégként', res.companyId);
-              this.companyService.saveToken(res.token);
-            }else {
-              localStorage.setItem("userId", res.userId);
-              console.log('Sikeres személyes bejelentkezés', res.userId);
-              this.userService.saveToken(res.token);
-            }
-            this.successMessage = 'Sikeres bejelentkezés!';
-             this.router.navigate(['/body']);
-
-          
+            this.successMessage = 'Sikeres céges bejelentkezés!';
+            localStorage.setItem('companyId', res.companyId);
+            this.companyService.saveToken(res.token);
+            this.router.navigate(['/body']);
           },
           error: (err: HttpErrorResponse) => {
-            this.errorMessage = 'A bejelentkezési adatok hibásan lettek megadva!';
-            console.log('Login failed: ', err.message);
-
+            this.errorMessage = 'Hibás bejelentkezési adatok!';
+          }
+        });
+      } else {
+        const username = this.loginForm.value.username;
+        this.userService.login(username, passwordHash).subscribe({
+          next: (res) => {
+            this.successMessage = 'Sikeres személyes bejelentkezés!';
+            localStorage.setItem('userId', res.userId);
+            this.userService.saveToken(res.token);
+            this.router.navigate(['/body']);
+          },
+          error: (err: HttpErrorResponse) => {
+            this.errorMessage = 'Hibás bejelentkezési adatok!';
           }
         });
       }
-    }
-
-    onHitelesitoInput(event: Event): void {
-      const input = event.target as HTMLInputElement;
-      let value = input.value.replace(/\D/g, ''); 
-    
-
-      if (this.isCompanyLogin){
-      if (value.length > 8) {
-        value = value.slice(0, 8) + '-' + value.slice(8); // kőtőjel
-      }
-      if (value.length > 10) {
-        value = value.slice(0, 10) + '-' + value.slice(10); // második kötőjel
-      }
-    
-      value = value.slice(0, 13);
-  
-      input.value = value; // Frissíti az input mezőt
-      this.loginForm.get('hitelesitő')?.setValue(value); // Szinkronizálja az űrlappal
+    } else {
+      this.errorMessage = 'Kérjük, töltse ki az összes kötelező mezőt helyesen!';
     }
   }
-  }
+}
