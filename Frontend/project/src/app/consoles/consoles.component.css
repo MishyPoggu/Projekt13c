@@ -65,11 +65,11 @@ body {
 
 .page-start-spacer {
     height: 10vh; 
-  }
+}
 
 .page-end-spacer {
     height: 10vh; 
-  }
+}
 
 .background-video {
     position: fixed;
@@ -79,4 +79,23 @@ body {
     height: 100%;
     object-fit: cover;
     z-index: 1;
-  }
+}
+
+@media (max-width: 600px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 80%; 
+        max-width: 220px;
+        height: 220px;
+        padding: 15px;
+    }
+
+    .card img {
+        max-height: 80px; 
+    }
+}
