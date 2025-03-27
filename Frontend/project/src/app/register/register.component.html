@@ -18,21 +18,22 @@
       </div>
 
       <div *ngIf="isCompanyRegistration; else userReg" class="col-md-12">
-      <div class="col-md-6">
-        <label for="taxNumber" class="form-label">Adószám</label>
-        <input type="text" formControlName="taxNumber" id="taxNumber" class="form-control">
-        <small class="text-danger" *ngIf="isInvalid('taxNumber')">Adószám kötelező!</small>
-      </div>
+        <div class="col-md-6">
+          <label for="taxNumber" class="form-label">Adószám</label>
+          <input type="text" formControlName="taxNumber" id="taxNumber" class="form-control" placeholder="12345678-1-23" maxlength="13" (input)="onTaxNumberInput($event)">
+          <small class="text-danger" *ngIf="isInvalid('taxNumber')">A formátum helytelen, úgy adja meg mint a fenti példában!</small>
+        </div>
+        
 
       <div class="col-md-6">
         <label for="companyName" class="form-label">Cég neve</label>
-        <input type="text" formControlName="companyName" id="companyName" class="form-control">
+        <input type="text" formControlName="companyName" id="companyName" class="form-control" placeholder="Arcade Zrt.">
         <small class="text-danger" *ngIf="isInvalid('companyName')">Cégnevet kötelező megadni!</small>
       </div>
 
       <div class="col-md-6">
         <label for="contactEmail" class="form-label">Email</label>
-        <input type="contactEmail" formControlName="contactEmail" id="contactEmail" class="form-control" required>
+        <input type="contactEmail" formControlName="contactEmail" id="contactEmail" class="form-control" placeholder="cégememailje@mail.hu" required>
         <small class="text-danger" *ngIf="isInvalid('contactEmail')">E-mail címet helyesen megadni kötelező!</small>
       </div>
     </div>
@@ -40,14 +41,14 @@
       <ng-template #userReg>
         <div class="col-md-6">
           <label for="username" class="form-label">Felhasználónév</label>
-          <input type="text" formControlName="username" id="username" class="form-control" required>
+          <input type="text" formControlName="username" id="username" class="form-control" placeholder="Arcade fan" required>
           <small class="text-danger" *ngIf="isInvalid('username')">Felhasználónevet kötelező megadni!</small>
         </div>
 
 
       <div class="col-md-6">
         <label for="email" class="form-label">Email</label>
-        <input type="email" formControlName="email" id="email" class="form-control" required>
+        <input type="email" formControlName="email" id="email" class="form-control" placeholder="szemelyesemailem@mail.hu" required>
         <small class="text-danger" *ngIf="isInvalid('email')">E-mail címet helyesen megadni kötelező!</small>
       </div>
     </ng-template>
