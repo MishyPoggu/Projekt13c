@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../services/profileservice.service';
 import { CommonModule } from '@angular/common';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-userprofile',
@@ -11,6 +11,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class UserprofileComponent implements OnInit {
   userProfile: any = {};
+  profilePic = new FormControl("/Frontend/project/src/assets/pfp1.png");
 
   constructor(private profileService: ProfileService) {}
 
@@ -24,9 +25,12 @@ export class UserprofileComponent implements OnInit {
 
     });
   }
+  
 
   saveProfile() {
     this.profileService.updateUserProfile(this.userProfile).subscribe(response => {
+      localStorage.setItem('profilePic', this.userProfile.profilePic);
+      window.location.reload();
       alert('A profilod sikeresen frissítve!')
     });
   }

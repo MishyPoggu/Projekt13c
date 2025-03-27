@@ -18,7 +18,8 @@
     <a href="#" class="icon"><i class="fas fa-home"></i></a>
 
     <a href="#" class="icon" (click)="toggleUserDropdown(); $event.preventDefault()">
-      <i class="fas fa-user"></i>
+      <img *ngIf="isLoggedIn && profilePic" [src]="profilePic" class="nav-avatar">
+      <i *ngIf="!isLoggedIn || !profilePic" class="fas fa-user"></i>
     </a>
 
     <ul class="user-dropdown" [class.open]="isUserDropdownOpen">

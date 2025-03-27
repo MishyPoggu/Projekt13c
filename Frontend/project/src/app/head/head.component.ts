@@ -10,10 +10,16 @@ import { CommonModule } from '@angular/common';
 })
 export class HeadComponent implements OnInit {
   isLoggedIn = false; 
+  profilePic: string | null = null;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    const savedPic = localStorage.getItem('profilePic');
+    if (savedPic) {
+    this.profilePic = `/Frontend/project/src/assets/${savedPic}`;
+    }
+
     this.userService.isLoggedIn().subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
