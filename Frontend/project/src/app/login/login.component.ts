@@ -18,15 +18,12 @@ export class LoginComponent implements OnInit {
   successMessage: string = '';
   isCompanyLogin: boolean = true;
 
-  constructor(
-    private formBuilder: FormBuilder, 
-    private userService: UserService, 
-    private companyService: CompanyService, 
-    private router: Router
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private companyService: CompanyService, 
+private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
-      username: [''], 
-      taxNumber: [''], 
+      username: ['', Validators.required],
+      taxNumber: ['', [Validators.required, Validators.pattern(/^\d{8}-\d{1}-\d{2}$/), Validators.maxLength(13)]],
       passwordHash: ['', Validators.required]
     });
   }
@@ -37,22 +34,21 @@ export class LoginComponent implements OnInit {
 
   toggleLoginType(): void {
     this.isCompanyLogin = !this.isCompanyLogin;
+    this.loginForm.reset();
 
     if (this.isCompanyLogin) {
-      this.loginForm.get('taxNumber')?.setValidators([
-        Validators.required,
-        Validators.pattern(/^\d{8}-\d{1}-\d{2}$/),
-        Validators.maxLength(13)
-      ]);
+      this.loginForm.get('taxNumber')?.setValidators(Validators.required);
+      this.loginForm.get('passwordHash')?.setValidators(Validators.required);
       this.loginForm.get('username')?.clearValidators();
     } else {
-      this.loginForm.get('username')?.setValidators(Validators.required);
       this.loginForm.get('taxNumber')?.clearValidators();
+      this.loginForm.get('passwordHash')?.setValidators(Validators.required);
+      this.loginForm.get('username')?.setValidators(Validators.required);
     }
 
     this.loginForm.get('taxNumber')?.updateValueAndValidity();
-    this.loginForm.get('username')?.updateValueAndValidity();
     this.loginForm.get('passwordHash')?.updateValueAndValidity();
+    this.loginForm.get('username')?.updateValueAndValidity();
   }
 
   onTaxNumberInput(event: Event): void {
@@ -84,7 +80,6 @@ export class LoginComponent implements OnInit {
 
     if (this.loginForm.valid) {
       const passwordHash = this.loginForm.value.passwordHash;
-
       if (this.isCompanyLogin) {
         const taxNumber = this.loginForm.value.taxNumber;
         this.companyService.login(taxNumber, passwordHash).subscribe({

@@ -26,8 +26,8 @@ export class UserService {
     return this.http.put(`${this.baseURL}/register`, user);
   }
 
-  login(hitelesitő: string, passwordHash: string): Observable<any> {
-    return this.http.post(`${this.baseURL}/login`, { hitelesitő, passwordHash });
+  login(username: string, passwordHash: string): Observable<any> {
+    return this.http.post(`${this.baseURL}/login`, { username, passwordHash });
   }
 
   logout() {

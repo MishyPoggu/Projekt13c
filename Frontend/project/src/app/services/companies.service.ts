@@ -26,8 +26,8 @@ export class CompanyService {
     return this.http.put(`${this.baseURL}/register`, company);
   }
 
-  login(hitelesitő: string, passwordHash: string): Observable<any> {
-    return this.http.post(`${this.baseURL}/login`, { hitelesitő, passwordHash });
+  login(taxNumber: string, passwordHash: string): Observable<any> {
+    return this.http.post(`${this.baseURL}/login`, { taxNumber, passwordHash });
   }
 
   logout() {
