@@ -5,8 +5,8 @@
 
     <div class="post-create">
       <form #addPostForm="ngForm" (ngSubmit)="createPost()">
-        <input [(ngModel)]="post.title" placeholder="Poszt címe" name="title" required />
-        <textarea [(ngModel)]="post.content" placeholder="Poszt tartalma" name="content" required></textarea>
+        <input [(ngModel)]="post.title" maxlength="30" placeholder="Poszt címe" name="title" required />
+        <textarea [(ngModel)]="post.content" maxlength="300" placeholder="Poszt tartalma" name="content" required></textarea>
         <button type="submit" [disabled]="addPostForm.invalid">Poszt létrehozása</button>
       </form>
     </div>
@@ -32,7 +32,7 @@
           </div>
 
           <form #addCommentForm="ngForm" (ngSubmit)="createComment(post.postId)">
-            <textarea [(ngModel)]="newComments[post.postId].content" placeholder="Írj egy hozzászólást..." name="content" required></textarea>
+            <textarea [(ngModel)]="newComments[post.postId].content" maxlength="150" placeholder="Írj egy hozzászólást..." name="content" required></textarea>
             <button type="submit" [disabled]="addCommentForm.invalid">Hozzászólás</button>
           </form>
         </div>
