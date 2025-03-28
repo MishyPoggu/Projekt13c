@@ -58,7 +58,7 @@ export class UserService {
   addMachineToUser(machine:Arcade, machineType:string) {
    const data= {
         userId: Number(localStorage.getItem("userId")),
-        machineId: machine.id,
+        name: machine.name,
         machineType:machineType
     }
     console.log(data)

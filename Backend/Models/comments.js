@@ -18,6 +18,7 @@ const Comments = connections.define(
         model: Users,
         key: "userId",
       },
+      onDelete: "CASCADE",
     },
     postId: {
       type: DataTypes.INTEGER,
@@ -26,6 +27,7 @@ const Comments = connections.define(
         model: Posts,
         key: "postId",
       },
+      onDelete: "CASCADE",
     },
     content: {
       type: DataTypes.TEXT,
