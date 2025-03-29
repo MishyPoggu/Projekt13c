@@ -18,6 +18,13 @@ const user = {
 
     idoremail: "Provide either user id or email address.",
     machineAlreadyExists: "This machine is already in your library.",
+    mfieldmissing: "Missing required fields: userId, name, machineType",
+    invalidType:
+      "Invalid machine type. Must be one of: Console, ArcadeMachine, PinballMachine",
+    machinenotfound: "Machine not found in machine type list.",
+    machineexists: "Machine already exists in user's library.",
+    machinefetcherror: "An error occurred while fetching user machines.",
+    machineunfilled: "Missing required fields: userId, name",
   },
   success: {
     registered: "User registered successfully!",
@@ -25,8 +32,9 @@ const user = {
     deleted: "User deleted successfully!",
     adminUpdated: "User successfully granted admin privilages",
     profileupdated: "Profile successfully updated",
-    machineAdded: "Machine successfully added to library",
+    machineadded: "Machine successfully added to library",
     updated: "User successfully updated",
+    machineremoved: "Machine successfully removed from library",
   },
 };
 

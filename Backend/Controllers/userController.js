@@ -92,7 +92,7 @@ const registerUser = async (req, res) => {
       return res.status(409).json({
         status: 409,
         message: msg.user.failure.emailtaken,
-        üzenet: "E-mail már használatban van.",
+        üzenet: msg.user.failure.emailtaken,
       });
     }
 
@@ -383,7 +383,8 @@ const addMachineToUser = async (req, res) => {
   if (!userId || !name || !machineType) {
     return res.status(400).json({
       status: 400,
-      message: "Missing required fields: userId, name, machineType",
+      message: msg.user.failure.mfieldmissing,
+      üzenet: uzn.user.failure.mfieldmissing,
     });
   }
 
@@ -403,14 +404,16 @@ const addMachineToUser = async (req, res) => {
       default:
         return res.status(400).json({
           status: 400,
-          message: "Invalid machine type",
+          message: msg.user.failure.invalidType,
+          üzenet: uzn.user.failure.invalidType,
         });
     }
 
     if (!machineExists) {
       return res.status(404).json({
         status: 404,
-        message: `Machine '${name}' not found in ${machineType}`,
+        message: msg.user.failure.machinenotfound,
+        üzenet: uzn.user.failure.machinenotfound,
       });
     }
 
@@ -422,7 +425,8 @@ const addMachineToUser = async (req, res) => {
     if (existingEntry) {
       return res.status(409).json({
         status: 409,
-        message: "Machine already exists in the user's collection",
+        message: msg.user.failure.machineexists,
+        üzenet: uzn.user.failure.machineexists,
       });
     }
 
@@ -434,14 +438,16 @@ const addMachineToUser = async (req, res) => {
 
     res.status(201).json({
       status: 201,
-      message: "Machine added successfully",
+      message: msg.user.success.machineadded,
+      üzenet: uzn.user.success.machineadded,
       userMachine,
     });
   } catch (error) {
     console.error("Error adding machine:", error);
     res.status(500).json({
       status: 500,
-      message: "Failed to add machine " + machineType,
+      message: msg.user.failure.unknown,
+      üzenet: uzn.user.failure.unknown,
     });
   }
 };
@@ -489,7 +495,8 @@ const getUserMachines = async (req, res) => {
     console.error("Error fetching user machines:", error);
     res.status(500).json({
       status: 500,
-      message: "Failed to fetch user machines",
+      message: msg.user.failure.machinefetcherror,
+      üzenet: uzn.user.failure.machinefetcherror,
     });
   }
 };
@@ -500,7 +507,8 @@ const removeMachineFromUser = async (req, res) => {
   if (!userId || !name) {
     return res.status(400).json({
       status: 400,
-      message: "Missing required fields: userId, name",
+      message: msg.user.failure.machineunfilled,
+      üzenet: uzn.user.failure.machineunfilled,
     });
   }
 
@@ -512,19 +520,22 @@ const removeMachineFromUser = async (req, res) => {
     if (deleted) {
       res.status(200).json({
         status: 200,
-        message: "Machine removed successfully",
+        message: msg.user.success.machineremoved,
+        üzenet: uzn.user.success.machineremoved,
       });
     } else {
       res.status(404).json({
         status: 404,
-        message: "Machine not found in user's collection",
+        message: msg.user.failure.machinenotfound,
+        üzenet: uzn.user.failure.machinenotfound,
       });
     }
   } catch (error) {
     console.error("Error removing machine:", error);
     res.status(500).json({
       status: 500,
-      message: "Failed to remove machine",
+      message: msg.user.failure.unknown,
+      üzenet: uzn.user.failure.unknown,
     });
   }
 };

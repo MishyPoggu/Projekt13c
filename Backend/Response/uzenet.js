@@ -18,6 +18,15 @@ const user = {
 
     idoremail: "Adjon meg vagy egy felhasználó id-jét, vagy e-mail címét.",
     machineAlreadyExists: "Ez a gép már szerepel a könyvtárában.",
+    mfieldmissing:
+      "A következő kötelező mezők hiányoznak: userId, name, machineType",
+    invalidType:
+      "Érvénytelen gép típus. Az alábbiak közül kell választani: Console, ArcadeMachine, PinballMachine",
+    machinenotfound: "Gép nem található a gép típus listában.",
+    machineexists: "Gép már létezik a felhasználó könyvtárában.",
+    machinefetcherror:
+      "Hiba történt a felhasználó gépeinek lekérdezése közben.",
+    machineunfilled: "Hiányzó kötelező mezők: userId, name",
   },
   success: {
     registered: "Felhasználó sikeresen regisztrálva!",
@@ -25,8 +34,9 @@ const user = {
     deleted: "Felhasználó sikeresen törölve!",
     adminUpdated: "Felhasználó sikeresen adminisztrátorrá téve!",
     profileupdated: "Profil sikeresen megváltoztatva",
-    machineAdded: "Gép sikeresen hozzáadva a könyvtárhoz",
+    machineadded: "Gép sikeresen hozzáadva a könyvtárhoz",
     updated: "Felhasználó sikeresen frissítve!",
+    machineremoved: "Gép sikeresen eltávolítva a könyvtárból",
   },
 };
 
