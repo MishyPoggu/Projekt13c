@@ -11,7 +11,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class UserprofileComponent implements OnInit {
   userId = Number(localStorage.getItem('userId'));  
-  profilForm: FormGroup;
+  profilForm: FormGroup; 
+  userProfile: any;
 
   constructor(private userService: UserService) {  
     this.profilForm = new FormGroup({
@@ -29,6 +30,7 @@ export class UserprofileComponent implements OnInit {
   loadUserProfile() {
     this.userService.getUserProfile(this.userId).subscribe(data => {  
       if (data) {
+        this.userProfile = data;
         this.profilForm.patchValue({
           name: data.name || '',
           age: data.age || null,
