@@ -1,9 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+
+h2 {
+    font-size: 2.5em;
+    color: #8000FF;
+    font-family: 'Press Start 2P', cursive;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+  text-align: center;
+}
+
+.form-control {
+    background-color: #333;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
 .profile-pictures {
     display: flex;
     justify-content: space-around;
-    gap: 10px;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 .profile-picture-label {
@@ -11,14 +33,15 @@
     border-radius: 10px;
     overflow: hidden;
     transition: transform 0.3s ease;
+    padding: 5px;
 }
 
 .profile-picture-label:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 .profile-pictures img {
-    width: 120px; 
+    width: 120px;
     height: 120px;
     border-radius: 10px;
     transition: transform 0.3s ease;
@@ -28,14 +51,56 @@
     transform: scale(1.1);
 }
 
-.form-control {
-    background-color: #333;
-    border: 1px solid #444;
-    color: #fff;
-    border-radius: 5px;
-    padding: 10px;
+.form-label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 10px;
+    display: block;
 }
 
-.btn:hover {
+.btn-secondary {
+    background-color: #8000FF;
+    border: 1px solid #8000FF;
+    color: white;
+    font-size: 1.1em;
+    border-radius: 5px;
+    padding: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-secondary:hover {
     background-color: #9b00e3;
+    transform: scale(1.05);
+}
+
+.form-control:focus {
+    border-color: #8000FF;
+    outline: none;
+    background-color: #222;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        height: auto;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    .profile-pictures {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-pictures img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .btn-secondary {
+        font-size: 1em;
+    }
 }
