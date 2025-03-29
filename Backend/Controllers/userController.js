@@ -417,7 +417,6 @@ const addMachineToUser = async (req, res) => {
       });
     }
 
-    // Check if user already has this machine
     const existingEntry = await UserMachines.findOne({
       where: { userId, name, machineType },
     });
@@ -459,7 +458,6 @@ const getUserMachines = async (req, res) => {
       attributes: ["name", "machineType"],
     });
 
-    // Group machines by type
     const machineGroups = {
       ArcadeMachine: [],
       Console: [],
@@ -470,7 +468,6 @@ const getUserMachines = async (req, res) => {
       machineGroups[machineType].push(name);
     });
 
-    // Fetch full details
     const [arcadeMachines, consoles, pinballMachines] = await Promise.all([
       machineGroups.ArcadeMachine.length
         ? ArcadeMachines.findAll({
