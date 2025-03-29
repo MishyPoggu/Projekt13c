@@ -37,6 +37,20 @@ export class UserService {
     this.router.navigate(['/login']);
   }
 
+  getUserProfile(userId: number): Observable<any> {
+    return this.http.get(`${this.baseURL}/${userId}`);
+  }
+
+  saveProfile(userId: number, name?: string, age?: number, phoneNumber?: string, profilePic?: string): Observable<any> {
+    return this.http.put(`${this.baseURL}/update`, {
+      userId,
+      name,
+      age,
+      phoneNumber,
+      profilePic
+    });
+  }
+
   saveToken(token: string) { 
     this.isLoggedInSubject.next(true); 
     localStorage.setItem('token', token);
