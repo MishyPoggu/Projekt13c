@@ -36,13 +36,15 @@ sequelize
   .then(() => {
     return sequelize.query("DROP TABLE IF EXISTS Companies;");
   })
-  .then(
-    `SELECT CONSTRAINT_NAME 
-     FROM information_schema.TABLE_CONSTRAINTS 
-     WHERE TABLE_NAME = 'usermachines' 
-     AND CONSTRAINT_TYPE = 'FOREIGN KEY'
-     AND CONSTRAINT_NAME = 'usermachines_ibfk_2';`
-  )
+  .then(() => {
+    return sequelize.query(
+      `SELECT CONSTRAINT_NAME
+       FROM information_schema.TABLE_CONSTRAINTS
+       WHERE TABLE_NAME = 'usermachines'
+       AND CONSTRAINT_TYPE = 'FOREIGN KEY'
+       AND CONSTRAINT_NAME = 'usermachines_ibfk_2';`
+    );
+  })
   .then(([results]) => {
     if (results.length > 0) {
       console.log("Dropping foreign key usermachines_ibfk_2...");
