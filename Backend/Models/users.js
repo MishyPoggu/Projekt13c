@@ -30,6 +30,10 @@ const Users = connections.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     phoneNumber: {
       type: DataTypes.STRING,
       allowNull: true,

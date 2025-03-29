@@ -26,6 +26,7 @@ const user = {
     adminUpdated: "User successfully granted admin privilages",
     profileupdated: "Profile successfully updated",
     machineAdded: "Machine successfully added to library",
+    updated: "User successfully updated",
   },
 };
 

@@ -343,42 +343,36 @@ const removeUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { userId, username, age, phoneNumber } = req.body;
+  const { userId, name, profile, age, phoneNumber } = req.body;
 
   try {
     const user = await Users.findOne({ where: { userId } });
     if (!user) {
       return res.status(404).json({
         status: 404,
-        message: "User not found",
+        message: msg.user.failure.idnotfound,
+        üzenet: uzn.user.failure.idnotfound,
       });
     }
 
-    if (username && username !== user.username) {
-      const existingUser = await Users.findOne({ where: { username } });
-      if (existingUser) {
-        return res.status(409).json({
-          status: 409,
-          message: "Username is already taken",
-        });
-      }
-    }
-
     await user.update({
-      username: username !== undefined ? username : user.username,
+      name: name !== undefined ? name : user.name,
       age: age !== undefined ? age : user.age,
+      profile: profile !== undefined ? profile : user.profile,
       phoneNumber: phoneNumber !== undefined ? phoneNumber : user.phoneNumber,
     });
 
     res.status(200).json({
       status: 200,
-      message: "User updated successfully",
+      message: msg.user.success.updated,
+      üzenet: uzn.user.success.updated,
     });
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({
       status: 500,
-      message: "An error occurred while updating the user",
+      message: msg.user.failure.unknown,
+      üzenet: uzn.user.failure.unknown,
     });
   }
 };
@@ -394,7 +388,6 @@ const addMachineToUser = async (req, res) => {
   }
 
   try {
-    // Validate if the machine exists in the correct table
     let machineExists = false;
 
     switch (machineType) {
@@ -433,7 +426,6 @@ const addMachineToUser = async (req, res) => {
       });
     }
 
-    // Add machine to user
     const userMachine = await UserMachines.create({
       userId,
       name,

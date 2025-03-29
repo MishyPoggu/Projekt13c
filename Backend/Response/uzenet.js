@@ -26,6 +26,7 @@ const user = {
     adminUpdated: "Felhasználó sikeresen adminisztrátorrá téve!",
     profileupdated: "Profil sikeresen megváltoztatva",
     machineAdded: "Gép sikeresen hozzáadva a könyvtárhoz",
+    updated: "Felhasználó sikeresen frissítve!",
   },
 };
 
