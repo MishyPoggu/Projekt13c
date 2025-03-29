@@ -15,7 +15,7 @@ const UserMachines = connections.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true,
+      primaryKey: false,
     },
     machineType: {
       type: DataTypes.ENUM("ArcadeMachine", "Console", "PinballMachine"),
