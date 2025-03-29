@@ -10,10 +10,16 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './userprofile.component.css'
 })
 export class UserprofileComponent implements OnInit {
-  userProfile: any = {};
-  profilePic = new FormControl("/Frontend/project/src/assets/pfp1.png");
+  profilForm: FormGroup;
 
-  constructor(private profileService: ProfileService) {}
+  constructor(private profileService: ProfileService) {
+    this.profilForm = new FormGroup({
+      name: new FormControl(''),
+      age: new  FormControl(''),
+      phone: new FormControl(''),
+      profilePic: new FormControl('')
+    })
+  }
 
   ngOnInit(): void {
     this.loadUserProfile();
@@ -21,17 +27,26 @@ export class UserprofileComponent implements OnInit {
 
   loadUserProfile() {
     this.profileService.getUserProfile().subscribe(data => {
-    this.userProfile = data || {}; 
+    if (data) {
+      this.profilForm.patchValue({
+        name: data.name || '',
+        age: data.age || '',
+        phone: data.phone || '',
+        profilePic: data.profilePic || '',
+      })
+    }
 
     });
   }
   
 
   saveProfile() {
-    this.profileService.updateUserProfile(this.userProfile).subscribe(response => {
-      localStorage.setItem('profilePic', this.userProfile.profilePic);
-      window.location.reload();
+    if (this.profilForm.valid) {
+    this.profileService.updateUserProfile(this.profilForm.value).subscribe(response => {
+      localStorage.setItem('profilePic', this.profilForm.value.profilePic);
       alert('A profilod sikeresen frissítve!')
+      window.location.reload();
     });
+  }
   }
 }

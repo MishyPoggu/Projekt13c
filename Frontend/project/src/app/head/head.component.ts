@@ -15,10 +15,7 @@ export class HeadComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    const savedPic = localStorage.getItem('profilePic');
-    if (savedPic) {
-    this.profilePic = `/Frontend/project/src/assets/${savedPic}`;
-    }
+    this.profilePic = localStorage.getItem('profilePic') || null;
 
     this.userService.isLoggedIn().subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
