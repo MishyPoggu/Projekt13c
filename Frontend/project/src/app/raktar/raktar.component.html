@@ -3,11 +3,11 @@
 <!-- https://wallpaper-mania.com/post/wallpaper-id-777000332135/ -->
   <div class="dark-overlay"></div>
   
-<div style="width: 100%; padding: 20px;">
+<div style="width: 120%; padding: 20px;">
     <input type="text" [(ngModel)]="searchTerm" placeholder="Keresés..." (input)="filterData()" />
   </div>
   
-  <div style="width: 100%; padding: 20px;">
+  <div style="width: 120%; padding: 20px;">
     <label for="publisherFilter">Kiadó</label>
     <select id="publisherFilter" [(ngModel)]="publisherFilter" (change)="filterData()">
       <option value="">-- Kiadó szűrése --</option>
@@ -15,7 +15,7 @@
     </select>
   </div>
   
-  <div style="width: 100%; padding: 20px;">
+  <div style="width: 120%; padding: 20px;">
     <label for="genreFilter">Műfaj</label>
     <select id="genreFilter" [(ngModel)]="genreFilter" (change)="filterData()">
       <option value="">-- Műfaj szűrése --</option>
@@ -23,12 +23,12 @@
     </select>
   </div>
 
-  <div style="width: 100%; padding: 20px;">
+  <div style="width: 120%; padding: 20px;">
     <label for="releaseFilter">Kiadás</label>
     <input type="number" id="releaseFilter" [(ngModel)]="releaseFilter" (input)="filterData()" placeholder="Pl 1987" />
 </div>
 
-  <div style="width: 60%; float: left;">
+  <div style="width: 60%;">
     <h2>Arcade Gépek</h2>
     <table>
       <tr>
@@ -80,17 +80,19 @@
     </table>
 
   </div>
-   <div style="width: 40%; background-color: aliceblue;position: absolute;right: 0%;top:10%; color:black; min-height: 100vh;">
-      <h2>A játékaid:</h2>
+<div class="background-image"></div> 
 
-      <h3>Árkádjátékaid:</h3>
+<div class="arcade-display">
+  <h2>A játékaid:</h2>
 
-      <div *ngIf="arcadeMachines.length === 0">
-        <h2>Nincsenek játékaid ilyen kategóriában.</h2>
-      </div>
+  <h3>Árkádjátékaid:</h3>
 
-      <div *ngIf="!(arcadeMachines.length === 0)">
- <table>
+  <div *ngIf="arcadeMachines.length === 0" class="no-games">
+    <h2>Nincsenek játékaid ilyen kategóriában.</h2>
+  </div>
+
+  <div *ngIf="!(arcadeMachines.length === 0)">
+    <table>
       <tr>
         <th>Név</th>
         <th>Kiadás</th>
@@ -103,16 +105,16 @@
         <td>{{arcadeMachine.genre}}</td>
         <td>{{arcadeMachine.publisher}}</td>
       </tr>
-     </table>
-      </div>
-    
-     <h3>Flipperek:</h3>
-     <div *ngIf="pinball.length === 0">
-      <h2>Nincsenek játékaid ilyen kategóriában.</h2>
-     </div>
+    </table>
+  </div>
 
-     <div *ngIf="!(pinball.length ===0)">
-      <table>
+  <h3>Flipperek:</h3>
+  <div *ngIf="pinball.length === 0" class="no-games">
+    <h2>Nincsenek játékaid ilyen kategóriában.</h2>
+  </div>
+
+  <div *ngIf="!(pinball.length === 0)">
+    <table>
       <tr>
         <th>Név</th>
         <th>Kiadás</th>
@@ -123,17 +125,16 @@
         <td>{{pinball.release}}</td>
         <td>{{pinball.publisher}}</td>
       </tr>
-     </table>
-     </div>
-     
+    </table>
+  </div>
 
-     <h3>Konzolok:</h3>
-     <div *ngIf="consolesMachines.length === 0">
-      <h2>Nincsenek játékaid ilyen kategóriában.</h2>
-     </div>
+  <h3>Konzolok:</h3>
+  <div *ngIf="consolesMachines.length === 0" class="no-games">
+    <h2>Nincsenek játékaid ilyen kategóriában.</h2>
+  </div>
 
-     <div *ngIf="!(consolesMachines.length ===0)">
-      <table>
+  <div *ngIf="!(consolesMachines.length === 0)">
+    <table>
       <tr>
         <th>Név</th>
         <th>Kiadás</th>
@@ -144,6 +145,6 @@
         <td>{{console.release}}</td>
         <td>{{console.publisher}}</td>
       </tr>
-     </table>
-     </div>
-      </div>
+    </table>
+  </div>
+</div>
