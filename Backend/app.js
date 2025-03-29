@@ -36,6 +36,25 @@ sequelize
   .then(() => {
     return sequelize.query("DROP TABLE IF EXISTS Companies;");
   })
+  .then(
+    `SELECT CONSTRAINT_NAME 
+     FROM information_schema.TABLE_CONSTRAINTS 
+     WHERE TABLE_NAME = 'usermachines' 
+     AND CONSTRAINT_TYPE = 'FOREIGN KEY'
+     AND CONSTRAINT_NAME = 'usermachines_ibfk_2';`
+  )
+  .then(([results]) => {
+    if (results.length > 0) {
+      console.log("Dropping foreign key usermachines_ibfk_2...");
+      return sequelize.query(
+        "ALTER TABLE usermachines DROP FOREIGN KEY usermachines_ibfk_2;"
+      );
+    } else {
+      console.log(
+        "Foreign key usermachines_ibfk_2 does not exist. Skipping..."
+      );
+    }
+  })
   .then(() => {
     return sequelize.sync({ force: false });
   })
