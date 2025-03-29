@@ -37,9 +37,22 @@ export class CompanyService {
     this.router.navigate(['/login']);
   }
 
+  getCompanyProfile(companyId: number): Observable<any> {
+    return this.http.get(`${this.baseURL}/companyProfile`);
+  }
+
+
+  saveCompanyProfile(companyId: number, registrationNumber: string, contactPerson: string, websiteUrl: string): Observable<any> {
+    return this.http.put(`${this.baseURL}/companyProfile`, {
+      companyId,
+      registrationNumber,
+      contactPerson,
+      websiteUrl
+    })
+  }
 
   saveToken(token: string, companyId?: string): void { 
-    this.isLoggedInSubject.next(true); 
+    this.isLoggedInSubject.next(true) ; 
     localStorage.setItem('token', token);
     
     if (companyId) {

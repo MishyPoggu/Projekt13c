@@ -38,11 +38,11 @@ export class UserService {
   }
 
   getUserProfile(userId: number): Observable<any> {
-    return this.http.get(`${this.baseURL}/${userId}`);
+    return this.http.get(`${this.baseURL}/profile`);
   }
 
   saveProfile(userId: number, name?: string, age?: number, phoneNumber?: string, profilePic?: string): Observable<any> {
-    return this.http.put(`${this.baseURL}/update`, {
+    return this.http.put(`${this.baseURL}/profile`, {
       userId,
       name,
       age,
