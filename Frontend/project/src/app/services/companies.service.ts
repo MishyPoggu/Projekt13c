@@ -38,18 +38,18 @@ export class CompanyService {
   }
 
   getCompanyProfile(companyId: number): Observable<any> {
-    return this.http.get(`${this.baseURL}/companyProfile`);
+    return this.http.get(`${this.baseURL}/${companyId}`);
   }
-
-
+  
   saveCompanyProfile(companyId: number, registrationNumber: string, contactPerson: string, websiteUrl: string): Observable<any> {
-    return this.http.put(`${this.baseURL}/companyProfile`, {
+    return this.http.post(`${this.baseURL}/update`, {
       companyId,
       registrationNumber,
       contactPerson,
       websiteUrl
-    })
+    });
   }
+  
 
   saveToken(token: string, companyId?: string): void { 
     this.isLoggedInSubject.next(true) ; 

@@ -38,11 +38,14 @@ export class UserService {
   }
 
   getUserProfile(userId: number): Observable<any> {
-    return this.http.get(`${this.baseURL}/profile`);
+    return this.http.get(`${this.baseURL}/get`, {
+      params: { userId: userId.toString() }
+    });
   }
+  
 
   saveProfile(userId: number, name?: string, age?: number, phoneNumber?: string, profilePic?: string): Observable<any> {
-    return this.http.put(`${this.baseURL}/profile`, {
+    return this.http.patch(`${this.baseURL}/profile`, {
       userId,
       name,
       age,
@@ -50,6 +53,7 @@ export class UserService {
       profilePic
     });
   }
+  
 
   saveToken(token: string) { 
     this.isLoggedInSubject.next(true); 
