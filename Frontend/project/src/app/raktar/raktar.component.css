@@ -25,6 +25,9 @@ body {
   font-family: 'Press Start 2P', cursive;
   color: white;
   background-color: black;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
 }
 
 div {
@@ -46,7 +49,7 @@ input, select {
 table {
   width: 100%;
   border-collapse: collapse;
-  border: 2px solid white;
+  border: 5px solid white;
   box-shadow: 0px 0px 10px #e20000;
   margin: 0 auto;
 }
@@ -54,8 +57,7 @@ table {
 table tr th, table tr td {
   text-align: center;
   padding: 10px;
-  border-bottom: 1px solid white;
-  border-top: 1px solid white;
+  border: none;
 }
 
 table tr th {
@@ -87,16 +89,18 @@ button:hover {
   font-family: 'Press Start 2P', cursive;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
   padding: 5px;
-  position: sticky; 
-  top: 0;
+  position: relative;
   height: auto;
-  min-height: 10vh; 
-  width: 15%;
+  min-height: 15vh;
+  width: 70%;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
   border-radius: 8px;
-  border: 3px solid #000000;
-  background: none; 
-  z-index: 1; 
+  border: 3px solid #919191;
+  background: none;
+  z-index: 1;
+  margin-bottom: 20px;
+  overflow-y: auto;
+  max-height: 50vh;
 }
 
 .user-games h2, .user-games h3 {
@@ -109,46 +113,30 @@ button:hover {
   font-family: 'Press Start 2P', cursive;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
   padding: 10px;
-  border: 10px solid #000000;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
   position: relative;
-  overflow: hidden;
-  width: 50%; 
-  margin: 0 auto;
-  min-height: 60vh;
-  z-index: 0; 
-  background: none; 
-}
-
-.arcade-display::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    rgba(255, 255, 255, 0.989) 50%,
-    rgba(255, 255, 255, 0.1) 50%
-  );
-  background-size: 100% 4px;
-  pointer-events: none;
+  max-height: 70vh;
+  height: auto;
+  overflow-y: auto;
+  background: none;
+  border: none;
 }
 
 .arcade-display table {
-  width: 80%; 
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
 }
 
 .arcade-display th, 
 .arcade-display td {
-  border: 1px solid #000000;
+  border: none;
   padding: 8px;
   text-align: center;
   color: white;
   font-family: 'Press Start 2P', cursive;
-  font-size: 0.9em; 
+  font-size: 0.9em;
 }
 
 .arcade-display th {
@@ -175,6 +163,28 @@ button:hover {
   font-size: 1.2em;
 }
 
-.arcade-display table th, .arcade-display table td {
-  color: white;
+.crt-effect {
+  position: relative;
+  width: 100%;
+  border-radius: 15px;
+  overflow: hidden; 
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.crt-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.989) 50%,
+    rgba(255, 255, 255, 0.1) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: inherit; 
+  border: 18px solid #292929; 
 }

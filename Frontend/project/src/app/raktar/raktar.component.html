@@ -1,34 +1,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <div class="background-image" style="background-image: url('assets/raktar.jpg');"></div>
 <!-- https://wallpaper-mania.com/post/wallpaper-id-777000332135/ -->
-  <div class="dark-overlay"></div>
-  
-<div style="width: 120%; padding: 20px;">
-    <input type="text" [(ngModel)]="searchTerm" placeholder="Keresés..." (input)="filterData()" />
-  </div>
-  
-  <div style="width: 120%; padding: 20px;">
-    <label for="publisherFilter">Kiadó</label>
-    <select id="publisherFilter" [(ngModel)]="publisherFilter" (change)="filterData()">
-      <option value="">-- Kiadó szűrése --</option>
-      <option *ngFor="let publisher of uniquePublishers" [value]="publisher">{{publisher}}</option>
-    </select>
-  </div>
-  
-  <div style="width: 120%; padding: 20px;">
-    <label for="genreFilter">Műfaj</label>
-    <select id="genreFilter" [(ngModel)]="genreFilter" (change)="filterData()">
-      <option value="">-- Műfaj szűrése --</option>
-      <option *ngFor="let genre of uniqueGenres" [value]="genre">{{genre}}</option>
-    </select>
-  </div>
+<div class="dark-overlay"></div>
 
-  <div style="width: 120%; padding: 20px;">
-    <label for="releaseFilter">Kiadás</label>
-    <input type="number" id="releaseFilter" [(ngModel)]="releaseFilter" (input)="filterData()" placeholder="Pl 1987" />
+<div style="width: 100%; padding: 20px;">
+  <input type="text" [(ngModel)]="searchTerm" placeholder="Keresés..." (input)="filterData()" />
 </div>
 
-  <div style="width: 60%;">
+<div style="width: 100%; padding: 20px;">
+  <label for="publisherFilter">Kiadó</label>
+  <select id="publisherFilter" [(ngModel)]="publisherFilter" (change)="filterData()">
+    <option value="">-- Kiadó szűrése --</option>
+    <option *ngFor="let publisher of uniquePublishers" [value]="publisher">{{publisher}}</option>
+  </select>
+</div>
+
+<div style="width: 100%; padding: 20px;">
+  <label for="genreFilter">Műfaj</label>
+  <select id="genreFilter" [(ngModel)]="genreFilter" (change)="filterData()">
+    <option value="">-- Műfaj szűrése --</option>
+    <option *ngFor="let genre of uniqueGenres" [value]="genre">{{genre}}</option>
+  </select>
+</div>
+
+<div style="width: 100%; padding: 20px;">
+  <label for="releaseFilter">Kiadás</label>
+  <input type="number" id="releaseFilter" [(ngModel)]="releaseFilter" (input)="filterData()" placeholder="Pl 1987" />
+</div>
+
+<div style="display: flex; justify-content: space-between; padding: 20px;">
+
+  <div style="width: 48%;">
     <h2>Arcade Gépek</h2>
     <table>
       <tr>
@@ -46,7 +48,7 @@
         <td><button (click)="addMachineToUser(arcade, 'ArcadeMachine')" style="cursor: pointer;">Hozzáadás</button></td>
       </tr>
     </table>
-  
+
     <h2>Flippergépek</h2>
     <table>
       <tr>
@@ -62,7 +64,7 @@
         <td><button (click)="addMachineToUser(pinball, 'PinballMachine')" style="cursor: pointer;">Hozzáadás</button></td>
       </tr>
     </table>
-  
+
     <h2>Konzolok</h2>
     <table>
       <tr>
@@ -78,73 +80,74 @@
         <td><button (click)="addMachineToUser(console, 'Console')" style="cursor: pointer;">Hozzáadás</button></td>
       </tr>
     </table>
-
-  </div>
-<div class="background-image"></div> 
-
-<div class="arcade-display">
-  <h2>A játékaid:</h2>
-
-  <h3>Árkádjátékaid:</h3>
-
-  <div *ngIf="arcadeMachines.length === 0" class="no-games">
-    <h2>Nincsenek játékaid ilyen kategóriában.</h2>
   </div>
 
-  <div *ngIf="!(arcadeMachines.length === 0)">
-    <table>
-      <tr>
-        <th>Név</th>
-        <th>Kiadás</th>
-        <th>Műfaj</th>
-        <th>Kiadó</th>
-      </tr>
-      <tr *ngFor="let arcadeMachine of arcadeMachines">
-        <td>{{arcadeMachine.name}}</td>
-        <td>{{arcadeMachine.release}}</td>
-        <td>{{arcadeMachine.genre}}</td>
-        <td>{{arcadeMachine.publisher}}</td>
-      </tr>
-    </table>
-  </div>
+  <div style="width: 48%; overflow-y: auto;">
+    <div class="crt-effect">
+      <div class="arcade-display">
+        <h2>A játékaid:</h2>
 
-  <h3>Flipperek:</h3>
-  <div *ngIf="pinball.length === 0" class="no-games">
-    <h2>Nincsenek játékaid ilyen kategóriában.</h2>
-  </div>
+        <h3>Árkádjátékaid:</h3>
+        <div *ngIf="arcadeMachines.length === 0" class="no-games">
+          <h2>Nincsenek játékaid ilyen kategóriában.</h2>
+        </div>
 
-  <div *ngIf="!(pinball.length === 0)">
-    <table>
-      <tr>
-        <th>Név</th>
-        <th>Kiadás</th>
-        <th>Kiadó</th>
-      </tr>
-      <tr *ngFor="let pinball of pinball">
-        <td>{{pinball.name}}</td>
-        <td>{{pinball.release}}</td>
-        <td>{{pinball.publisher}}</td>
-      </tr>
-    </table>
-  </div>
+        <div *ngIf="!(arcadeMachines.length === 0)">
+          <table>
+            <tr>
+              <th>Név</th>
+              <th>Kiadás</th>
+              <th>Műfaj</th>
+              <th>Kiadó</th>
+            </tr>
+            <tr *ngFor="let arcadeMachine of arcadeMachines">
+              <td>{{arcadeMachine.name}}</td>
+              <td>{{arcadeMachine.release}}</td>
+              <td>{{arcadeMachine.genre}}</td>
+              <td>{{arcadeMachine.publisher}}</td>
+            </tr>
+          </table>
+        </div>
 
-  <h3>Konzolok:</h3>
-  <div *ngIf="consolesMachines.length === 0" class="no-games">
-    <h2>Nincsenek játékaid ilyen kategóriában.</h2>
-  </div>
+        <h3>Flipperek:</h3>
+        <div *ngIf="pinball.length === 0" class="no-games">
+          <h2>Nincsenek játékaid ilyen kategóriában.</h2>
+        </div>
 
-  <div *ngIf="!(consolesMachines.length === 0)">
-    <table>
-      <tr>
-        <th>Név</th>
-        <th>Kiadás</th>
-        <th>Kiadó</th>
-      </tr>
-      <tr *ngFor="let console of consolesMachines">
-        <td>{{console.name}}</td>
-        <td>{{console.release}}</td>
-        <td>{{console.publisher}}</td>
-      </tr>
-    </table>
+        <div *ngIf="!(pinball.length === 0)">
+          <table>
+            <tr>
+              <th>Név</th>
+              <th>Kiadás</th>
+              <th>Kiadó</th>
+            </tr>
+            <tr *ngFor="let pinball of pinball">
+              <td>{{pinball.name}}</td>
+              <td>{{pinball.release}}</td>
+              <td>{{pinball.publisher}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Konzolok:</h3>
+        <div *ngIf="consolesMachines.length === 0" class="no-games">
+          <h2>Nincsenek játékaid ilyen kategóriában.</h2>
+        </div>
+
+        <div *ngIf="!(consolesMachines.length === 0)">
+          <table>
+            <tr>
+              <th>Név</th>
+              <th>Kiadás</th>
+              <th>Kiadó</th>
+            </tr>
+            <tr *ngFor="let console of consolesMachines">
+              <td>{{console.name}}</td>
+              <td>{{console.release}}</td>
+              <td>{{console.publisher}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
