@@ -10,6 +10,7 @@
         <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Regisztráció</h2>
       </div>
       
+      <!-- Váltás céges és Személyes regisztráció között-->
       <div class="form-check form-switch text-center mb-3">
         <input class="form-check-input" type="checkbox" id="toggleRegistration" (change)="toggleRegistrationType()" [checked]="isCompanyRegistration">
         <label class="form-check-label" for="toggleRegistration">
@@ -17,7 +18,7 @@
         </label>
       </div>
 
-      <div *ngIf="isCompanyRegistration; else userReg" class="col-md-12">
+      <div *ngIf="isCompanyRegistration; else userReg" class="col-md-12"> <!--Céges regisztráció-->
         <div class="col-md-6">
           <label for="taxNumber" class="form-label">Adószám</label>
           <input type="text" formControlName="taxNumber" id="taxNumber" class="form-control" placeholder="12345678-1-23" maxlength="13" (input)="onTaxNumberInput($event)">
@@ -38,7 +39,7 @@
       </div>
     </div>
 
-      <ng-template #userReg>
+      <ng-template #userReg> <!--Személyes regisztráció-->
         <div class="col-md-6">
           <label for="username" class="form-label">Felhasználónév</label>
           <input type="text" formControlName="username" id="username" class="form-control" placeholder="Arcade fan" required>
@@ -59,7 +60,7 @@
         <small class="text-danger" *ngIf="isInvalid('passwordHash')">Jelszót kötelező megadni!</small>
       </div>
 
-      <div class="text-center mt-5">
+      <div class="text-center mt-5"> <!--Regisztációs gomb, hibaellenőrzéssel-->
         <button type="submit" class="btn btn-secondary w-100"
           [ngClass]="{'btn-success': isCompanyRegistration 
           ? registerForm.get('companyName')?.valid && registerForm.get('taxNumber')?.valid && registerForm.get('contactEmail')?.valid && registerForm.get('passwordHash')?.valid

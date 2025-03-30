@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class CompanyService {
 
-  private baseURL = "http://localhost:3004/companies";
+  private baseURL = "http://localhost:3004/companies"; // Backend API címe
 
   constructor(private http: HttpClient, private router: Router) { 
     this.router = router; 
@@ -22,11 +22,11 @@ export class CompanyService {
   }
 
 
-  register(company: any): Observable<any> {
+  register(company: any): Observable<any> { // céges regisztráció
     return this.http.put(`${this.baseURL}/register`, company);
   }
 
-  login(taxNumber: string, passwordHash: string): Observable<any> {
+  login(taxNumber: string, passwordHash: string): Observable<any> { // céges bejelentkezés
     return this.http.post(`${this.baseURL}/login`, { taxNumber, passwordHash });
   }
 
@@ -37,12 +37,12 @@ export class CompanyService {
     this.router.navigate(['/login']);
   }
 
-  getCompanyProfile(companyId: number): Observable<any> {
+  getCompanyProfile(companyId: number): Observable<any> { // cég profiljának lekérése
     return this.http.get(`${this.baseURL}/${companyId}`);
   }
   
   saveCompanyProfile(companyId: number, registrationNumber: string, contactPerson: string, websiteUrl: string): Observable<any> {
-    return this.http.post(`${this.baseURL}/update`, {
+    return this.http.post(`${this.baseURL}/update`, { // cég profiljának frissítése
       companyId,
       registrationNumber,
       contactPerson,

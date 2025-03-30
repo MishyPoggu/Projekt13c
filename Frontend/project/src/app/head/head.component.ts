@@ -9,21 +9,21 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./head.component.css']
 })
 export class HeadComponent implements OnInit {
-  isLoggedIn = false; 
+  isLoggedIn = false;  // bejelentkezési állapot
   profilePic: string | null = null;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.profilePic = localStorage.getItem('profilePic') || null;
+    this.profilePic = localStorage.getItem('profilePic') || null; // profilkép betöltése
 
-    this.userService.isLoggedIn().subscribe(isLoggedIn => {
+    this.userService.isLoggedIn().subscribe(isLoggedIn => { // bejelentkezési állapot
       this.isLoggedIn = isLoggedIn;
     });
   }
 
   logout() {
-    this.userService.logout(); 
+    this.userService.logout();   // kijelentkezés
     this.isLoggedIn = false;
   }
 
@@ -31,10 +31,10 @@ export class HeadComponent implements OnInit {
   isUserDropdownOpen = false; 
 
   toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+    this.isMenuOpen = !this.isMenuOpen; // lenyiló menü-t változtatja attól függően, hogy nyitva van-e
   }
 
   toggleUserDropdown() {
-    this.isUserDropdownOpen = !this.isUserDropdownOpen;
+    this.isUserDropdownOpen = !this.isUserDropdownOpen; 
   }
 }

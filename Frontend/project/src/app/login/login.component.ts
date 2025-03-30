@@ -13,17 +13,17 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  errorMessage: string = '';
-  successMessage: string = '';
-  isCompanyLogin: boolean = true;
+  loginForm: FormGroup; 
+  errorMessage: string = ''; // Hibaüzenet
+  successMessage: string = ''; 
+  isCompanyLogin: boolean = true; // Céges vagy személyes bejelentkezés
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private companyService: CompanyService, 
 private router: Router
-  ) {
+  ) { // Űrlap inicializálása, és validátorok
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
-      taxNumber: ['', [Validators.required, Validators.pattern(/^\d{8}-\d{1}-\d{2}$/), Validators.maxLength(13)]],
+      taxNumber: ['', [Validators.required, Validators.pattern(/^\d{8}-\d{1}-\d{2}$/), Validators.maxLength(13)]], // Adószám helyes megadása
       passwordHash: ['', Validators.required]
     });
   }
@@ -32,26 +32,26 @@ private router: Router
     this.toggleLoginType();
   }
 
-  toggleLoginType(): void {
+  toggleLoginType(): void { // Céges vagy személyes bejelentkezés közötti váltás
     this.isCompanyLogin = !this.isCompanyLogin;
     this.loginForm.reset();
 
-    if (this.isCompanyLogin) {
+    if (this.isCompanyLogin) { // Céges bejelentkezési adatok
       this.loginForm.get('taxNumber')?.setValidators(Validators.required);
       this.loginForm.get('passwordHash')?.setValidators(Validators.required);
       this.loginForm.get('username')?.clearValidators();
-    } else {
+    } else { // Személyes bejelentkezési adatok
       this.loginForm.get('taxNumber')?.clearValidators();
       this.loginForm.get('passwordHash')?.setValidators(Validators.required);
       this.loginForm.get('username')?.setValidators(Validators.required);
     }
-
+    // Validációk frissítése 
     this.loginForm.get('taxNumber')?.updateValueAndValidity();
     this.loginForm.get('passwordHash')?.updateValueAndValidity();
     this.loginForm.get('username')?.updateValueAndValidity();
   }
 
-  onTaxNumberInput(event: Event): void {
+  onTaxNumberInput(event: Event): void { // Adószám ellenőrzése és és formátum módosítása
     if (!this.isCompanyLogin) return;
 
     const input = event.target as HTMLInputElement;
@@ -78,7 +78,7 @@ private router: Router
     this.errorMessage = ''; 
     this.successMessage = '';
 
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid) { // Céges bejelentkezés
       const passwordHash = this.loginForm.value.passwordHash;
       if (this.isCompanyLogin) {
         const taxNumber = this.loginForm.value.taxNumber;
@@ -93,7 +93,7 @@ private router: Router
             this.errorMessage = 'Hibás bejelentkezési adatok!';
           }
         });
-      } else {
+      } else { // Személyes bejelentkezés
         const username = this.loginForm.value.username;
         this.userService.login(username, passwordHash).subscribe({
           next: (res) => {

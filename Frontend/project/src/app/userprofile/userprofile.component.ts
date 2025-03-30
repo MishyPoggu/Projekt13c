@@ -11,13 +11,14 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './userprofile.component.css'
 })
 export class UserprofileComponent implements OnInit {
-  userId = Number(localStorage.getItem('userId'));  
+  userId = Number(localStorage.getItem('userId'));   
   companyId = Number(localStorage.getItem('companyId'));
-  profilForm: FormGroup; 
+  profilForm: FormGroup;  // Űrlapot létrehozzuk
   userProfile: any;
-  isCompanyLogin: boolean = false;
+  isCompanyLogin: boolean = false; // Megnézzük hogy cég vagy felhasználó jelentkezik be
 
   constructor(private userService: UserService, private companyService: CompanyService) {  
+    // inicializálunk és validációk beállítása
     this.profilForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       age: new FormControl('', [Validators.required, Validators.min(12), Validators.max(116)]),
@@ -31,10 +32,10 @@ export class UserprofileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadUserProfile();
+    this.loadUserProfile(); 
   }
 
-  onPhoneNumberInput(event: Event): void {
+  onPhoneNumberInput(event: Event): void { // Telefonszám magyarra formázása
     const input = event.target as HTMLInputElement;
     let value = input.value.replace(/\D/g, '');
     
@@ -56,7 +57,7 @@ export class UserprofileComponent implements OnInit {
     this.profilForm.get('phoneNumber')?.setValue(value);
   }
   
-  onRegistrationNumberInput(event: Event): void {
+  onRegistrationNumberInput(event: Event): void { // Cégjegyszékszám formázása magyar formátumura
     const input = event.target as HTMLInputElement;
     let value = input.value.replace(/\D/g, ''); 
   
@@ -74,7 +75,7 @@ export class UserprofileComponent implements OnInit {
     this.profilForm.get('registrationNumber')?.setValue(value);
   }
   
-  onWebsiteUrlInput(event: Event): void {
+  onWebsiteUrlInput(event: Event): void { // URL formázása
     const input = event.target as HTMLInputElement;
     let value = input.value.trim();
   
@@ -89,13 +90,13 @@ export class UserprofileComponent implements OnInit {
   }
   
 
-  isInvalid(fieldName: string): boolean {
-    const control = this.profilForm.get(fieldName);
+  isInvalid(fieldName: string): boolean { // Form mezők validációjának ellenőrzése
+    const control = this.profilForm.get(fieldName); 
     return control ? control.invalid && control.touched : false;
   }
 
   loadUserProfile() {
-    if (this.companyId) {
+    if (this.companyId) { // véges profil betöltése
       this.isCompanyLogin = true;
       this.companyService.getCompanyProfile(this.companyId).subscribe(data => {
         if (data) {
@@ -107,7 +108,7 @@ export class UserprofileComponent implements OnInit {
           });
         }
       })
-    }else {
+    }else { // felhasználói profil betöltése
       this.isCompanyLogin = false;
       this.userService.getUserProfile(this.userId).subscribe(data => {  
         if (data) {
@@ -123,7 +124,7 @@ export class UserprofileComponent implements OnInit {
     }
   }
 
-  saveProfile() {
+  saveProfile() { // Profil mentése
     if (this.profilForm.valid) {
       if (this.isCompanyLogin) {
         this.companyService.saveCompanyProfile(

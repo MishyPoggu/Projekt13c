@@ -1,7 +1,7 @@
 <div class="bg">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-    <div style="text-align: center;" *ngIf="successMessage" class="alert alert-successful">{{ successMessage }}</div>
+    <div style="text-align: center;" *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div> <!-- Hibaüzenet-->
+    <div style="text-align: center;" *ngIf="successMessage" class="alert alert-successful">{{ successMessage }}</div> <!-- Sikeres belépés-->
 
     <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 5px; max-width: 500px; min-height: 600px;">
       
@@ -9,20 +9,20 @@
         <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Bejelentkezés</h2>
       </div>
 
-      <div class="form-check form-switch text-center mb-3">
+      <div class="form-check form-switch text-center mb-3"> <!-- Céges vagy user kiválasztása -->
         <input class="form-check-input" type="checkbox" id="companyLoginSwitch" (change)="toggleLoginType()" [checked]="isCompanyLogin">
         <label class="form-check-label" for="companyLoginSwitch">
           {{ isCompanyLogin ? 'Felhasználó vagyok' : 'Cég vagyok' }}
         </label>
       </div>
 
-      <div *ngIf="isCompanyLogin; else userLogin">
+      <div *ngIf="isCompanyLogin; else userLogin"> <!-- Céges bejelentkezés -->
         <label for="taxNumber" class="form-label">Adószám</label>
         <input type="text" formControlName="taxNumber" id="taxNumber" class="form-control" placeholder="12345678-1-23" maxlength="13" (input)="onTaxNumberInput($event)" required>
         <small class="text-danger" *ngIf="isInvalid('taxNumber')">Adószám megadása kötelező, a fenti formátumban!</small>
       </div>
 
-      <ng-template #userLogin>
+      <ng-template #userLogin> <!-- Felhasználói bejelentkezés -->
         <label for="username" class="form-label">Felhasználónév</label>
         <input type="text" formControlName="username" id="username" class="form-control" placeholder="Arcade fan" required>
         <small class="text-danger" *ngIf="isInvalid('username')">Felhasználónév megadása kötelező!</small>
@@ -34,7 +34,7 @@
         <small class="text-danger" *ngIf="isInvalid('passwordHash')">Jelszót kötelező megadni!</small>
       </div>
 
-      <div class="text-center mt-5">
+      <div class="text-center mt-5"> <!-- Bejelentkezés gomb -->
         <button type="submit" class="btn btn-secondary w-100"
           [ngClass]="{'btn-success': isCompanyLogin 
           ? loginForm.get('taxNumber')?.valid && loginForm.get('passwordHash')?.valid

@@ -1,10 +1,11 @@
 <form (ngSubmit)="saveProfile()" *ngIf="userProfile" [formGroup]="profilForm">
+  <!---Űrlap akkor jelenik meg ha már van user profile -->
     <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 10px; max-width: 1500px; height: 550px;">
       <div class="text-center mb-4">
         <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Profil</h2>
       </div>
       
-      <div *ngIf="!isCompanyLogin">
+      <div *ngIf="!isCompanyLogin"> <!-- Felhasználóként van bejelentkezve-->
       <div class="mt-3">
         <label class="form-label">Profilkép választás</label>
         <div class="profile-pictures">
@@ -40,7 +41,7 @@
       </div>
     </div>
       
-    <div *ngIf="isCompanyLogin">
+    <div *ngIf="isCompanyLogin"> <!-- Cégként van bejelentkezve-->
       <div class="mt-3">
         <label for="registrationNumber" class="form-label">Cégjegyzékszám</label>
         <input type="text" id="registrationNumber" class="form-control" formControlName="registrationNumber" placeholder="01-09-123456" (input)="onRegistrationNumberInput($event)">
