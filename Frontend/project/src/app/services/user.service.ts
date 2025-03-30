@@ -26,10 +26,15 @@ export class UserService {
   }
 
   login(username: string, passwordHash: string): Observable<any> {
+    // Töröljük a céges adatokat, ha felhasználói módba jelentkezik
+    localStorage.removeItem('companyId');
+    localStorage.removeItem('token');
+    
     return this.http.post(`${this.baseURL}/login`, { username, passwordHash });
   }
 
   logout() {
+    // Kijelentkezésnél töröljük a felhasználói adatokat
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     this.isLoggedInSubject.next(false); 
@@ -37,13 +42,13 @@ export class UserService {
   }
 
   getUserProfile(userId: number): Observable<any> {
-    return this.http.get(`${this.baseURL}/get`, {
+    return this.http.get(`${this.baseURL}`, {
       params: { userId: userId.toString() }
     });
   }
 
   saveProfile(userId: number, name?: string, age?: number, phoneNumber?: string, profilePic?: string): Observable<any> {
-    return this.http.patch(`${this.baseURL}/profile`, {
+    return this.http.patch(`${this.baseURL}/update`, {
       userId,
       name,
       age,
@@ -62,7 +67,7 @@ export class UserService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    return !!this.getToken() && !!localStorage.getItem('userId');
   }
 
   getUserMachines(userID: number) {

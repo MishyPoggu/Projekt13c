@@ -26,22 +26,27 @@ export class CompanyService {
   }
 
   login(taxNumber: string, passwordHash: string): Observable<any> { // céges bejelentkezés
+  
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    
     return this.http.post(`${this.baseURL}/login`, { taxNumber, passwordHash });
   }
 
   logout() {
+    
     localStorage.removeItem('token');
     localStorage.removeItem('companyId');
     this.isLoggedInSubject.next(false); 
     this.router.navigate(['/login']);
   }
 
-  getCompanyProfile(companyId: number): Observable<any> { // cég profiljának lekérése
-    return this.http.get(`${this.baseURL}/${companyId}`);
+  getCompanyProfile(companyId: number): Observable<any> {
+    return this.http.get(`${this.baseURL}`);
   }
-  
+
   saveCompanyProfile(companyId: number, registrationNumber: string, contactPerson: string, websiteUrl: string): Observable<any> {
-    return this.http.post(`${this.baseURL}/update`, { // cég profiljának frissítése
+    return this.http.post(`${this.baseURL}/update`, {
       companyId,
       registrationNumber,
       contactPerson,
