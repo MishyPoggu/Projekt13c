@@ -23,7 +23,7 @@ const createComment = async (req, res) => {
 
     res.status(201).json({
       status: 201,
-      data: commentWithUser, 
+      data: commentWithUser,
       message: msg.comment.success.created,
       üzenet: uzn.comment.success.created,
     });
@@ -37,7 +37,6 @@ const createComment = async (req, res) => {
     });
   }
 };
-
 
 const getCommentsByPostId = async (req, res) => {
   const { postId } = req.params;
