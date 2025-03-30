@@ -36,6 +36,11 @@ div {
   padding: 20px;
 }
 
+.filters {
+  padding: 10px;
+  width: 100%;
+}
+
 input, select {
   font-family: 'Press Start 2P', cursive;
   font-size: 0.8em;
@@ -44,6 +49,7 @@ input, select {
   border: 2px solid white;
   padding: 5px;
   width: 80%;
+  box-sizing: border-box;
 }
 
 table {
@@ -51,12 +57,12 @@ table {
   border-collapse: collapse;
   border: 5px solid white;
   box-shadow: 0px 0px 10px #e20000;
-  margin: 0 auto;
+  margin: 20px 0;
 }
 
 table tr th, table tr td {
   text-align: center;
-  padding: 10px; 
+  padding: 10px;
   border: none;
 }
 
@@ -73,9 +79,10 @@ button {
   padding: 5px 10px;
   cursor: pointer;
   transition: 0.3s;
-  font-size: 1em; 
+  font-size: 1em;
   border-radius: 5px;
   box-shadow: 0 0 15px #e20000;
+  position: relative;
 }
 
 button:hover {
@@ -84,45 +91,40 @@ button:hover {
   box-shadow: 0 0 25px #ff0000;
 }
 
-.user-games {
-  color: white;
-  font-family: 'Press Start 2P', cursive;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-  padding: 5px;
-  position: relative;
-  height: auto;
-  min-height: 15vh;
-  width: 70%;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
-  border: 3px solid #919191;
-  background: none;
-  z-index: 1;
-  margin-bottom: 20px;
-  overflow-y: auto;
-  max-height: 50vh;
+.button-text {
+  display: inline; 
 }
 
-.user-games h2, .user-games h3 {
-  font-size: 1.5em;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+.button-plus {
+  display: none; 
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.machine-list, .user-games {
+  width: 48%;
 }
 
 .arcade-display {
   color: white;
   font-family: 'Press Start 2P', cursive;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-  padding: 10px; 
+  padding: 10px;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
-  position: sticky;
-  top: 0;
   width: 100%;
-  max-height: calc(100vh - 200px); 
+  max-height: calc(100vh - 200px);
   overflow-y: auto;
   background: none;
   border: none;
   z-index: 10;
+  position: sticky;
+  top: 20px;
 }
 
 .arcade-display table {
@@ -133,11 +135,11 @@ button:hover {
 .arcade-display th, 
 .arcade-display td {
   border: none;
-  padding: 8px; 
+  padding: 8px;
   text-align: center;
   color: white;
   font-family: 'Press Start 2P', cursive;
-  font-size: 0.8em; 
+  font-size: 0.8em;
 }
 
 .arcade-display th {
@@ -167,17 +169,17 @@ button:hover {
 .arcade-display h3 {
   color: white;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
-  font-size: 1.2em; 
+  font-size: 1.2em;
 }
 
 .crt-effect {
-  position: sticky;
-  top: 0;
   width: 100%;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
-  max-height: calc(100vh - 160px); 
+  max-height: calc(100vh - 160px);
+  position: sticky;
+  top: 0;
 }
 
 .crt-effect::before {
@@ -196,4 +198,220 @@ button:hover {
   z-index: 2;
   border-radius: inherit;
   border: 18px solid #292929;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    padding: 10px;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .machine-list {
+    width: 90%;
+    order: 1;
+  }
+
+  .user-games {
+    width: 90%;
+    order: 2;
+    position: relative;
+    transform: none;
+    left: 0;
+    margin-top: 20px;
+  }
+
+  .arcade-display {
+    max-height: none;
+    position: static;
+    width: 100%;
+    padding: 5px; 
+  }
+
+  .crt-effect {
+    max-height: none;
+    position: static;
+    width: 100%;
+  }
+
+  .filters {
+    padding: 5px;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
+  }
+
+  table {
+    width: 90%;
+    margin: 10px auto; 
+    font-size: 1em; 
+  }
+
+  table tr th, table tr td {
+    padding: 8px; 
+    font-size: 0.9em; 
+  }
+
+  button {
+    font-size: 0.7em; 
+    padding: 3px 6px; 
+  }
+
+  .button-text {
+    display: none; 
+  }
+
+  .button-plus {
+    display: inline; 
+  }
+
+  .arcade-display table {
+    width: 100%; 
+    font-size: 0.6em;
+    table-layout: fixed; 
+    margin: 0 auto; 
+  }
+
+  .arcade-display th, 
+  .arcade-display td {
+    padding: 6px; 
+    font-size: 0.6em; 
+    word-wrap: break-word; 
+  }
+
+  /* Arcade táblázat fixálása hogy ne csússzon el mobil nézetben- mint lejebb */
+  .arcade-display table:nth-child(2) th:nth-child(1), 
+  .arcade-display table:nth-child(2) td:nth-child(1) { width: 35%; } 
+  .arcade-display table:nth-child(2) th:nth-child(2), 
+  .arcade-display table:nth-child(2) td:nth-child(2) { width: 15%; } 
+  .arcade-display table:nth-child(2) th:nth-child(3), 
+  .arcade-display table:nth-child(2) td:nth-child(3) { width: 25%; } 
+  .arcade-display table:nth-child(2) th:nth-child(4), 
+  .arcade-display table:nth-child(2) td:nth-child(4) { width: 20%; } 
+  .arcade-display table:nth-child(2) th:nth-child(5), 
+  .arcade-display table:nth-child(2) td:nth-child(5) { width: 5%; } 
+
+
+  .arcade-display table:nth-child(4) th:nth-child(1), 
+  .arcade-display table:nth-child(4) td:nth-child(1),
+  .arcade-display table:nth-child(6) th:nth-child(1), 
+  .arcade-display table:nth-child(6) td:nth-child(1) { width: 45%; } 
+  .arcade-display table:nth-child(4) th:nth-child(2), 
+  .arcade-display table:nth-child(4) td:nth-child(2),
+  .arcade-display table:nth-child(6) th:nth-child(2), 
+  .arcade-display table:nth-child(6) td:nth-child(2) { width: 20%; } 
+  .arcade-display table:nth-child(4) th:nth-child(3), 
+  .arcade-display table:nth-child(4) td:nth-child(3),
+  .arcade-display table:nth-child(6) th:nth-child(3), 
+  .arcade-display table:nth-child(6) td:nth-child(3) { width: 30%; } 
+  .arcade-display table:nth-child(4) th:nth-child(4), 
+  .arcade-display table:nth-child(4) td:nth-child(4),
+  .arcade-display table:nth-child(6) th:nth-child(4), 
+  .arcade-display table:nth-child(6) td:nth-child(4) { width: 5%; } 
+
+  .arcade-display button {
+    font-size: 0.9em; 
+    padding: 4px 8px; 
+  }
+
+  .machine-list h2 {
+    margin: 10px 0 5px;
+  }
+}
+
+@media (max-width: 400px) {
+  .machine-list, .user-games {
+    width: 100%;
+  }
+
+  table {
+    width: 95%;
+    margin: 10px auto; 
+    table-layout: fixed;
+    overflow-x: hidden;
+    font-size: 1.1em; /
+  }
+
+  table tr th, table tr td {
+    padding: 10px; 
+    font-size: 1em; 
+    word-wrap: break-word;
+  }
+
+  button {
+    font-size: 0.6em; 
+    padding: 2px 5px; 
+  }
+
+  .button-text {
+    display: none; 
+  }
+
+  .button-plus {
+    display: inline; 
+  }
+
+  .arcade-display table {
+    width: 100%; 
+    font-size: 0.55em; 
+    table-layout: fixed; 
+    margin: 0 auto; 
+  }
+
+  .arcade-display th, 
+  .arcade-display td {
+    padding: 5px; 
+    font-size: 0.55em; 
+    word-wrap: break-word; 
+  }
+
+  /* Arcade táblázat fixálása hogy ne csússzon el mobil nézetben, a sorrend:név, kiadás, műfaj, kiadó törlés */
+  .arcade-display table:nth-child(2) th:nth-child(1), 
+  .arcade-display table:nth-child(2) td:nth-child(1) { width: 35%; } 
+  .arcade-display table:nth-child(2) th:nth-child(2), 
+  .arcade-display table:nth-child(2) td:nth-child(2) { width: 15%; } 
+  .arcade-display table:nth-child(2) th:nth-child(3), 
+  .arcade-display table:nth-child(2) td:nth-child(3) { width: 25%; } 
+  .arcade-display table:nth-child(2) th:nth-child(4), 
+  .arcade-display table:nth-child(2) td:nth-child(4) { width: 20%; } 
+  .arcade-display table:nth-child(2) th:nth-child(5), 
+  .arcade-display table:nth-child(2) td:nth-child(5) { width: 5%; } 
+
+  /* Ez pedig kontroller és flippernél */
+  .arcade-display table:nth-child(4) th:nth-child(1), 
+  .arcade-display table:nth-child(4) td:nth-child(1),
+  .arcade-display table:nth-child(6) th:nth-child(1), 
+  .arcade-display table:nth-child(6) td:nth-child(1) { width: 45%; } 
+  .arcade-display table:nth-child(4) th:nth-child(2), 
+  .arcade-display table:nth-child(4) td:nth-child(2),
+  .arcade-display table:nth-child(6) th:nth-child(2), 
+  .arcade-display table:nth-child(6) td:nth-child(2) { width: 20%; } 
+  .arcade-display table:nth-child(4) th:nth-child(3), 
+  .arcade-display table:nth-child(4) td:nth-child(3),
+  .arcade-display table:nth-child(6) th:nth-child(3), 
+  .arcade-display table:nth-child(6) td:nth-child(3) { width: 30%; }
+  .arcade-display table:nth-child(4) th:nth-child(4), 
+  .arcade-display table:nth-child(4) td:nth-child(4),
+  .arcade-display table:nth-child(6) th:nth-child(4), 
+  .arcade-display table:nth-child(6) td:nth-child(4) { width: 5%; } 
+
+  .arcade-display button {
+    font-size: 0.8em; 
+    padding: 3px 6px; 
+  }
+
+  .machine-list h2 {
+    font-size: 1.2em;
+    margin: 10px 0 5px;
+  }
+
+  .filters input,
+  .filters select {
+    font-size: 0.8em;
+    padding: 5px;
+    width: 100%;
+  }
 }

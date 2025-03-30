@@ -1,13 +1,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <div class="background-image" style="background-image: url('assets/raktar.jpg');"></div>
-<!-- https://wallpaper-mania.com/post/wallpaper-id-777000332135/ -->
 <div class="dark-overlay"></div>
 
-<div style="width: 100%; padding: 20px;">
+<div class="filters">
   <input type="text" [(ngModel)]="searchTerm" placeholder="Keresés..." (input)="filterData()" />
 </div>
 
-<div style="width: 100%; padding: 20px;">
+<div class="filters">
   <label for="publisherFilter">Kiadó</label>
   <select id="publisherFilter" [(ngModel)]="publisherFilter" (change)="filterData()">
     <option value="">-- Kiadó szűrése --</option>
@@ -15,7 +14,7 @@
   </select>
 </div>
 
-<div style="width: 100%; padding: 20px;">
+<div class="filters">
   <label for="genreFilter">Műfaj</label>
   <select id="genreFilter" [(ngModel)]="genreFilter" (change)="filterData()">
     <option value="">-- Műfaj szűrése --</option>
@@ -23,14 +22,13 @@
   </select>
 </div>
 
-<div style="width: 100%; padding: 20px;">
+<div class="filters">
   <label for="releaseFilter">Kiadás</label>
   <input type="number" id="releaseFilter" [(ngModel)]="releaseFilter" (input)="filterData()" placeholder="Pl 1987" />
 </div>
 
-<div style="display: flex; justify-content: space-between; padding: 20px;">
-
-  <div style="width: 48%;">
+<div class="content">
+  <div class="machine-list">
     <h2>Arcade Gépek</h2>
     <table>
       <tr>
@@ -45,7 +43,7 @@
         <td>{{arcade.release}}</td>
         <td>{{arcade.genre}}</td>
         <td>{{arcade.publisher}}</td>
-        <td><button (click)="addMachineToUser(arcade, 'ArcadeMachine')" style="cursor: pointer;">Hozzáadás</button></td>
+        <td><button (click)="addMachineToUser(arcade, 'ArcadeMachine')"><span class="button-text">Hozzáadás</span><span class="button-plus">+</span></button></td>
       </tr>
     </table>
 
@@ -61,7 +59,7 @@
         <td>{{pinball.name}}</td>
         <td>{{pinball.release}}</td>
         <td>{{pinball.publisher}}</td>
-        <td><button (click)="addMachineToUser(pinball, 'PinballMachine')" style="cursor: pointer;">Hozzáadás</button></td>
+        <td><button (click)="addMachineToUser(pinball, 'PinballMachine')"><span class="button-text">Hozzáadás</span><span class="button-plus">+</span></button></td>
       </tr>
     </table>
 
@@ -77,12 +75,12 @@
         <td>{{console.name}}</td>
         <td>{{console.release}}</td>
         <td>{{console.publisher}}</td>
-        <td><button (click)="addMachineToUser(console, 'Console')" style="cursor: pointer;">Hozzáadás</button></td>
+        <td><button (click)="addMachineToUser(console, 'Console')"><span class="button-text">Hozzáadás</span><span class="button-plus">+</span></button></td>
       </tr>
     </table>
   </div>
 
-  <div style="width: 48%;">
+  <div class="user-games">
     <div class="crt-effect">
       <div class="arcade-display">
         <h2>A játékaid:</h2>
@@ -91,7 +89,6 @@
         <div *ngIf="arcadeMachines.length === 0" class="no-games">
           <h2>Nincsenek játékaid ilyen kategóriában.</h2>
         </div>
-
         <div *ngIf="!(arcadeMachines.length === 0)">
           <table>
             <tr>
@@ -106,7 +103,7 @@
               <td>{{arcadeMachine.release}}</td>
               <td>{{arcadeMachine.genre}}</td>
               <td>{{arcadeMachine.publisher}}</td>
-              <td><button (click)="removeMachineFromUser(arcadeMachine, 'ArcadeMachine')" style="cursor: pointer;">X</button></td>
+              <td><button (click)="removeMachineFromUser(arcadeMachine, 'ArcadeMachine')">X</button></td>
             </tr>
           </table>
         </div>
@@ -115,7 +112,6 @@
         <div *ngIf="pinball.length === 0" class="no-games">
           <h2>Nincsenek játékaid ilyen kategóriában.</h2>
         </div>
-
         <div *ngIf="!(pinball.length === 0)">
           <table>
             <tr>
@@ -128,7 +124,7 @@
               <td>{{pinball.name}}</td>
               <td>{{pinball.release}}</td>
               <td>{{pinball.publisher}}</td>
-              <td><button (click)="removeMachineFromUser(pinball, 'PinballMachine')" style="cursor: pointer;">X</button></td>
+              <td><button (click)="removeMachineFromUser(pinball, 'PinballMachine')">X</button></td>
             </tr>
           </table>
         </div>
@@ -137,7 +133,6 @@
         <div *ngIf="consolesMachines.length === 0" class="no-games">
           <h2>Nincsenek játékaid ilyen kategóriában.</h2>
         </div>
-
         <div *ngIf="!(consolesMachines.length === 0)">
           <table>
             <tr>
@@ -150,7 +145,7 @@
               <td>{{console.name}}</td>
               <td>{{console.release}}</td>
               <td>{{console.publisher}}</td>
-              <td><button (click)="removeMachineFromUser(console, 'Console')" style="cursor: pointer;">X</button></td>
+              <td><button (click)="removeMachineFromUser(console, 'Console')">X</button></td>
             </tr>
           </table>
         </div>
