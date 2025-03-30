@@ -11,16 +11,15 @@ import { Arcade } from '../arcade';
 export class UserService {
   private baseURL = "http://localhost:3004/users";
 
-  constructor(private http: HttpClient,private router: Router) { 
+  constructor(private http: HttpClient, private router: Router) { 
     this.router = router; 
   }
 
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.isAuthenticated()); 
 
   isLoggedIn() {
-      return this.isLoggedInSubject.asObservable(); 
+    return this.isLoggedInSubject.asObservable(); 
   }
-
 
   register(user: any): Observable<any> {
     return this.http.put(`${this.baseURL}/register`, user);
@@ -42,7 +41,6 @@ export class UserService {
       params: { userId: userId.toString() }
     });
   }
-  
 
   saveProfile(userId: number, name?: string, age?: number, phoneNumber?: string, profilePic?: string): Observable<any> {
     return this.http.patch(`${this.baseURL}/profile`, {
@@ -53,7 +51,6 @@ export class UserService {
       profilePic
     });
   }
-  
 
   saveToken(token: string) { 
     this.isLoggedInSubject.next(true); 
@@ -68,19 +65,27 @@ export class UserService {
     return !!this.getToken();
   }
 
-
-  getUserMachines(userID:number) {
-    return this.http.get(`${this.baseURL}/machines/${userID}`)
+  getUserMachines(userID: number) {
+    return this.http.get(`${this.baseURL}/machines/${userID}`);
   }
 
-  addMachineToUser(machine:Arcade, machineType:string) {
-   const data= {
-        userId: Number(localStorage.getItem("userId")),
-        name: machine.name,
-        machineType:machineType
-    }
-    console.log(data)
-    //alert("megnyomva")
-    return this.http.post(`${this.baseURL}/machines/add`, data)
+  addMachineToUser(machine: Arcade, machineType: string) {
+    const data = {
+      userId: Number(localStorage.getItem("userId")),
+      name: machine.name,
+      machineType: machineType
+    };
+    console.log(data);
+    return this.http.post(`${this.baseURL}/machines/add`, data);
+  }
+
+  removeMachineFromUser(machine: Arcade, machineType: string) {
+    const data = {
+      userId: Number(localStorage.getItem("userId")),
+      name: machine.name,
+      machineType: machineType 
+    };
+    console.log(data);
+    return this.http.delete(`${this.baseURL}/machines/remove`, { body: data });
   }
 }
