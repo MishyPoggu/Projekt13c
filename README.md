@@ -3,6 +3,7 @@
   <img src="https://katolikuskeri.hu/Files/keri/keri_logo2.jpg" alt="KERI logó" width="350">
 </div>
 Szent István Katolikus Technikum és Gimnázium
+
 Baráth Levente, Karsai Mihály Ferenc, Klubert Ádám
 
 Projekt neve: Pixel Vault
@@ -11,7 +12,7 @@ SZOFTVERFEJLESZTÉS ÉS -TESZTELÉS VIZSGAREMEK- Sátoraljaújhely, 2025
 A projektünk a külföldön erőteljes színvonalú "arcade" kultúra megismertetéséül szolgál,és elsődlegesen a videójáték termekkel rendelkező személyeknek, a retro -
 játékgyűjtőknek és minden ebben a témában érdeklődőnek szól.
 Az oldalunk lehetőséget szolgál arra hogy a cégek, az ARCADE teremszolgáltatók és a videójátékokkal foglalkozó helyek hirdessék magukat, így jobban megismerhetjük hazánkban lévő videójáték szolgáltatásokat.
-Az általános felhasználók, vagy gyüjtők a fórumon beszélhetnek egymással. Ha ritka konzolokat vagy akár gépeket keresnek, itt nyugodtan írhatnak egy posztot róla. Ha netán valaki hasonló érdeklődésben részesül, vagy akár rendelkezésre áll egy ilyen géppel, akkor kommentben írhat a poszt alá.
+Az általános felhasználók, vagy gyűjtők a fórumon beszélhetnek egymással. Ha ritka konzolokat vagy akár gépeket keresnek, itt nyugodtan írhatnak egy posztot róla. Ha netán valaki hasonló érdeklődésben részesül, vagy akár rendelkezésre áll egy ilyen géppel, akkor kommentben írhat a poszt alá.
 Ha netán nem is gyűjtő, vagy céggel rendelkező az illető, akkor is használhatja az oldalt, hiszen egy Paddle Battle nevezetű játékkal is le kötheti magát, vagy akár olvashat játék vagy gépeket fejlesztő cégekről és azoknak a történetéről-történelméről. 
 A raktár felületen a bejelentkezett felhasználók el menthetik maguknak az oldalon fel sorolt flipper,arcade gépeket és akár konzolokat is. Ez sokaknak segíthet szortírozni gyüjteményeik,de még a helyfenntartók is jobban át láthatják mivel rendelkeznek. 
 
