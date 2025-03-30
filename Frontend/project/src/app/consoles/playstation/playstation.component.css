@@ -10,6 +10,7 @@
   .container {
     flex-direction: column;
     min-height: 100vh;
+    overflow: hidden;
   }
 }
 
@@ -43,22 +44,29 @@
 
 .content p {
   position: relative;
-  font-size: clamp(1em, 2vw, 1.5em);
+  font-size: clamp(0.8em, 2vw, 1.5em); 
   z-index: 2;
   text-align: center;
   padding: 10px;
+  line-height: 1.4; 
+  word-wrap: break-word; 
 }
 
 @media (max-width: 768px) {
   .content {
     min-height: 100vh;
     padding: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
   }
 }
 
 @media (max-width: 375px) {
-  .content {
-    min-height: 100vh;
+  .content p {
+    font-size: clamp(0.7em, 1.8vw, 1.2em); 
+    padding: 8px; 
   }
 }
 
