@@ -7,6 +7,7 @@ Szent István Katolikus Technikum és Gimnázium
 Baráth Levente, Karsai Mihály Ferenc, Klubert Ádám
 
 Projekt neve: Pixel Vault
+
 SZOFTVERFEJLESZTÉS ÉS -TESZTELÉS VIZSGAREMEK- Sátoraljaújhely, 2025
 
 A projektünk a külföldön erőteljes színvonalú "arcade" kultúra megismertetéséül szolgál,és elsődlegesen a videójáték termekkel rendelkező személyeknek, a retro -
