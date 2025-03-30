@@ -36,7 +36,7 @@
   
       <div class="mt-3">
         <label for="phoneNumber" class="form-label">Telefonszám</label>
-        <input type="text" id="phone" class="form-control" formControlName="phoneNumber" placeholder="pl: 06 20 123 4567" (input)="onPhoneNumberInput($event)">
+        <input type="text" id="phone" class="form-control" formControlName="phoneNumber" maxlength="14" placeholder="pl: 06 20 123 4567" (input)="onPhoneNumberInput($event)">
         <small class="text-danger" *ngIf="isInvalid('phoneNumber')">Telefonszámot a fenti formátumban lehet megadni!</small>
       </div>
     </div>

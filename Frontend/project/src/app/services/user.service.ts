@@ -41,14 +41,14 @@ export class UserService {
     this.router.navigate(['/login']);
   }
 
-  getUserProfile(userId: number): Observable<any> {
+  getUserProfile(userID: number): Observable<any> {
     return this.http.get(`${this.baseURL}`, {
-      params: { userId: userId.toString() }
+      params: { userId: userID.toString() }
     });
   }
 
   saveProfile(userId: number, name?: string, age?: number, phoneNumber?: string, profilePic?: string): Observable<any> {
-    return this.http.patch(`${this.baseURL}/update`, {
+    return this.http.post(`${this.baseURL}/update`, {  
       userId,
       name,
       age,
@@ -56,6 +56,7 @@ export class UserService {
       profilePic
     });
   }
+  
 
   saveToken(token: string) { 
     this.isLoggedInSubject.next(true); 
