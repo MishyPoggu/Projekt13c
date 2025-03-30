@@ -8,6 +8,7 @@ const {
   getAddresses,
   getAdvertisements,
   updateCompany,
+  postAdvertisement,
 } = require("../Controllers/companyController");
 
 router.post("/add-address", addAddress);
@@ -17,5 +18,6 @@ router.get("", getAllCompanies);
 router.get("/:companyId/addresses", getAddresses);
 router.get("/:companyId/advertisements", getAdvertisements);
 router.post("/update", updateCompany);
+router.post(":companyId/advertisement", postAdvertisement);
 
 module.exports = router;
