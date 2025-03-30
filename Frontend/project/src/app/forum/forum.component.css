@@ -8,6 +8,17 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  position: relative;
+}
+
+.background-img {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw; /* Teljes szélesség */
+  height: 100vh; /* Teljes magasság */
+  object-fit: cover; /* Teljes lefedettség, arányok megtartása */
+  z-index: -1; 
 }
 
 .forum-container {
@@ -19,12 +30,14 @@ body {
   margin: 0 auto;
   align-items: flex-start;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
 .main-content {
   width: 600px;
   padding: 20px;
-  background-color: rgba(56, 22, 102, 0.8);
+  background-color: rgba(56, 22, 102, 0.6);
   border-radius: 20px;
   color: white;
   font-family: 'Press Start 2P', cursive;
@@ -42,7 +55,7 @@ body {
   border: none;
   border-radius: 10px;
   font-size: 14px;
-  background: #29094a;
+  background: rgba(41, 9, 74, 0.8);
   color: white;
 }
 
@@ -74,7 +87,7 @@ body {
 }
 
 .post {
-  background-color: rgba(45, 12, 84, 0.9);
+  background-color: rgba(45, 12, 84, 0.7);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
@@ -101,7 +114,7 @@ body {
 .comments-section {
   margin-top: 15px;
   padding: 10px;
-  background: rgba(56, 22, 102, 0.8);
+  background: rgba(56, 22, 102, 0.6);
   border-radius: 10px;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -115,7 +128,7 @@ body {
 
 .sidebar {
   width: 400px;
-  background-color: rgba(56, 22, 102, 0.8);
+  background-color: rgba(56, 22, 102, 0.6);
   padding: 20px;
   overflow-y: auto;
   border-radius: 20px;
