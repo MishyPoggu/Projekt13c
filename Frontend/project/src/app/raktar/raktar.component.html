@@ -99,12 +99,14 @@
               <th>Kiadás</th>
               <th>Műfaj</th>
               <th>Kiadó</th>
+              <th>Törlés</th>
             </tr>
             <tr *ngFor="let arcadeMachine of arcadeMachines">
               <td>{{arcadeMachine.name}}</td>
               <td>{{arcadeMachine.release}}</td>
               <td>{{arcadeMachine.genre}}</td>
               <td>{{arcadeMachine.publisher}}</td>
+              <td><button (click)="removeMachineFromUser(arcadeMachine, 'ArcadeMachine')" style="cursor: pointer;">Törlés</button></td>
             </tr>
           </table>
         </div>
@@ -120,11 +122,13 @@
               <th>Név</th>
               <th>Kiadás</th>
               <th>Kiadó</th>
+              <th>Törlés</th>
             </tr>
             <tr *ngFor="let pinball of pinball">
               <td>{{pinball.name}}</td>
               <td>{{pinball.release}}</td>
               <td>{{pinball.publisher}}</td>
+              <td><button (click)="removeMachineFromUser(pinball, 'PinballMachine')" style="cursor: pointer;">Törlés</button></td>
             </tr>
           </table>
         </div>
@@ -140,14 +144,17 @@
               <th>Név</th>
               <th>Kiadás</th>
               <th>Kiadó</th>
+              <th>Törlés</th>
             </tr>
             <tr *ngFor="let console of consolesMachines">
               <td>{{console.name}}</td>
               <td>{{console.release}}</td>
               <td>{{console.publisher}}</td>
+              <td><button (click)="removeMachineFromUser(console, 'Console')" style="cursor: pointer;">Törlés</button></td>
             </tr>
           </table>
         </div>
       </div>
     </div>
   </div>
+</div>

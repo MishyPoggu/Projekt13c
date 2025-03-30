@@ -145,4 +145,11 @@ export class RaktarComponent implements OnInit, AfterViewInit {
       error: (err: HttpErrorResponse) => alert(err.message)
     });
   }
+
+  removeMachineFromUser(arcade: Arcade, machineType: string) {
+    this.userService.removeMachineFromUser(arcade, machineType).subscribe({
+      next: () => window.location.reload(),
+      error: (err: HttpErrorResponse) => alert(err.message)
+    });
+  }
 }

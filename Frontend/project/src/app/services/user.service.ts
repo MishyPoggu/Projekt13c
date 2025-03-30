@@ -11,7 +11,7 @@ import { Arcade } from '../arcade';
 export class UserService {
   private baseURL = "http://localhost:3004/users";
 
-  constructor(private http: HttpClient,private router: Router) { 
+  constructor(private http: HttpClient, private router: Router) { 
     this.router = router; 
   }
 
@@ -20,7 +20,6 @@ export class UserService {
   isLoggedIn() {
       return this.isLoggedInSubject.asObservable(); 
   }
-
 
   register(user: any): Observable<any> {
     return this.http.put(`${this.baseURL}/register`, user);
@@ -64,19 +63,26 @@ export class UserService {
     return !!this.getToken();
   }
 
-
-  getUserMachines(userID:number) {
-    return this.http.get(`${this.baseURL}/machines/${userID}`)
+  getUserMachines(userID: number) {
+    return this.http.get(`${this.baseURL}/machines/${userID}`);
   }
 
-  addMachineToUser(machine:Arcade, machineType:string) {
-   const data= {
-        userId: Number(localStorage.getItem("userId")),
-        name: machine.name,
-        machineType:machineType
-    }
-    console.log(data)
-    //alert("megnyomva")
-    return this.http.post(`${this.baseURL}/machines/add`, data)
+  addMachineToUser(machine: Arcade, machineType: string) {
+    const data = {
+      userId: Number(localStorage.getItem("userId")),
+      name: machine.name,
+      machineType: machineType
+    };
+    console.log(data);
+    return this.http.post(`${this.baseURL}/machines/add`, data);
+  }
+
+  removeMachineFromUser(machine: Arcade, machineType: string) {
+    const data = {
+      userId: Number(localStorage.getItem("userId")),
+      name: machine.name
+    };
+    console.log(data);
+    return this.http.delete(`${this.baseURL}/machines/remove`, { body: data });
   }
 }
