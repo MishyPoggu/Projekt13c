@@ -21,7 +21,6 @@ export class CompanyService {
       return this.isLoggedInSubject.asObservable(); 
   }
 
-
   register(company: any): Observable<any> { // céges regisztráció
     return this.http.put(`${this.baseURL}/register`, company);
   }
@@ -50,9 +49,12 @@ export class CompanyService {
     });
   }
   
+  getAllCompanies(): Observable<any> { // összes cég lekérése
+    return this.http.get(`${this.baseURL}`);
+  }
 
   saveToken(token: string, companyId?: string): void { 
-    this.isLoggedInSubject.next(true) ; 
+    this.isLoggedInSubject.next(true); 
     localStorage.setItem('token', token);
     
     if (companyId) {

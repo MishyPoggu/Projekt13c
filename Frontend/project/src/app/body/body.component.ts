@@ -1,6 +1,7 @@
 import { Component, HostListener, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CompanyService } from '../services/companies.service';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { ScrolldownComponent } from '../../scrolldown/scrolldown.component';
@@ -10,7 +11,7 @@ import { ScrolldownComponent } from '../../scrolldown/scrolldown.component';
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule, ScrolldownComponent],
+  imports: [FormsModule, CommonModule, ScrolldownComponent], // CompanyService nem kell itt importálni
 })
 export class BodyComponent implements AfterViewInit {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
@@ -18,7 +19,13 @@ export class BodyComponent implements AfterViewInit {
   selectedFile: File | null = null;
   showForm: boolean = false;
   aosInitialized: boolean = false;
-  showMoreFields: boolean = false; 
+  showMoreFields: boolean = false;
+  companies: any[] = [];
+  isCustomSelected: boolean = false;
+
+  constructor(private companyService: CompanyService) {
+    this.fetchCompanies();
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -35,10 +42,11 @@ export class BodyComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     const video = this.videoPlayer.nativeElement;
-    video.load(); 
+    video.load();
 
     const tryPlay = () => {
-      video.play()
+      video
+        .play()
         .then(() => {
           console.log('Video is playing');
         })
@@ -60,6 +68,23 @@ export class BodyComponent implements AfterViewInit {
     }
   }
 
+  fetchCompanies() {
+    this.companyService.getAllCompanies().subscribe(
+      (response: any) => {
+        this.companies = response.data; // A backend JSON struktúrája alapján
+        console.log('Cégek lekérve:', this.companies);
+      },
+      (error: any) => { // Explicit típus megadása
+        console.error('Hiba a cégek lekérésekor:', error);
+      }
+    );
+  }
+
+  onCompanyChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.isCustomSelected = selectElement.value === 'custom';
+  }
+
   onSubmit() {
     console.log('Elküldve!');
   }
@@ -73,6 +98,6 @@ export class BodyComponent implements AfterViewInit {
   }
 
   toggleFields() {
-    this.showMoreFields = !this.showMoreFields; 
+    this.showMoreFields = !this.showMoreFields;
   }
 }
