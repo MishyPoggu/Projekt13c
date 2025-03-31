@@ -29,6 +29,10 @@ export class PostService {
   }
 
   deletePost(postId: number) {
-    return this.http.delete(`${this.baseURL}${this.getPostsEnd}${postId}`);
+    const userId = Number(localStorage.getItem("userId")) || null;
+    const companyId = Number(localStorage.getItem("companyId")) || null;
+    return this.http.delete(`${this.baseURL}${this.getPostsEnd}${postId}`, {
+      body: { userId, companyId },
+    });
   }
 }

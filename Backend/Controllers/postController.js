@@ -1,13 +1,13 @@
-const { Posts, Users } = require("../Models/index");
+const { Posts, Users, Companies } = require("../Models/index");
 const upload = require("../Middleware/uploadImage");
 const msg = require("../Response/msg");
 const uzn = require("../Response/uzenet");
 
 const createPost = async (req, res) => {
-  console.log('Bejövő kérés:', req.body, req.file);
   try {
     const {
       userId,
+      companyId,
       title,
       content,
       companyName,
@@ -19,9 +19,7 @@ const createPost = async (req, res) => {
     } = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
-    console.log('Feldolgozott adatok:', { userId, title, content, companyName, street, city, zipcode, state, country, imageUrl });
-
-    if (!userId || (!title && !content && !companyName)) {
+    if ((!userId && !companyId) || (!title && !content && !companyName)) {
       return res.status(400).json({
         status: 400,
         message: msg.data.failure.unfilled,
@@ -30,7 +28,8 @@ const createPost = async (req, res) => {
     }
 
     const newPost = await Posts.create({
-      userId,
+      userId: userId || null,
+      companyId: companyId || null,
       title: title || `${companyName || "Ismeretlen cég"} - Új helyszín`,
       content: content || "Nincs további tartalom",
       companyName,
@@ -40,7 +39,15 @@ const createPost = async (req, res) => {
       stateOrRegion: state,
       country,
       imageUrl,
-      type: companyName ? 'location' : 'forum'
+      type: companyName ? "location" : "forum",
+    });
+
+    const postWithDetails = await Posts.findOne({
+      where: { postId: newPost.postId },
+      include: [
+        { model: Users, attributes: ["username"] },
+        { model: Companies, attributes: ["companyName"] },
+      ],
     });
 
     res.status(201).json({
@@ -48,15 +55,15 @@ const createPost = async (req, res) => {
       postId: newPost.postId,
       message: msg.post.success.created,
       üzenet: uzn.post.success.created,
-      data: newPost 
+      data: postWithDetails,
     });
   } catch (error) {
-    console.error('Hiba a poszt létrehozásakor:', error);
+    console.error("Hiba a poszt létrehozásakor:", error);
     res.status(500).json({
       status: 500,
       message: msg.user.failure.unknown,
       üzenet: uzn.user.failure.unknown,
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -67,7 +74,10 @@ const getAllPosts = async (req, res) => {
     const whereClause = type ? { type } : {};
     const posts = await Posts.findAll({
       where: whereClause,
-      include: [{ model: Users, attributes: ["username"] }],
+      include: [
+        { model: Users, attributes: ["username"] },
+        { model: Companies, attributes: ["companyName"] },
+      ],
       order: [["createdAt", "DESC"]],
     });
     res.status(200).json({
@@ -89,7 +99,10 @@ const getPostById = async (req, res) => {
   try {
     const post = await Posts.findOne({
       where: { postId: id },
-      include: [{ model: Users, attributes: ["username"] }],
+      include: [
+        { model: Users, attributes: ["username"] },
+        { model: Companies, attributes: ["companyName"] },
+      ],
     });
     if (!post) {
       return res.status(404).json({
@@ -114,6 +127,8 @@ const getPostById = async (req, res) => {
 
 const deletePost = async (req, res) => {
   const { id } = req.params;
+  const { userId, companyId } = req.body;
+
   try {
     const post = await Posts.findOne({ where: { postId: id } });
     if (!post) {
@@ -123,6 +138,17 @@ const deletePost = async (req, res) => {
         üzenet: uzn.post.failure.notfound,
       });
     }
+
+    if (
+      (post.userId && post.userId !== userId) ||
+      (post.companyId && post.companyId !== companyId)
+    ) {
+      return res.status(403).json({
+        status: 403,
+        message: "Nem jogosult törölni ezt a posztot!",
+      });
+    }
+
     await post.destroy();
     res.status(200).json({
       status: 200,
@@ -140,8 +166,8 @@ const deletePost = async (req, res) => {
 };
 
 module.exports = {
-  createPost: [upload.single("image"), createPost], 
+  createPost: [upload.single("image"), createPost],
   getAllPosts,
   getPostById,
-  deletePost
+  deletePost,
 };

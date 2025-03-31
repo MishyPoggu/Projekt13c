@@ -4,37 +4,20 @@ const connections = require("../Connections/connections");
 // A connections egy inicializált Sequelize példány
 const sequelize = connections;
 
-// Modellek importálása
 const Users = require("./users");
 const Token = require("./token");
 const UserMachines = require("./usermachines");
+
 const ArcadeMachines = require("./arcademachines");
 const Consoles = require("./consoles");
 const PinballMachines = require("./pinballmachines");
+
 const Addresses = require("./addresses");
 const Advertisements = require("./advertisements");
 const Companies = require("./companies");
-const CompanyMachines = require("./companyMachines"); 
 
-// Posztok és kommentek (új)
-const Posts = sequelize.define('Posts', {
-  postId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  userId: { 
-    type: Sequelize.INTEGER, 
-    allowNull: false,
-    references: { model: 'Users', key: 'userId' } // Idegenkulcs
-  },
-  title: { type: Sequelize.STRING, allowNull: false },
-  content: { type: Sequelize.STRING, allowNull: false },
-  companyName: { type: Sequelize.STRING },
-  streetAddress: { type: Sequelize.STRING },
-  city: { type: Sequelize.STRING },
-  postalCode: { type: Sequelize.STRING },
-  stateOrRegion: { type: Sequelize.STRING },
-  country: { type: Sequelize.STRING },
-  imageUrl: { type: Sequelize.STRING },
-  type: { type: Sequelize.ENUM('forum', 'location'), defaultValue: 'forum' }
-});
+// Posztok és kommentek 
+const Posts = require("./posts");
 const Comments = require("./comments");
 
 // Gépek hozzákötése a felhasználókhoz
@@ -78,9 +61,6 @@ Users.hasMany(ArcadeMachines, { foreignKey: "userId" });
 Users.hasMany(Consoles, { foreignKey: "userId" });
 Users.hasMany(PinballMachines, { foreignKey: "userId" });
 
-Companies.hasMany(Addresses, { foreignKey: "companyId" });
-Addresses.belongsTo(Companies, { foreignKey: "companyId" });
-
 Advertisements.belongsTo(Addresses, {
   foreignKey: "addressId",
   targetKey: "addressId",
@@ -97,16 +77,12 @@ Advertisements.belongsTo(Companies, {
   onDelete: "CASCADE",
 });
 
-// CompanyMachines kapcsolatok
-Companies.hasMany(CompanyMachines, { foreignKey: "companyId" });
-CompanyMachines.belongsTo(Companies, { foreignKey: "companyId" });
-
-// Posztok és kommentek kapcsolatok
 Posts.belongsTo(Users, { foreignKey: "userId" });
+Posts.belongsTo(Companies, { foreignKey: "companyId" });
 Comments.belongsTo(Users, { foreignKey: "userId" });
+Comments.belongsTo(Companies, { foreignKey: "companyId" });
 Comments.belongsTo(Posts, { foreignKey: "postId" });
 
-// Szinkronizálás
 sequelize.sync({ force: false }).then(() => {
   console.log('Adatbázis szinkronizálva');
 }).catch(err => {
@@ -114,7 +90,7 @@ sequelize.sync({ force: false }).then(() => {
 });
 
 module.exports = {
-  sequelize,
+  sequelize, 
   ArcadeMachines,
   Consoles,
   PinballMachines,
@@ -126,5 +102,4 @@ module.exports = {
   Posts,
   Comments,
   UserMachines,
-  CompanyMachines,
 };

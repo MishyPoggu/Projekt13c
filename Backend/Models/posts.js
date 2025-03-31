@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const connections = require("../Connections/connections");
 const Users = require("./users");
+const Companies = require("./companies");
 
 const Posts = connections.define(
   "Post",
@@ -12,10 +13,18 @@ const Posts = connections.define(
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: Users,
         key: "userId",
+      },
+    },
+    companyId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: Companies,
+        key: "companyId",
       },
     },
     type: {
@@ -66,4 +75,6 @@ const Posts = connections.define(
 );
 
 Posts.belongsTo(Users, { foreignKey: "userId" });
+Posts.belongsTo(Companies, { foreignKey: "companyId" });
+
 module.exports = Posts;

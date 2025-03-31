@@ -12,13 +12,13 @@ body {
 }
 
 .background-img {
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Teljes szélesség */
-  height: 100vh; /* Teljes magasság */
-  object-fit: cover; /* Teljes lefedettség, arányok megtartása */
-  z-index: -1; 
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
 }
 
 .forum-container {
@@ -154,12 +154,12 @@ body {
 }
 
 .jump-to-news {
-  display: none;  
+  display: none;
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.6);  
+  background-color: rgba(0, 0, 0, 0.6);
   color: white;
   padding: 10px 20px;
   border-radius: 25px;
@@ -179,7 +179,7 @@ body {
 
   .sidebar {
     width: 100%;
-    order: 1; 
+    order: 1;
     margin-top: 20px;
   }
 
@@ -188,11 +188,11 @@ body {
   }
 
   .jump-to-news {
-    display: block; 
+    display: block;
   }
-  
+
   .jump-to-news:hover {
-    background-color: rgba(0, 0, 0, 0.8); 
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
 
