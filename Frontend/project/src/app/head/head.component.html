@@ -1,5 +1,4 @@
-<nav class="navbar">
-  <!-- Burger lenyíló menü -->
+<nav class="navbar"> <!-- Burger lenyíiló menü-->
   <div class="burger" (click)="toggleMenu()">
     <div class="line" [class.open]="isMenuOpen"></div>
     <div class="line" [class.open]="isMenuOpen"></div>
@@ -13,24 +12,23 @@
     <li><a href="/paddlebattle">Paddle Battle</a></li>
   </ul>
 
-  <!-- Idézet a navbarra -->
+  <!--Idézet a navbarra-->
   <h2>"In the early '80s, the arcade game Pac-Man was twice as popular as oxygen."</h2>
 
   <div class="icons">
     <a href="#" class="icon"><i class="fas fa-home"></i></a>
 
     <a href="#" class="icon" (click)="toggleUserDropdown(); $event.preventDefault()">
-      <img *ngIf="isLoggedIn && !isCompanyLogin && profilePic" [src]="profilePic" class="nav-avatar">
-      <i *ngIf="isLoggedIn && isCompanyLogin" class="fas fa-building"></i>
-      <i *ngIf="!isLoggedIn || (!isCompanyLogin && !profilePic)" class="fas fa-user"></i>
+      <img *ngIf="isLoggedIn && profilePic" [src]="profilePic" class="nav-avatar">
+      <i *ngIf="!isLoggedIn || !profilePic" class="fas fa-user"></i>
     </a>
 
     <ul class="user-dropdown" [class.open]="isUserDropdownOpen">
-      <ng-container *ngIf="isLoggedIn; else guestLinks">
+      <ng-container *ngIf="isLoggedIn; else guestLinks"> <!--Bejelentkezett felhasználóknak-->
         <li><a href="/userprofile">Profil</a></li>
         <li><a href="#" (click)="logout(); $event.preventDefault()">Kijelentkezés</a></li>
       </ng-container>
-      <ng-template #guestLinks>
+      <ng-template #guestLinks> <!-- Új felhasználóknak-->
         <li><a href="/login">Bejelentkezés</a></li>
         <li><a href="/register">Regisztráció</a></li>
       </ng-template>
