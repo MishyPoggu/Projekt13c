@@ -75,14 +75,14 @@ export class ForumComponent implements OnInit {
       },
     });
   }
-
+// Hírek widget //
   loadElfsightScript() {
     const script = document.createElement('script');
     script.src = 'https://static.elfsight.com/platform/platform.js';
     script.async = true;
     document.body.appendChild(script);
   }
-
+// innentől a poszt kezelések vannak //
   createPost() {
     this.postService.createPost(this.post).subscribe({
       next: (res: any) => {

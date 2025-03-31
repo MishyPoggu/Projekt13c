@@ -134,7 +134,7 @@ export class RaktarComponent implements OnInit, AfterViewInit {
   openData(arcade: Arcade) {
     this.arcade = arcade;
   }
-
+// A szűrések az oldalon //
   filterData() {
     const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
     const filterFunction = (machine: Arcade) => 
@@ -161,7 +161,7 @@ export class RaktarComponent implements OnInit, AfterViewInit {
   getUniqueGenres(data: Arcade[]): string[] {
     return [...new Set(data.map(item => item.genre).filter(g => g))];
   }
-
+// gép hozzáadás //
   addMachineToEntity(arcade: Arcade, machineType: string) {
     if (this.isCompany) {
       this.companyService.addMachineToCompany(arcade, machineType).subscribe({
@@ -175,7 +175,7 @@ export class RaktarComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
+// gép törlés //
   removeMachineFromEntity(arcade: Arcade, machineType: string) {
     if (this.isCompany) {
       this.companyService.removeMachineFromCompany(arcade, machineType).subscribe({

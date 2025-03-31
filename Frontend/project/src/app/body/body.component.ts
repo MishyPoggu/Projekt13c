@@ -21,8 +21,8 @@ export class BodyComponent implements OnInit, AfterViewInit {
   locations: any[] = [];
   selectedFile: File | null = null;
   environment = Environment;
-  currentUserId: number = Number(localStorage.getItem('userId')) || 0; // 0 jelzi, ha nincs bejelentkezve
-  isLoggedIn: boolean = !!localStorage.getItem('userId'); // Bejelentkezési állapot ellenőrzése
+  currentUserId: number = Number(localStorage.getItem('userId')) || 0; 
+  isLoggedIn: boolean = !!localStorage.getItem('userId'); 
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
 
@@ -99,10 +99,10 @@ export class BodyComponent implements OnInit, AfterViewInit {
     if (this.selectedFile) {
       formData.append('image', this.selectedFile, this.selectedFile.name);
     }
-
+// hirdetés létrehozása //
     this.postService.createFormPost(formData).subscribe({
       next: (res: any) => {
-        this.loadLocations(); // Frissítjük a listát sikeres mentés után
+        this.loadLocations(); 
         form.reset();
         this.selectedFile = null;
         this.showMoreFields = false;
@@ -114,7 +114,7 @@ export class BodyComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
+// hirdetés törlése //
   deleteLocation(postId: number) {
     if (!this.isLoggedIn) {
       alert('Kérlek, jelentkezz be a törléshez!');
@@ -124,7 +124,7 @@ export class BodyComponent implements OnInit, AfterViewInit {
     if (confirm('Biztosan törölni szeretnéd ezt a hirdetést?')) {
       this.postService.deletePost(postId).subscribe({
         next: () => {
-          this.loadLocations(); // Frissítjük a listát törlés után
+          this.loadLocations(); 
           alert('Hirdetés sikeresen törölve!');
         },
         error: (err) => {
