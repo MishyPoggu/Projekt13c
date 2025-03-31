@@ -98,10 +98,10 @@ export class BodyComponent implements OnInit, AfterViewInit {
     formData.append('userId', localStorage.getItem('userId') || '1');
     formData.append('companyName', this.isCustomSelected ? form.value.customName : form.value.companySelect);
     formData.append('street', form.value.street);
-    formData.append('city', form.value.city || '');
-    formData.append('zipcode', form.value.zipcode || '');
-    formData.append('state', form.value.state || '');
-    formData.append('country', form.value.country || '');
+    formData.append('city', form.value.city);
+    formData.append('zipcode', form.value.zipcode);
+    formData.append('state', form.value.state);
+    formData.append('country', form.value.country);
     formData.append('content', form.value.description);
     if (this.selectedFile) {
       formData.append('image', this.selectedFile, this.selectedFile.name);
@@ -112,6 +112,7 @@ export class BodyComponent implements OnInit, AfterViewInit {
         this.locations.unshift(res.data);
         form.reset();
         this.selectedFile = null;
+        this.showMoreFields = false; // Reset to hidden after submission
         alert('Hely sikeresen hozzáadva!');
       },
       error: (err) => {

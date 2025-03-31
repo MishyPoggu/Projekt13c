@@ -132,13 +132,13 @@ h1 {
   background-color: #e68900;
 }
 
-.hidden-fields {
+.additional-fields {
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
 
-.hidden-fields.show {
+.additional-fields.show {
   display: block;
   opacity: 1;
 }

@@ -63,7 +63,7 @@
       {{ showMoreFields ? 'Kevesebb mező' : 'További mezők' }}
     </button>
 
-    <div *ngIf="showMoreFields">
+    <div class="additional-fields" [ngClass]="{'show': showMoreFields}">
       <div>
         <label for="city">Város:</label>
         <input type="text" id="city" name="city" ngModel required placeholder="Pl. Sátoraljaújhely" />
