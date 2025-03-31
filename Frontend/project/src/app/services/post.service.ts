@@ -1,30 +1,34 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Environment } from '../environment';
-import { Post } from '../post';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   baseURL = Environment.baseURL;
+  addPostEnd = "posts/create";
+  getPostsEnd = "posts/";
 
-  addPostEnd="posts/create";
-  getPostsEnd="posts/"
-
-  createPost(post:Post) {
-    return this.http.post(this.baseURL+this.addPostEnd, post);
+  createFormPost(formData: FormData) {
+    return this.http.post(`${this.baseURL}${this.addPostEnd}`, formData);
   }
 
-
-  getPost() {
-    return this.http.get(this.baseURL+this.getPostsEnd);
+  createPost(post: any) {
+    return this.http.post(`${this.baseURL}${this.addPostEnd}`, post);
   }
 
-  deletePost(postId:number) {
+  getForumPosts() {
+    return this.http.get(`${this.baseURL}${this.getPostsEnd}?type=forum`);
+  }
+
+  getLocations() {
+    return this.http.get(`${this.baseURL}${this.getPostsEnd}?type=location`);
+  }
+
+  deletePost(postId: number) {
     return this.http.delete(`${this.baseURL}${this.getPostsEnd}${postId}`);
   }
 }

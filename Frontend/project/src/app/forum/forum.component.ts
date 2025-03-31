@@ -15,7 +15,6 @@ import { Comment } from '../comment';
   styleUrls: ['./forum.component.css']
 })
 export class ForumComponent implements OnInit {
-
   posts_: Post[] = [];
   userId: number = 0;
   newComments: { [postId: number]: Comment } = {}; 
@@ -29,13 +28,17 @@ export class ForumComponent implements OnInit {
     User: { username: "" } 
   };
 
-  constructor(private http: HttpClient, private postService: PostService, private commentService: CommentService) {}
+  constructor(
+    private http: HttpClient, 
+    private postService: PostService, 
+    private commentService: CommentService
+  ) {}
 
   ngOnInit() {
     this.loadElfsightScript();
     this.userId = Number(localStorage.getItem("userId")); 
 
-    this.postService.getPost().subscribe({
+    this.postService.getForumPosts().subscribe({
       next: (res: any) => {
         this.posts_ = res.data;
 
@@ -87,12 +90,12 @@ export class ForumComponent implements OnInit {
   }
 
   deletePost(postId: number) {
-    const post = this.posts_.find(p => p.postId === postId);
+    const post: Post | undefined = this.posts_.find(p => p.postId === postId);
     
     if (post && post.userId === this.userId) {
       this.postService.deletePost(postId).subscribe({
         next: () => {
-          this.posts_ = this.posts_.filter(post => post.postId !== postId);
+          this.posts_ = this.posts_.filter(p => p.postId !== postId);
           alert("Poszt törölve.");
         },
         error: (err: HttpErrorResponse) => {
@@ -109,24 +112,28 @@ export class ForumComponent implements OnInit {
 
     if (!commentToSend || !commentToSend.content.trim()) return;
 
+    const post: Post | undefined = this.posts_.find(p => p.postId === postId);
+    if (!post) {
+      alert("A poszt nem található!");
+      return;
+    }
+
     this.commentService.createComment(commentToSend).subscribe({
       next: (res: any) => {
-        const post = this.posts_.find(p => p.postId === postId);
-        if (post) {
-          const newComment = res.data || {
-            commentId: res.commentId,
-            userId: commentToSend.userId,
-            postId: postId,
-            content: commentToSend.content,
-            createdAt: new Date().toISOString(),
-            User: { username: res.data?.User?.username || "ismeretlen" }
-          };
+        const newComment = res.data || {
+          commentId: res.commentId,
+          userId: commentToSend.userId,
+          postId: postId,
+          content: commentToSend.content,
+          createdAt: new Date().toISOString(),
+          User: { username: res.data?.User?.username || "ismeretlen" }
+        };
 
-          if (!post.comments) {
-            post.comments = [];
-          }
-          post.comments.push(newComment);
+        if (!post.comments) {
+          post.comments = [];
         }
+        post.comments.push(newComment);
+        
         this.newComments[postId].content = "";
         alert("Hozzászólás sikeresen hozzáadva");
       },
@@ -137,25 +144,25 @@ export class ForumComponent implements OnInit {
   }
 
   deleteComment(commentId: number) {
-    let commentOwnerId: number | null = null;
+    const post = this.posts_.find(p => 
+      p.comments && p.comments.some(c => c.commentId === commentId)
+    );
 
-    this.posts_.forEach(post => {
-      if (post.comments) {
-        const comment = post.comments.find(c => c.commentId === commentId);
-        if (comment) {
-          commentOwnerId = comment.userId;
-        }
-      }
-    });
+    if (!post) {
+      alert("A hozzászólás nem található!");
+      return;
+    }
 
-    if (commentOwnerId === this.userId) {
+    const comment = post.comments!.find(c => c.commentId === commentId);
+    if (!comment) {
+      alert("A hozzászólás nem található!");
+      return;
+    }
+
+    if (comment.userId === this.userId) {
       this.commentService.deleteComment(commentId).subscribe({
         next: () => {
-          this.posts_.forEach(post => {
-            if (post.comments) {
-              post.comments = post.comments.filter(comment => comment.commentId !== commentId);
-            }
-          });
+          post.comments = post.comments!.filter(c => c.commentId !== commentId);
           alert("Hozzászólás törölve.");
         },
         error: (err: HttpErrorResponse) => {
@@ -166,11 +173,11 @@ export class ForumComponent implements OnInit {
       alert("Nem törölheted más hozzászólását!");
     }
   }
+
   scrollToNews() {
     const newsSection = document.getElementById("news");
     if (newsSection) {
       newsSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
-  
 }

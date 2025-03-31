@@ -1,43 +1,74 @@
 const { Posts, Users } = require("../Models/index");
-const connections = require("../Connections/connections");
+const upload = require("../Middleware/uploadImage");
 const msg = require("../Response/msg");
 const uzn = require("../Response/uzenet");
 
 const createPost = async (req, res) => {
-  const { userId, title, content } = req.body;
-
-  if (!userId || !title || !content) {
-    return res.status(400).json({
-      status: 400,
-      message: msg.data.failure.unfilled,
-      üzenet: uzn.data.failure.unfilled,
-    });
-  }
-
+  console.log('Bejövő kérés:', req.body, req.file);
   try {
-    const newPost = await Posts.create({ userId, title, content });
+    const {
+      userId,
+      title,
+      content,
+      companyName,
+      street,
+      city,
+      zipcode,
+      state,
+      country,
+    } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    console.log('Feldolgozott adatok:', { userId, title, content, companyName, street, city, zipcode, state, country, imageUrl });
+
+    if (!userId || (!title && !content && !companyName)) {
+      return res.status(400).json({
+        status: 400,
+        message: msg.data.failure.unfilled,
+        üzenet: uzn.data.failure.unfilled,
+      });
+    }
+
+    const newPost = await Posts.create({
+      userId,
+      title: title || `${companyName || "Ismeretlen cég"} - Új helyszín`,
+      content: content || "Nincs további tartalom",
+      companyName,
+      streetAddress: street,
+      city,
+      postalCode: zipcode,
+      stateOrRegion: state,
+      country,
+      imageUrl,
+      type: companyName ? 'location' : 'forum'
+    });
+
     res.status(201).json({
       status: 201,
       postId: newPost.postId,
       message: msg.post.success.created,
       üzenet: uzn.post.success.created,
+      data: newPost 
     });
   } catch (error) {
-    console.error(error);
+    console.error('Hiba a poszt létrehozásakor:', error);
     res.status(500).json({
       status: 500,
       message: msg.user.failure.unknown,
       üzenet: uzn.user.failure.unknown,
-      err:error
+      error: error.message
     });
   }
 };
 
 const getAllPosts = async (req, res) => {
   try {
+    const { type } = req.query;
+    const whereClause = type ? { type } : {};
     const posts = await Posts.findAll({
+      where: whereClause,
       include: [{ model: Users, attributes: ["username"] }],
-      order: [["createdAt", "DESC"]]
+      order: [["createdAt", "DESC"]],
     });
     res.status(200).json({
       status: 200,
@@ -108,4 +139,9 @@ const deletePost = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getAllPosts, getPostById, deletePost };
+module.exports = {
+  createPost: [upload.single("image"), createPost], 
+  getAllPosts,
+  getPostById,
+  deletePost
+};

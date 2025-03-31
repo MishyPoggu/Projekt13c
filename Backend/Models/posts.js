@@ -26,6 +26,34 @@ const Posts = connections.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    companyName: {
+      type: DataTypes.STRING,
+      allowNull: true, 
+    },
+    streetAddress: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    postalCode: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    stateOrRegion: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: true, 
+    },
   },
   {
     timestamps: true,

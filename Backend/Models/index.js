@@ -1,8 +1,12 @@
+const Sequelize = require('sequelize');
 const connections = require("../Connections/connections");
 
+// A connections egy inicializált Sequelize példány
+const sequelize = connections;
+
+// Modellek importálása (nem függvényként hívjuk meg őket)
 const Users = require("./users");
 const Token = require("./token");
-
 const UserMachines = require("./usermachines");
 
 // Ezeknek az értéke nem fog változni, csak a szerveren tárolni kell őket
@@ -16,7 +20,24 @@ const Advertisements = require("./advertisements");
 const Companies = require("./companies");
 
 // Posztok és kommentek (új)
-const Posts = require("./posts");
+const Posts = sequelize.define('Posts', {
+  postId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  userId: { 
+    type: Sequelize.INTEGER, 
+    allowNull: false,
+    references: { model: 'Users', key: 'userId' } // Idegenkulcs
+  },
+  title: { type: Sequelize.STRING, allowNull: false },
+  content: { type: Sequelize.STRING, allowNull: false },
+  companyName: { type: Sequelize.STRING },
+  streetAddress: { type: Sequelize.STRING },
+  city: { type: Sequelize.STRING },
+  postalCode: { type: Sequelize.STRING },
+  stateOrRegion: { type: Sequelize.STRING },
+  country: { type: Sequelize.STRING },
+  imageUrl: { type: Sequelize.STRING },
+  type: { type: Sequelize.ENUM('forum', 'location'), defaultValue: 'forum' }
+});
 const Comments = require("./comments");
 
 // Gépek hozzákötése a felhasználókhoz
@@ -82,8 +103,15 @@ Posts.belongsTo(Users, { foreignKey: "userId" });
 Comments.belongsTo(Users, { foreignKey: "userId" });
 Comments.belongsTo(Posts, { foreignKey: "postId" });
 
+// Szinkronizálás (opcionális, csak fejlesztéshez)
+sequelize.sync({ force: false }).then(() => {
+  console.log('Adatbázis szinkronizálva');
+}).catch(err => {
+  console.error('Szinkronizálási hiba:', err);
+});
+
 module.exports = {
-  connections,
+  sequelize, // Exportáljuk a sequelize példányt is
   ArcadeMachines,
   Consoles,
   PinballMachines,

@@ -5,21 +5,16 @@ const app = express();
 const cors = require("cors");
 const fs = require("fs");
 const axios = require("axios");
+const path = require("path");
 
 require("dotenv").config();
 
 const userRoute = require("./Routes/userRoute");
 const tokenRoute = require("./Routes/tokenRoute");
-
-// Konzolok, Arcade gépek, Pinball gépek
 const consoleRoute = require("./Routes/consoleRoute");
 const arcadeMachineRoute = require("./Routes/arcadeMachineRoute");
 const pinballMachineRoute = require("./Routes/pinballMachineRoute");
-
-// Cégek
 const companyRoutes = require("./Routes/companyRoute");
-
-// Posztok és kommentek (új)
 const postRoute = require("./Routes/postRoute");
 const commentRoute = require("./Routes/commentRoute");
 
@@ -27,7 +22,8 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
-// Eredeti tábla droppolás és szinkronizálás megtartása
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 sequelize
   .query("DROP TABLE IF EXISTS Advertisements;")
   .then(() => {
@@ -52,33 +48,15 @@ sequelize
     console.error("Failed to create tables:", err.message);
   });
 
-/*
-app.use(
-  cors({
-    origin: "http://localhost:4200/",
-    methods: "GET, POST, PUT, DELETE",
-    credentials: true,
-  })
-);
-*/
-
-// Meglévő route-ok
 app.use("/users", userRoute);
 app.use("/tokens", tokenRoute);
-
-// Konzolok, Arcade gépek, Pinball gépek
 app.use("/consoles", consoleRoute);
 app.use("/arcade", arcadeMachineRoute);
 app.use("/pinball", pinballMachineRoute);
-
-// Cégek
 app.use("/companies", companyRoutes);
-
-// Új route-ok posztokhoz és kommentekhez
 app.use("/posts", postRoute);
 app.use("/comments", commentRoute);
 
-// Json betöltése
 const loadJsonData = (filePath) => {
   return new Promise((resolve, reject) => {
     console.log(`Attempting to read file: ${filePath}`);
@@ -87,27 +65,15 @@ const loadJsonData = (filePath) => {
         console.error(`Error reading file at ${filePath}:`, err);
         return reject(`Error reading file: ${err.message}`);
       }
-
       try {
         const jsonData = JSON.parse(data);
         console.log("Raw file data:", jsonData);
-
-        // Determine which key to extract based on file name
         let key;
-        if (filePath.includes("consoles")) {
-          key = "consoles";
-        } else if (filePath.includes("arcademachines")) {
-          key = "arcadeMachines";
-        } else if (filePath.includes("flippermachines")) {
-          key = "pinballMachines";
-        } else {
-          return reject(`Unknown JSON format in file: ${filePath}`);
-        }
-
-        if (!jsonData[key]) {
-          return reject(`Key "${key}" not found in ${filePath}`);
-        }
-
+        if (filePath.includes("consoles")) key = "consoles";
+        else if (filePath.includes("arcademachines")) key = "arcadeMachines";
+        else if (filePath.includes("flippermachines")) key = "pinballMachines";
+        else return reject(`Unknown JSON format in file: ${filePath}`);
+        if (!jsonData[key]) return reject(`Key "${key}" not found in ${filePath}`);
         console.log(`Loaded ${jsonData[key].length} items from ${filePath}`);
         resolve(jsonData[key]);
       } catch (parseError) {
@@ -128,36 +94,19 @@ const sendDataToAPI = async (data, url) => {
   }
 };
 
-// gépek autómatikus betöltése
 const insertDataIntoDB = async () => {
   try {
     console.log("Loading data from JSON files...");
-
     const consoles = await loadJsonData("../Adatbázis/consoles.json");
     console.log(`Loaded ${consoles.length} consoles from JSON.`);
-
-    const arcademachines = await loadJsonData(
-      "../Adatbázis/arcademachines.json"
-    );
+    const arcademachines = await loadJsonData("../Adatbázis/arcademachines.json");
     console.log(`Loaded ${arcademachines.length} arcade machines from JSON.`);
-
-    const pinballmachines = await loadJsonData(
-      "../Adatbázis/flippermachines.json"
-    );
+    const pinballmachines = await loadJsonData("../Adatbázis/flippermachines.json");
     console.log(`Loaded ${pinballmachines.length} pinball machines from JSON.`);
 
-    await sendDataToAPI(
-      { consoles },
-      "http://localhost:3004/consoles/addMultiple"
-    );
-    await sendDataToAPI(
-      { arcadeMachines: arcademachines },
-      "http://localhost:3004/arcade/addMultiple"
-    );
-    await sendDataToAPI(
-      { pinballMachines: pinballmachines },
-      "http://localhost:3004/pinball/addMultiple"
-    );
+    await sendDataToAPI({ consoles }, "http://localhost:3004/consoles/addMultiple");
+    await sendDataToAPI({ arcadeMachines: arcademachines }, "http://localhost:3004/arcade/addMultiple");
+    await sendDataToAPI({ pinballMachines: pinballmachines }, "http://localhost:3004/pinball/addMultiple");
 
     console.log("All data inserted successfully!");
   } catch (error) {

@@ -1,71 +1,109 @@
-<body>
-  <div class="header">
-    <h1>Pixel Vault</h1>
+<div class="header">
+  <h1>Pixel Vault</h1>
+</div>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<video #videoPlayer muted loop playsinline preload="auto" class="background-video">
+  <source src="assets/játék-videó.mp4" type="video/mp4" />
+  A böngésződ nem támogatja a videó lejátszást.
+</video>
+
+<div class="spacer"></div>
+
+<app-scrolldown></app-scrolldown>
+
+<div class="content">
+  <form
+    class="form-container"
+    *ngIf="showForm"
+    data-aos="fade-up"
+    data-aos-duration="2000"
+    (ngSubmit)="onSubmit(form)"
+    #form="ngForm"
+  >
+    <div>
+      <label for="companySelect">Cég/Hely neve:</label>
+      <select
+        id="companySelect"
+        name="companySelect"
+        ngModel
+        (change)="onCompanyChange($event)"
+        required
+      >
+        <option value="" disabled selected>Válassz egy céget, vagy írj be egy hely fenntartót</option>
+        <option *ngFor="let company of companies" [value]="company.companyId">
+          {{ company.companyName }}
+        </option>
+        <option value="custom">Hely fenntartó (új név megadása)</option>
+      </select>
+      <input
+        *ngIf="isCustomSelected"
+        type="text"
+        id="customName"
+        name="customName"
+        ngModel
+        required
+        placeholder="Add meg a hely nevét"
+      />
+    </div>
+
+    <div>
+      <label for="street">Helyszín adatok</label>
+      <label for="street">Utcacím:</label>
+      <input
+        type="text"
+        id="street"
+        name="street"
+        ngModel
+        required
+        placeholder="Pl. Ady Endre utca 1"
+      />
+    </div>
+
+    <button type="button" (click)="toggleFields()">
+      {{ showMoreFields ? 'Kevesebb mező' : 'További mezők' }}
+    </button>
+
+    <div *ngIf="showMoreFields">
+      <div>
+        <label for="city">Város:</label>
+        <input type="text" id="city" name="city" ngModel required placeholder="Pl. Sátoraljaújhely" />
+      </div>
+      <div>
+        <label for="zipcode">Irányítószám:</label>
+        <input type="text" id="zipcode" name="zipcode" ngModel required placeholder="Pl. 3950" />
+      </div>
+      <div>
+        <label for="state">Állam vagy régió:</label>
+        <input type="text" id="state" name="state" ngModel required placeholder="Pl. Heves megye" />
+      </div>
+      <div>
+        <label for="country">Ország:</label>
+        <input type="text" id="country" name="country" ngModel required placeholder="Pl. Magyarország" />
+      </div>
+    </div>
+
+    <div>
+      <label for="description">Leírás:</label>
+      <textarea id="description" name="description" ngModel required placeholder="Írd be a leírást"></textarea>
+    </div>
+
+    <div id="uj-resz">
+      <label for="image">Kép feltöltése:</label>
+      <input type="file" id="image" name="image" (change)="onFileSelected($event)" />
+    </div>
+
+    <button type="submit" [disabled]="!form.valid">Mentés</button>
+  </form>
+
+  <div class="locations" *ngIf="locations.length > 0">
+    <h2>Hirdetések</h2>
+    <div *ngFor="let location of locations" class="location-item">
+      <h3>{{ location.companyName || 'Névtelen hely' }}</h3>
+      <p>{{ location.streetAddress }}, {{ location.city }}, {{ location.postalCode }}, {{ location.country }}</p>
+      <p>{{ location.content }}</p>
+      <img *ngIf="location.imageUrl" [src]="environment.baseURL + location.imageUrl" alt="Hely képe" style="max-width: 200px;" />
+    </div>
   </div>
-  <video #videoPlayer muted loop playsinline preload="auto" class="background-video">
-    <source src="assets/játék-videó.mp4" type="video/mp4" />
-  </video>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <div class="spacer"></div>
+</div>
 
-  <app-scrolldown></app-scrolldown>
-
-  <div class="content">
-    <form class="form-container" *ngIf="showForm" data-aos="fade-up" data-aos-duration="2000" (ngSubmit)="onSubmit()" #form="ngForm">
-      <div>
-        <label for="companySelect">Cég/Hely neve:</label>
-        <select id="companySelect" name="companySelect" ngModel (change)="onCompanyChange($event)" required>
-          <option value="" disabled selected>Válassz egy céget vagy helyet</option>
-          <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyName }}</option>
-          <option value="custom">Hely fenntartó (új név megadása)</option>
-        </select>
-        <input *ngIf="isCustomSelected" type="text" id="customName" name="customName" ngModel required placeholder="Add meg a hely nevét" />
-      </div>
-
-      <div>
-        <label for="name">Helyszín adatok</label>
-        <label for="streetAddress">Utcacím:</label>
-        <input type="text" id="street" name="street" ngModel required placeholder="Pl. Ady Endre utca 1" />
-      </div>
-
-      <button type="button" (click)="toggleFields()">
-        {{ showMoreFields ? 'Kevesebb mező' : 'További mezők' }}
-      </button>
-
-      <div *ngIf="showMoreFields">
-        <div>
-          <label for="city">Város:</label>
-          <input type="text" id="city" name="city" ngModel required placeholder="Pl. Sátoraljaújhely" />
-        </div>
-
-        <div>
-          <label for="postalCode">Irányítószám:</label>
-          <input type="text" id="zipcode" name="zipcode" ngModel required placeholder="Pl. 3950" />
-        </div>
-
-        <div>
-          <label for="stateOrRegion">Állam vagy régió:</label>
-          <input type="text" id="state" name="state" ngModel required placeholder="Pl. Heves megye" />
-        </div>
-
-        <div>
-          <label for="country">Ország:</label>
-          <input type="text" id="country" name="country" ngModel required placeholder="Pl. Magyarország" />
-        </div>
-      </div>
-
-      <div>
-        <label for="description">Leírás:</label>
-        <textarea id="description" name="description" ngModel required placeholder="Írd be a leírást"></textarea>
-      </div>
-
-      <div id="uj-resz">
-        <label for="image">Kép feltöltése:</label>
-        <input type="file" id="image" name="image" (change)="onFileSelected($event)" />
-      </div>
-
-      <button type="submit" [disabled]="!form.valid">Mentés</button>
-    </form>
-  </div>
-  <div class="page-end-spacer"></div>
-</body>
+<div class="page-end-spacer"></div>

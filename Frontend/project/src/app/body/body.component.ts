@@ -1,43 +1,55 @@
-import { Component, HostListener, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { PostService } from '../services/post.service';
 import { CompanyService } from '../services/companies.service';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { ScrolldownComponent } from '../../scrolldown/scrolldown.component';
+import { Environment } from '../environment';
+import { CommonModule } from '@angular/common';
+import { ScrolldownComponent } from '../scrolldown/scrolldown.component';
 
 @Component({
   selector: 'app-body',
-  templateUrl: './body.component.html',
-  styleUrls: ['./body.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule, ScrolldownComponent], // CompanyService nem kell itt importálni
+  imports: [FormsModule, CommonModule, ScrolldownComponent],
+  templateUrl: './body.component.html',
+  styleUrls: ['./body.component.css']
 })
-export class BodyComponent implements AfterViewInit {
+export class BodyComponent implements OnInit, AfterViewInit {
+  showForm = true;
+  showMoreFields = false;
+  isCustomSelected = false;
+  companies: any[] = [];
+  locations: any[] = [];
+  selectedFile: File | null = null;
+  environment = Environment;
+
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
 
-  selectedFile: File | null = null;
-  showForm: boolean = false;
-  aosInitialized: boolean = false;
-  showMoreFields: boolean = false;
-  companies: any[] = [];
-  isCustomSelected: boolean = false;
+  constructor(
+    private http: HttpClient,
+    private postService: PostService,
+    private companyService: CompanyService
+  ) {}
 
-  constructor(private companyService: CompanyService) {
-    this.fetchCompanies();
-  }
+  ngOnInit() {
+    this.companyService.getAllCompanies().subscribe({
+      next: (res: any) => {
+        this.companies = res.data;
+      },
+      error: (err) => {
+        console.error('Error fetching companies:', err);
+      }
+    });
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const scrollPosition = window.scrollY;
-    if (scrollPosition > 50 && !this.aosInitialized) {
-      this.aosInitialized = true;
-      this.showForm = true;
-      AOS.init({
-        duration: 2000,
-        once: false,
-      });
-    }
+    this.postService.getLocations().subscribe({
+      next: (res: any) => {
+        this.locations = res.data;
+        console.log('Locations:', this.locations);
+      },
+      error: (err) => {
+        console.error('Error fetching locations:', err);
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -45,14 +57,9 @@ export class BodyComponent implements AfterViewInit {
     video.load();
 
     const tryPlay = () => {
-      video
-        .play()
-        .then(() => {
-          console.log('Video is playing');
-        })
-        .catch((error) => {
-          console.error('Video play error: ', error);
-        });
+      video.play().catch((error) => {
+        console.warn('Videó nem tudott elindulni automatikusan:', error);
+      });
     };
 
     tryPlay();
@@ -68,36 +75,49 @@ export class BodyComponent implements AfterViewInit {
     }
   }
 
-  fetchCompanies() {
-    this.companyService.getAllCompanies().subscribe(
-      (response: any) => {
-        this.companies = response.data; // A backend JSON struktúrája alapján
-        console.log('Cégek lekérve:', this.companies);
-      },
-      (error: any) => { // Explicit típus megadása
-        console.error('Hiba a cégek lekérésekor:', error);
-      }
-    );
+  toggleFields() {
+    this.showMoreFields = !this.showMoreFields;
   }
 
   onCompanyChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    this.isCustomSelected = selectElement.value === 'custom';
-  }
-
-  onSubmit() {
-    console.log('Elküldve!');
+    const target = event.target as HTMLSelectElement;
+    this.isCustomSelected = target.value === 'custom';
   }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (input?.files?.length) {
+    if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-      console.log('Kiválasztott fájl:', this.selectedFile);
     }
   }
 
-  toggleFields() {
-    this.showMoreFields = !this.showMoreFields;
+  onSubmit(form: NgForm) {
+    if (!form.valid) return;
+
+    const formData = new FormData();
+    formData.append('userId', localStorage.getItem('userId') || '1');
+    formData.append('companyName', this.isCustomSelected ? form.value.customName : form.value.companySelect);
+    formData.append('street', form.value.street);
+    formData.append('city', form.value.city || '');
+    formData.append('zipcode', form.value.zipcode || '');
+    formData.append('state', form.value.state || '');
+    formData.append('country', form.value.country || '');
+    formData.append('content', form.value.description);
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+    }
+
+    this.postService.createFormPost(formData).subscribe({
+      next: (res: any) => {
+        this.locations.unshift(res.data);
+        form.reset();
+        this.selectedFile = null;
+        alert('Hely sikeresen hozzáadva!');
+      },
+      error: (err) => {
+        console.error('Error creating post:', err);
+        alert('Hiba történt a mentés során!');
+      }
+    });
   }
 }
