@@ -13,6 +13,7 @@ import { combineLatest } from 'rxjs'; // RxJS segédfüggvény a kombináláshoz
 export class HeadComponent implements OnInit {
   isLoggedIn = false;
   profilePic: string | null = null;
+isCompanyLogin = false;
 
   constructor(
     private userService: UserService,
