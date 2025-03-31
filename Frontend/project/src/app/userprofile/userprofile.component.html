@@ -1,70 +1,142 @@
-<form (ngSubmit)="saveProfile()" *ngIf="userProfile" [formGroup]="profilForm">
-  <!---Űrlap akkor jelenik meg ha már van user profile -->
-    <div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 10px; max-width: 1500px; height: 550px;">
-      <div class="text-center mb-4">
-        <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Profil</h2>
+<div class="container mt-4" style="background-color: #000000; padding: 20px; border-radius: 10px; max-width: 1500px; min-height: 550px;">
+  <div class="text-center mb-4">
+    <h2 style="color: #8000FF; font-family: 'Press Start 2P', cursive;">Profil</h2>
+  </div>
+
+  <!-- Táblázat az eddigi adatok megjelenítésére -->
+  <div class="mb-4" *ngIf="userProfile">
+    <h3 style="color: #fff;">Adatok</h3>
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Mező</th>
+          <th scope="col">Érték</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Felhasználói adatok -->
+        <tr *ngIf="!isCompanyLogin">
+          <td>Felhasználónév</td>
+          <td>{{ userProfile.username || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="!isCompanyLogin">
+          <td>Email</td>
+          <td>{{ userProfile.email || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="!isCompanyLogin">
+          <td>Jelszó (hash)</td>
+          <td>{{ userProfile.passwordHash ? 'Titkosítva' : 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="!isCompanyLogin">
+          <td>Név</td>
+          <td>{{ userProfile.name || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="!isCompanyLogin">
+          <td>Életkor</td>
+          <td>{{ userProfile.age || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="!isCompanyLogin">
+          <td>Telefonszám</td>
+          <td>{{ userProfile.phoneNumber || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="!isCompanyLogin">
+          <td>Profilkép</td>
+          <td>
+            <img *ngIf="userProfile.profilePic" [src]="userProfile.profilePic" alt="Profilkép" style="width: 50px; height: 50px; border-radius: 50%;">
+            <span *ngIf="!userProfile.profilePic">Nincs megadva</span>
+          </td>
+        </tr>
+        <!-- Céges adatok -->
+        <tr *ngIf="isCompanyLogin">
+          <td>Cégnév</td>
+          <td>{{ userProfile.companyName || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="isCompanyLogin">
+          <td>Cégjegyzékszám</td>
+          <td>{{ userProfile.registrationNumber || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="isCompanyLogin">
+          <td>Adószám</td>
+          <td>{{ userProfile.taxNumber || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="isCompanyLogin">
+          <td>Kapcsolattartó neve</td>
+          <td>{{ userProfile.contactPerson || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="isCompanyLogin">
+          <td>Kapcsolattartó email</td>
+          <td>{{ userProfile.contactEmail || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="isCompanyLogin">
+          <td>Jelszó (hash)</td>
+          <td>{{ userProfile.passwordHash ? 'Titkosítva' : 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="isCompanyLogin">
+          <td>Weboldal URL-je</td>
+          <td>{{ userProfile.websiteUrl || 'Nincs megadva' }}</td>
+        </tr>
+        <tr *ngIf="isCompanyLogin">
+          <td>Céges ikon</td>
+          <td><i class="fas fa-building" style="font-size: 24px; color: #fff;"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color: #fff;">Adatok hozzáadása</h3>
+  <!-- Űrlap az adatok szerkesztésére -->
+  <form (ngSubmit)="saveProfile()" *ngIf="userProfile" [formGroup]="profilForm">
+    <div *ngIf="!isCompanyLogin"> <!-- Felhasználói mezők -->
+      <div class="mt-3">
+        <label for="name" class="form-label">Név</label>
+        <input type="text" id="name" class="form-control" formControlName="name" placeholder="pl. Nagy Ferenc">
+        <small class="text-danger" *ngIf="isInvalid('name')">Nevet a fenti formátumban lehet megadni!</small>
       </div>
-      
-      <div *ngIf="!isCompanyLogin"> <!-- Felhasználóként van bejelentkezve-->
+      <div class="mt-3">
+        <label for="age" class="form-label">Életkor</label>
+        <input type="text" id="age" class="form-control" formControlName="age" placeholder="pl. 18">
+        <small class="text-danger" *ngIf="isInvalid('age')">Érték 12 és 116 között lehet!</small>
+      </div>
+      <div class="mt-3">
+        <label for="phoneNumber" class="form-label">Telefonszám</label>
+        <input type="text" id="phone" class="form-control" formControlName="phoneNumber" maxlength="14" placeholder="pl. 06 20 123 4567" (input)="onPhoneNumberInput($event)">
+        <small class="text-danger" *ngIf="isInvalid('phoneNumber')">Telefonszámot a fenti formátumban lehet megadni!</small>
+      </div>
       <div class="mt-3">
         <label class="form-label">Profilkép választás</label>
         <div class="profile-pictures">
           <label class="profile-picture-label">
-            <input type="radio" name="profilePic" formControlName="profilePic">
-            <img src="assets/acc.icon.png" alt="Profilkép 1">
+            <input type="radio" name="profilePic" value="assets/acc.icon.png" formControlName="profilePic">
+            <img src="assets/acc.icon.png" alt="Profilkép 1" style="width: 50px; height: 50px; border-radius: 50%;">
           </label>
-
           <label class="profile-picture-label">
-            <input type="radio" name="profilePic" formControlName="profilePic">
-            <img src="assets/acc.icon.2.png" alt="Profilkép 2">
+            <input type="radio" name="profilePic" value="assets/acc.icon.2.png" formControlName="profilePic">
+            <img src="assets/acc.icon.2.png" alt="Profilkép 2" style="width: 50px; height: 50px; border-radius: 50%;">
           </label>
-          
         </div>
-      </div>      
-
-      <div class="mt-3">
-        <label for="name" class="form-label">Név</label>
-        <input type="text" id="name" class="form-control" formControlName="name" placeholder="Neve:pl Nagy Ferenc">
-        <small class="text-danger" *ngIf="isInvalid('name')">Nevet a fenti formátumban lehet megadni!</small>
-      </div>
-  
-      <div class="mt-3">
-        <label for="age" class="form-label">Életkor</label>
-        <input type="text" id="age" class="form-control" formControlName="age" placeholder="Életkora: pl 18">
-        <small class="text-danger" *ngIf="isInvalid('age')">Életkort a fenti formátumban lehet megadni!</small>
-      </div>
-  
-      <div class="mt-3">
-        <label for="phoneNumber" class="form-label">Telefonszám</label>
-        <input type="text" id="phone" class="form-control" formControlName="phoneNumber" maxlength="14" placeholder="pl: 06 20 123 4567" (input)="onPhoneNumberInput($event)">
-        <small class="text-danger" *ngIf="isInvalid('phoneNumber')">Telefonszámot a fenti formátumban lehet megadni!</small>
       </div>
     </div>
-      
-    <div *ngIf="isCompanyLogin"> <!-- Cégként van bejelentkezve-->
+
+    <div *ngIf="isCompanyLogin"> <!-- Céges mezők -->
       <div class="mt-3">
         <label for="registrationNumber" class="form-label">Cégjegyzékszám</label>
-        <input type="text" id="registrationNumber" class="form-control" formControlName="registrationNumber" placeholder="01-09-123456" (input)="onRegistrationNumberInput($event)">
+        <input type="text" id="registrationNumber" class="form-control" formControlName="registrationNumber" placeholder="pl. 01-09-123456" (input)="onRegistrationNumberInput($event)">
         <small class="text-danger" *ngIf="isInvalid('registrationNumber')">Cégjegyzékszámot a fenti formátumban lehet megadni!</small>
       </div>
-
       <div class="mt-3">
         <label for="contactPerson" class="form-label">Kapcsolattartó neve</label>
-        <input type="text" id="contactPerson" class="form-control" formControlName="contactPerson" placeholder="Adja meg a cég Kapcsolattartójának a nevét!">
+        <input type="text" id="contactPerson" class="form-control" formControlName="contactPerson" placeholder="pl. Nagy Ferenc">
         <small class="text-danger" *ngIf="isInvalid('contactPerson')">Kapcsolattartó nevét a fenti formátumban lehet megadni!</small>
       </div>
-
       <div class="mt-3">
-          <label for="websiteUrl" class="form-label">Weboldal URL-je</label>
-          <input type="text" id="websiteUrl" class="form-control" formControlName="websiteUrl" placeholder="Cégének a hivatalos weboldala, https://www.pelda.hu" (input)="onWebsiteUrlInput($event)">
-          <small class="text-danger" *ngIf="isInvalid('websiteUrl')">Weboldal URL-jét a fenti formátumban lehet megadni!</small>
+        <label for="websiteUrl" class="form-label">Weboldal URL-je</label>
+        <input type="text" id="websiteUrl" class="form-control" formControlName="websiteUrl" placeholder="pl. https://www.pelda.hu" (input)="onWebsiteUrlInput($event)">
+        <small class="text-danger" *ngIf="isInvalid('websiteUrl')">Weboldal URL-jét a fenti formátumban lehet megadni!</small>
       </div>
     </div>
 
-
-
-        <div class="text-center mt-5" >
-          <button type="submit" class="btn btn-secondary w-100">Mentés</button>
-        </div>
+    <div class="text-center mt-5">
+      <button type="submit" class="btn btn-secondary w-100">Mentés</button>
     </div>
-</form>
+  </form>
+</div>

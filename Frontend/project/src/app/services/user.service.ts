@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { Arcade } from '../arcade';
 
 @Injectable({
@@ -11,14 +11,12 @@ import { Arcade } from '../arcade';
 export class UserService {
   private baseURL = "http://localhost:3004/users";
 
-  constructor(private http: HttpClient, private router: Router) { 
-    this.router = router; 
-  }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  private isLoggedInSubject = new BehaviorSubject<boolean>(this.isAuthenticated()); 
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
 
   isLoggedIn() {
-    return this.isLoggedInSubject.asObservable(); 
+    return this.isLoggedInSubject.asObservable();
   }
 
   register(user: any): Observable<any> {
@@ -26,18 +24,15 @@ export class UserService {
   }
 
   login(username: string, passwordHash: string): Observable<any> {
-    // Töröljük a céges adatokat, ha felhasználói módba jelentkezik
     localStorage.removeItem('companyId');
     localStorage.removeItem('token');
-    
     return this.http.post(`${this.baseURL}/login`, { username, passwordHash });
   }
 
   logout() {
-    // Kijelentkezésnél töröljük a felhasználói adatokat
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-    this.isLoggedInSubject.next(false); 
+    this.isLoggedInSubject.next(false);
     this.router.navigate(['/login']);
   }
 
@@ -47,19 +42,26 @@ export class UserService {
     });
   }
 
-  saveProfile(userId: number, name?: string, age?: number, phoneNumber?: string, profilePic?: string): Observable<any> {
-    return this.http.post(`${this.baseURL}/update`, {  
-      userId,
-      name,
-      age,
-      phoneNumber,
-      profilePic
-    });
+  saveProfile(
+    userId: number,
+    name?: string,
+    age?: number,
+    phoneNumber?: string,
+    profilePic?: string,
+    username?: string, // Bár nem használjuk az űrlapon, a definícióban marad
+    email?: string     // Bár nem használjuk az űrlapon, a definícióban marad
+  ): Observable<any> {
+    const updateData: any = { userId };
+    if (name !== undefined) updateData.name = name;
+    if (age !== undefined) updateData.age = age;
+    if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
+    if (profilePic !== undefined) updateData.profilePic = profilePic;
+    // A username és email nem kerül frissítésre az űrlapról
+    return this.http.post(`${this.baseURL}/update`, updateData);
   }
-  
 
-  saveToken(token: string) { 
-    this.isLoggedInSubject.next(true); 
+  saveToken(token: string) {
+    this.isLoggedInSubject.next(true);
     localStorage.setItem('token', token);
   }
 
@@ -89,7 +91,7 @@ export class UserService {
     const data = {
       userId: Number(localStorage.getItem("userId")),
       name: machine.name,
-      machineType: machineType 
+      machineType: machineType
     };
     console.log(data);
     return this.http.delete(`${this.baseURL}/machines/remove`, { body: data });

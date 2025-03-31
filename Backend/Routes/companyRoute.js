@@ -9,6 +9,7 @@ const {
   getAdvertisements,
   updateCompany,
   postAdvertisement,
+  getCompanyById
 } = require("../Controllers/companyController");
 
 router.post("/add-address", addAddress);
