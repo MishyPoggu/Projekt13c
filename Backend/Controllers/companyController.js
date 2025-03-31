@@ -247,6 +247,31 @@ const getAdvertisements = async (req, res) => {
   }
 };
 
+const getCompanyById = async (req, res) => {
+  const { companyId } = req.params;
+  try {
+    const company = await Companies.findByPk(companyId);
+    if (!company) {
+      return res.status(404).json({
+        status: 404,
+        message: msg.company.failure.notfound,
+        üzenet: uzn.company.failure.notfound,
+      });
+    }
+    res.status(200).json({
+      status: 200,
+      data: company,
+    });
+  } catch (error) {
+    console.error("Error fetching company by ID:", error);
+    res.status(500).json({
+      status: 500,
+      message: msg.company.failure.fetcherror,
+      üzenet: uzn.company.failure.fetcherror,
+    });
+  }
+};
+
 const postAdvertisement = async (req, res) => {
   upload.single("image")(req, res, async function (err) {
     if (err) {
@@ -307,4 +332,5 @@ module.exports = {
   addAddress,
   postAdvertisement,
   updateCompany,
+  getCompanyById,
 };

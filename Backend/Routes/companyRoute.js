@@ -19,5 +19,6 @@ router.get("/:companyId/addresses", getAddresses);
 router.get("/:companyId/advertisements", getAdvertisements);
 router.post("/update", updateCompany);
 router.post("/:companyId/advertisement", postAdvertisement);
+router.get("/:companyId", getCompanyById);
 
 module.exports = router;
