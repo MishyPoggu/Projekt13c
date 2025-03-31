@@ -18,6 +18,9 @@ const companyRoutes = require("./Routes/companyRoute");
 const postRoute = require("./Routes/postRoute");
 const commentRoute = require("./Routes/commentRoute");
 
+// Import the CompanyMachines model to ensure it's part of the schema
+const CompanyMachines = require("./Models/companyMachines");
+
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -39,10 +42,11 @@ sequelize
     );
   })
   .then(() => {
+    // Sync all models, including the new CompanyMachines table
     return sequelize.sync({ force: false });
   })
   .then(() => {
-    console.log("All tables created successfully!");
+    console.log("All tables created successfully, including CompanyMachines!");
   })
   .catch((err) => {
     console.error("Failed to create tables:", err.message);

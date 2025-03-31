@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { CompanyService } from '../services/company.service';
 
 @Component({
   selector: 'app-raktar',
@@ -13,7 +14,6 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./raktar.component.css']
 })
 export class RaktarComponent implements OnInit, AfterViewInit {
-
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
 
   arcades: Arcade[] = [];
@@ -35,14 +35,26 @@ export class RaktarComponent implements OnInit, AfterViewInit {
   uniqueGenres: string[] = [];
 
   userMachines: any;
+  companyMachines: any;
   arcadeMachines: any;
   consolesMachines: any;
   pinball: any;
 
-  constructor(private arcadeService: ArcadeService, private userService: UserService) { }
+  isCompany: boolean = false;
+
+  constructor(
+    private arcadeService: ArcadeService,
+    private userService: UserService,
+    private companyService: CompanyService
+  ) { }
 
   ngOnInit(): void {
-    this.loadUserMachines();
+    this.isCompany = !!localStorage.getItem('companyId');
+    if (this.isCompany) {
+      this.loadCompanyMachines();
+    } else {
+      this.loadUserMachines();
+    }
     this.loadArcades();
     this.loadPinballs();
     this.loadConsoles();
@@ -59,6 +71,19 @@ export class RaktarComponent implements OnInit, AfterViewInit {
         this.arcadeMachines = this.userMachines.arcadeMachines;
         this.consolesMachines = this.userMachines.consoles;
         this.pinball = this.userMachines.pinballMachines;
+      },
+      error: (err: HttpErrorResponse) => alert(err.message)
+    });
+  }
+
+  loadCompanyMachines() {
+    const companyId = Number(localStorage.getItem("companyId"));
+    this.companyService.getCompanyMachines(companyId).subscribe({
+      next: (res: any) => {
+        this.companyMachines = res.machines;
+        this.arcadeMachines = this.companyMachines.arcadeMachines;
+        this.consolesMachines = this.companyMachines.consoles;
+        this.pinball = this.companyMachines.pinballMachines;
       },
       error: (err: HttpErrorResponse) => alert(err.message)
     });
@@ -112,7 +137,6 @@ export class RaktarComponent implements OnInit, AfterViewInit {
 
   filterData() {
     const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
-
     const filterFunction = (machine: Arcade) => 
       (machine.name.toLowerCase().includes(lowerCaseSearchTerm) ||
         (machine.genre && machine.genre.toLowerCase().includes(lowerCaseSearchTerm)) ||
@@ -120,7 +144,6 @@ export class RaktarComponent implements OnInit, AfterViewInit {
       (!this.publisherFilter || machine.publisher.toLowerCase().includes(this.publisherFilter.toLowerCase())) &&
       (!this.genreFilter || (machine.genre && machine.genre.toLowerCase().includes(this.genreFilter.toLowerCase()))) &&
       (!this.releaseFilter || (machine.release && machine.release.toString().includes(this.releaseFilter)));
-
     this.filteredArcades = this.arcades.filter(filterFunction);
     this.filteredPinballs = this.pinballMachines.filter(filterFunction);
     this.filteredConsoles = this.consoles.filter(filterFunction);
@@ -139,17 +162,31 @@ export class RaktarComponent implements OnInit, AfterViewInit {
     return [...new Set(data.map(item => item.genre).filter(g => g))];
   }
 
-  addMachineToUser(arcade: Arcade, machineType: string) {
-    this.userService.addMachineToUser(arcade, machineType).subscribe({
-      next: () => window.location.reload(),
-      error: (err: HttpErrorResponse) => alert(err.message)
-    });
+  addMachineToEntity(arcade: Arcade, machineType: string) {
+    if (this.isCompany) {
+      this.companyService.addMachineToCompany(arcade, machineType).subscribe({
+        next: () => window.location.reload(),
+        error: (err: HttpErrorResponse) => alert(err.message)
+      });
+    } else {
+      this.userService.addMachineToUser(arcade, machineType).subscribe({
+        next: () => window.location.reload(),
+        error: (err: HttpErrorResponse) => alert(err.message)
+      });
+    }
   }
 
-  removeMachineFromUser(arcade: Arcade, machineType: string) {
-    this.userService.removeMachineFromUser(arcade, machineType).subscribe({
-      next: () => window.location.reload(),
-      error: (err: HttpErrorResponse) => alert(err.message)
-    });
+  removeMachineFromEntity(arcade: Arcade, machineType: string) {
+    if (this.isCompany) {
+      this.companyService.removeMachineFromCompany(arcade, machineType).subscribe({
+        next: () => window.location.reload(),
+        error: (err: HttpErrorResponse) => alert(err.message)
+      });
+    } else {
+      this.userService.removeMachineFromUser(arcade, machineType).subscribe({
+        next: () => window.location.reload(),
+        error: (err: HttpErrorResponse) => alert(err.message)
+      });
+    }
   }
 }

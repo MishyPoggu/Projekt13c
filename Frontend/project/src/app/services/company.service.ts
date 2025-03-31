@@ -44,15 +44,14 @@ export class CompanyService {
     registrationNumber?: string,
     contactPerson?: string,
     websiteUrl?: string,
-    companyName?: string, // Bár nem használjuk az űrlapon, a definícióban marad
-    taxNumber?: string,   // Bár nem használjuk az űrlapon, a definícióban marad
-    contactEmail?: string // Bár nem használjuk az űrlapon, a definícióban marad
+    companyName?: string,
+    taxNumber?: string,
+    contactEmail?: string
   ): Observable<any> {
     const updateData: any = { companyId };
     if (registrationNumber !== undefined) updateData.registrationNumber = registrationNumber;
     if (contactPerson !== undefined) updateData.contactPerson = contactPerson;
     if (websiteUrl !== undefined) updateData.websiteUrl = websiteUrl;
-    // A companyName, taxNumber és contactEmail nem kerül frissítésre az űrlapról
     return this.http.post(`${this.baseURL}/update`, updateData);
   }
 
@@ -74,5 +73,25 @@ export class CompanyService {
 
   isAuthenticated(): boolean {
     return !!this.getToken() && !!localStorage.getItem('companyId');
+  }
+
+  addMachineToCompany(arcade: any, machineType: string): Observable<any> {
+    const companyId = localStorage.getItem('companyId');
+    return this.http.post(`${this.baseURL}/${companyId}/machines/add`, {
+      companyId,
+      name: arcade.name,
+      machineType,
+    });
+  }
+
+  getCompanyMachines(companyId: number): Observable<any> {
+    return this.http.get(`${this.baseURL}/${companyId}/machines`);
+  }
+
+  removeMachineFromCompany(arcade: any, machineType: string): Observable<any> {
+    const companyId = localStorage.getItem('companyId');
+    return this.http.delete(`${this.baseURL}/${companyId}/machines/remove`, {
+      body: { companyId, name: arcade.name, machineType },
+    });
   }
 }

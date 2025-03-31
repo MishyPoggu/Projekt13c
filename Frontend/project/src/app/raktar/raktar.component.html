@@ -43,7 +43,7 @@
         <td>{{arcade.release}}</td>
         <td>{{arcade.genre}}</td>
         <td>{{arcade.publisher}}</td>
-        <td><button (click)="addMachineToUser(arcade, 'ArcadeMachine')"><span class="button-text">Hozzáadás</span><span class="button-plus">+</span></button></td>
+        <td><button (click)="addMachineToEntity(arcade, 'ArcadeMachine')"><span class="button-text">Hozzáadás</span><span class="button-plus">+</span></button></td>
       </tr>
     </table>
 
@@ -59,7 +59,7 @@
         <td>{{pinball.name}}</td>
         <td>{{pinball.release}}</td>
         <td>{{pinball.publisher}}</td>
-        <td><button (click)="addMachineToUser(pinball, 'PinballMachine')"><span class="button-text">Hozzáadás</span><span class="button-plus">+</span></button></td>
+        <td><button (click)="addMachineToEntity(pinball, 'PinballMachine')"><span class="button-text">Hozzáadás</span><span class="button-plus">+</span></button></td>
       </tr>
     </table>
 
@@ -75,7 +75,7 @@
         <td>{{console.name}}</td>
         <td>{{console.release}}</td>
         <td>{{console.publisher}}</td>
-        <td><button (click)="addMachineToUser(console, 'Console')"><span class="button-text">Hozzáadás</span><span class="button-plus">+</span></button></td>
+        <td><button (click)="addMachineToEntity(console, 'Console')"><span class="button-text">Hozzáadás</span><span class="button-plus">+</span></button></td>
       </tr>
     </table>
   </div>
@@ -83,7 +83,7 @@
   <div class="user-games">
     <div class="crt-effect">
       <div class="arcade-display">
-        <h2>A játékaid:</h2>
+        <h2>{{ isCompany ? 'Céged gépei:' : 'A játékaid:' }}</h2>
 
         <h3>Árkádjátékaid:</h3>
         <div *ngIf="arcadeMachines.length === 0" class="no-games">
@@ -103,7 +103,7 @@
               <td>{{arcadeMachine.release}}</td>
               <td>{{arcadeMachine.genre}}</td>
               <td>{{arcadeMachine.publisher}}</td>
-              <td><button (click)="removeMachineFromUser(arcadeMachine, 'ArcadeMachine')">X</button></td>
+              <td><button (click)="removeMachineFromEntity(arcadeMachine, 'ArcadeMachine')">X</button></td>
             </tr>
           </table>
         </div>
@@ -124,7 +124,7 @@
               <td>{{pinball.name}}</td>
               <td>{{pinball.release}}</td>
               <td>{{pinball.publisher}}</td>
-              <td><button (click)="removeMachineFromUser(pinball, 'PinballMachine')">X</button></td>
+              <td><button (click)="removeMachineFromEntity(pinball, 'PinballMachine')">X</button></td>
             </tr>
           </table>
         </div>
@@ -145,7 +145,7 @@
               <td>{{console.name}}</td>
               <td>{{console.release}}</td>
               <td>{{console.publisher}}</td>
-              <td><button (click)="removeMachineFromUser(console, 'Console')">X</button></td>
+              <td><button (click)="removeMachineFromEntity(console, 'Console')">X</button></td>
             </tr>
           </table>
         </div>

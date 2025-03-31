@@ -4,20 +4,17 @@ const connections = require("../Connections/connections");
 // A connections egy inicializált Sequelize példány
 const sequelize = connections;
 
-// Modellek importálása (nem függvényként hívjuk meg őket)
+// Modellek importálása
 const Users = require("./users");
 const Token = require("./token");
 const UserMachines = require("./usermachines");
-
-// Ezeknek az értéke nem fog változni, csak a szerveren tárolni kell őket
 const ArcadeMachines = require("./arcademachines");
 const Consoles = require("./consoles");
 const PinballMachines = require("./pinballmachines");
-
-// Céges dolgok
 const Addresses = require("./addresses");
 const Advertisements = require("./advertisements");
 const Companies = require("./companies");
+const CompanyMachines = require("./companyMachines"); 
 
 // Posztok és kommentek (új)
 const Posts = sequelize.define('Posts', {
@@ -77,10 +74,12 @@ PinballMachines.belongsToMany(Users, {
 Users.hasMany(Token, { foreignKey: "userId" });
 Token.belongsTo(Users, { foreignKey: "userId" });
 
-// Gépek hozzáfűzése
 Users.hasMany(ArcadeMachines, { foreignKey: "userId" });
 Users.hasMany(Consoles, { foreignKey: "userId" });
 Users.hasMany(PinballMachines, { foreignKey: "userId" });
+
+Companies.hasMany(Addresses, { foreignKey: "companyId" });
+Addresses.belongsTo(Companies, { foreignKey: "companyId" });
 
 Advertisements.belongsTo(Addresses, {
   foreignKey: "addressId",
@@ -98,12 +97,16 @@ Advertisements.belongsTo(Companies, {
   onDelete: "CASCADE",
 });
 
-// Új összekötések posztokhoz és kommentekhez
+// CompanyMachines kapcsolatok
+Companies.hasMany(CompanyMachines, { foreignKey: "companyId" });
+CompanyMachines.belongsTo(Companies, { foreignKey: "companyId" });
+
+// Posztok és kommentek kapcsolatok
 Posts.belongsTo(Users, { foreignKey: "userId" });
 Comments.belongsTo(Users, { foreignKey: "userId" });
 Comments.belongsTo(Posts, { foreignKey: "postId" });
 
-// Szinkronizálás (opcionális, csak fejlesztéshez)
+// Szinkronizálás
 sequelize.sync({ force: false }).then(() => {
   console.log('Adatbázis szinkronizálva');
 }).catch(err => {
@@ -111,7 +114,7 @@ sequelize.sync({ force: false }).then(() => {
 });
 
 module.exports = {
-  sequelize, // Exportáljuk a sequelize példányt is
+  sequelize,
   ArcadeMachines,
   Consoles,
   PinballMachines,
@@ -123,4 +126,5 @@ module.exports = {
   Posts,
   Comments,
   UserMachines,
+  CompanyMachines,
 };
