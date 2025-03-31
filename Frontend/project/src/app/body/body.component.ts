@@ -21,6 +21,8 @@ export class BodyComponent implements OnInit, AfterViewInit {
   locations: any[] = [];
   selectedFile: File | null = null;
   environment = Environment;
+  currentUserId: number = Number(localStorage.getItem('userId')) || 0; // 0 jelzi, ha nincs bejelentkezve
+  isLoggedIn: boolean = !!localStorage.getItem('userId'); // Bejelentkezési állapot ellenőrzése
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
 
@@ -40,15 +42,7 @@ export class BodyComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.postService.getLocations().subscribe({
-      next: (res: any) => {
-        this.locations = res.data;
-        console.log('Locations:', this.locations);
-      },
-      error: (err) => {
-        console.error('Error fetching locations:', err);
-      }
-    });
+    this.loadLocations();
   }
 
   ngAfterViewInit() {
@@ -86,10 +80,15 @@ export class BodyComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(form: NgForm) {
-    if (!form.valid) return;
+    if (!form.valid || !this.isLoggedIn) {
+      if (!this.isLoggedIn) {
+        alert('Kérlek, jelentkezz be a mentéshez!');
+      }
+      return;
+    }
 
     const formData = new FormData();
-    formData.append('userId', localStorage.getItem('userId') || '1');
+    formData.append('userId', this.currentUserId.toString());
     formData.append('companyName', form.value.companyName);
     formData.append('street', form.value.street);
     formData.append('city', form.value.city);
@@ -103,15 +102,47 @@ export class BodyComponent implements OnInit, AfterViewInit {
 
     this.postService.createFormPost(formData).subscribe({
       next: (res: any) => {
-        this.locations.unshift(res.data);
+        this.loadLocations(); // Frissítjük a listát sikeres mentés után
         form.reset();
         this.selectedFile = null;
-        this.showMoreFields = false; 
+        this.showMoreFields = false;
         alert('Hely sikeresen hozzáadva!');
       },
       error: (err) => {
         console.error('Error creating post:', err);
         alert('Hiba történt a mentés során!');
+      }
+    });
+  }
+
+  deleteLocation(postId: number) {
+    if (!this.isLoggedIn) {
+      alert('Kérlek, jelentkezz be a törléshez!');
+      return;
+    }
+
+    if (confirm('Biztosan törölni szeretnéd ezt a hirdetést?')) {
+      this.postService.deletePost(postId).subscribe({
+        next: () => {
+          this.loadLocations(); // Frissítjük a listát törlés után
+          alert('Hirdetés sikeresen törölve!');
+        },
+        error: (err) => {
+          console.error('Error deleting post:', err);
+          alert('Hiba történt a törlés során!');
+        }
+      });
+    }
+  }
+
+  private loadLocations() {
+    this.postService.getLocations().subscribe({
+      next: (res: any) => {
+        this.locations = res.data;
+        console.log('Locations:', this.locations);
+      },
+      error: (err) => {
+        console.error('Error fetching locations:', err);
       }
     });
   }

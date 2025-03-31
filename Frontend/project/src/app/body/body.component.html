@@ -95,6 +95,13 @@
       <p>{{ location.streetAddress }}, {{ location.city }}, {{ location.postalCode }}, {{ location.country }}</p>
       <p>{{ location.content }}</p>
       <img *ngIf="location.imageUrl" [src]="environment.baseURL + location.imageUrl" alt="Hely képe" style="max-width: 200px;" />
+      <button
+        *ngIf="isLoggedIn && location.userId === currentUserId"
+        class="delete-btn"
+        (click)="deleteLocation(location.postId)"
+      >
+        Törlés
+      </button>
     </div>
   </div>
 </div>

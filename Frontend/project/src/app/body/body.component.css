@@ -191,6 +191,20 @@ h1 {
   margin-top: 10px;
 }
 
+.delete-btn {
+  width: auto;
+  padding: 8px 16px;
+  background-color: #ff4444;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #cc0000;
+}
+
 @keyframes blink {
   to {
     visibility: hidden;
