@@ -13,7 +13,7 @@ const connections = new Sequelize(
 );
 
 // Néha kell, amikor új táblát hozunk létre
-// connections.sync({ force: true });
+connections.sync({ force: false });
 
 connections
   .authenticate()
