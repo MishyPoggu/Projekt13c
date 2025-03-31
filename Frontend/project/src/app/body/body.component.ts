@@ -17,7 +17,6 @@ import { ScrolldownComponent } from '../scrolldown/scrolldown.component';
 export class BodyComponent implements OnInit, AfterViewInit {
   showForm = true;
   showMoreFields = false;
-  isCustomSelected = false;
   companies: any[] = [];
   locations: any[] = [];
   selectedFile: File | null = null;
@@ -79,11 +78,6 @@ export class BodyComponent implements OnInit, AfterViewInit {
     this.showMoreFields = !this.showMoreFields;
   }
 
-  onCompanyChange(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    this.isCustomSelected = target.value === 'custom';
-  }
-
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -96,7 +90,7 @@ export class BodyComponent implements OnInit, AfterViewInit {
 
     const formData = new FormData();
     formData.append('userId', localStorage.getItem('userId') || '1');
-    formData.append('companyName', this.isCustomSelected ? form.value.customName : form.value.companySelect);
+    formData.append('companyName', form.value.companyName);
     formData.append('street', form.value.street);
     formData.append('city', form.value.city);
     formData.append('zipcode', form.value.zipcode);
@@ -112,7 +106,7 @@ export class BodyComponent implements OnInit, AfterViewInit {
         this.locations.unshift(res.data);
         form.reset();
         this.selectedFile = null;
-        this.showMoreFields = false; // Reset to hidden after submission
+        this.showMoreFields = false; 
         alert('Hely sikeresen hozzáadva!');
       },
       error: (err) => {

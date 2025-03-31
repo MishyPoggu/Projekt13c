@@ -21,28 +21,14 @@
     #form="ngForm"
   >
     <div>
-      <label for="companySelect">Cég/Hely neve:</label>
-      <select
-        id="companySelect"
-        name="companySelect"
-        ngModel
-        (change)="onCompanyChange($event)"
-        required
-      >
-        <option value="" disabled selected>Válassz egy céget, vagy írj be egy hely fenntartót</option>
-        <option *ngFor="let company of companies" [value]="company.companyId">
-          {{ company.companyName }}
-        </option>
-        <option value="custom">Hely fenntartó (új név megadása)</option>
-      </select>
+      <label for="companyName">Cég/Hely neve:</label>
       <input
-        *ngIf="isCustomSelected"
         type="text"
-        id="customName"
-        name="customName"
+        id="companyName"
+        name="companyName"
         ngModel
         required
-        placeholder="Add meg a hely nevét"
+        placeholder="Add meg a cég vagy hely nevét"
       />
     </div>
 
@@ -70,7 +56,14 @@
       </div>
       <div>
         <label for="zipcode">Irányítószám:</label>
-        <input type="text" id="zipcode" name="zipcode" ngModel required placeholder="Pl. 3950" />
+        <input
+          type="number"
+          id="zipcode"
+          name="zipcode"
+          ngModel
+          required
+          placeholder="Pl. 3950"
+        />
       </div>
       <div>
         <label for="state">Állam vagy régió:</label>
