@@ -1,0 +1,1 @@
+ALTER TABLE Posts ADD COLUMN type VARCHAR(50) DEFAULT 'forum';
