@@ -18,6 +18,10 @@ const Posts = connections.define(
         key: "userId",
       },
     },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -28,7 +32,7 @@ const Posts = connections.define(
     },
     companyName: {
       type: DataTypes.STRING,
-      allowNull: true, 
+      allowNull: true,
     },
     streetAddress: {
       type: DataTypes.STRING,
@@ -52,7 +56,7 @@ const Posts = connections.define(
     },
     imageUrl: {
       type: DataTypes.STRING,
-      allowNull: true, 
+      allowNull: true,
     },
   },
   {
